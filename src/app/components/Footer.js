@@ -82,8 +82,8 @@ export default function Footer() {
             <div>
               <h3 className="text-white font-semibold mb-4">Company</h3>
               <ul className="space-y-3">
-                <li><Link href="https://tallerapp.xyz/privacy.html" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="https://tallerapp.xyz/terms.html" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">Terms & Conditions</Link></li>
+                <li><Link href="/privacy" className="text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">Terms & Conditions</Link></li>
               </ul>
             </div>
           </div>
