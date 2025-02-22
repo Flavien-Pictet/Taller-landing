@@ -21,6 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${rethinkSansMedium.variable} ${rethinkSansBold.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={rethinkSansMedium.className}>{children}</body>
     </html>
   );
