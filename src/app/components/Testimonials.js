@@ -26,7 +26,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <div className="w-full max-w-[1100px] mx-auto px-4 mt-[100px] min-w-full">
+    <div className="w-full max-w-[1200px] mx-auto px-4 mt-[100px]">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function Testimonials() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-10 items-start mt-[60px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 items-start mt-[60px]">
         {testimonials.map((testimonial, index) => (
           <motion.div 
             key={index}
@@ -56,7 +56,7 @@ export default function Testimonials() {
             viewport={{ once: false }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
             whileHover={{ y: -10 }}
-            className={`w-full md:w-[352px] flex flex-col justify-between bg-[#0D0D0D] rounded-[20px] p-6 border border-white/10`}
+            className="w-full flex flex-col justify-between bg-[#0D0D0D] rounded-[20px] p-6 border border-white/10"
           >
             <div>
               <p className="text-[#949FA6] font-rethink-sans text-[18px] font-normal leading-[29.333px] mb-6">

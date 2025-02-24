@@ -4,27 +4,27 @@ import { motion } from 'framer-motion';
 
 export default function Product() {
   return (
-    <div id="product" className="w-full max-w-[1100px] mx-auto px-4 mt-[50px] md:mt-[300px] min-w-full">
+    <div id="product" className="w-full max-w-[1200px] mx-auto px-4 mt-[50px] md:mt-[300px]">
       {/* Height Prediction Section */}
       <motion.div 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
         transition={{ duration: 0.6 }}
-        className="mb-[50px] md:mb-[250px] flex flex-col md:flex-row items-center gap-[30px] md:gap-[80px]"
+        className="mb-[50px] md:mb-[160px] flex flex-col md:flex-row items-center gap-[30px] md:gap-[60px]"
       >
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full md:w-1/2 order-2 md:order-1"
+          className="w-full md:w-[45%] order-2 md:order-1"
         >
           <Image
             src="/images/HeightChart.svg"
             alt="Height prediction chart"
-            width={600}
-            height={400}
+            width={500}
+            height={350}
             className="w-full h-auto rounded-[20px]"
           />
         </motion.div>
