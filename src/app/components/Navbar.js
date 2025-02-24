@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`w-full border-b border-x border-white/10 fixed top-0 left-0 z-50 transition-all duration-300 ${
+      <nav className={`w-full border-b border-white/10 fixed top-0 left-0 z-50 transition-all duration-300 ${
         isScrolled ? 'bg-black/50 backdrop-blur-lg' : 'bg-transparent'
       }`}>
         <div className="w-full">
@@ -57,7 +57,7 @@ const Navbar = () => {
             />
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-center gap-[30px] px-[50px] py-[14px] rounded-[60px] border border-white/10 shrink-0 absolute left-1/2 -translate-x-1/2">
+            <div className="hidden lg:flex items-center justify-center gap-[30px] px-[50px] py-[14px] rounded-[60px] border border-white/10 shrink-0 absolute left-1/2 -translate-x-1/2">
               <a 
                 href="https://quirky-daphne-313.notion.site/Taller-app-Affiliation-program-139793ad0b078092af4cf12458961c14"
                 target="_blank"
@@ -83,9 +83,9 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Navigation */}
-            <div className="flex md:hidden items-center gap-2 flex-shrink-0">
+            <div className="flex lg:hidden items-center gap-2 flex-shrink-0">
               <a 
-                href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
+                href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-[40px] h-[40px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
@@ -125,7 +125,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Buttons */}
-            <div className="hidden md:flex gap-4 flex-shrink-0">
+            <div className="hidden lg:flex gap-2 flex-shrink-0">
               <a 
                 href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
                 target="_blank"
