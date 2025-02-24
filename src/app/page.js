@@ -36,9 +36,14 @@ const shadowsIntoLight = localFont({
   variable: '--font-shadows'
 });
 
+const manrope = localFont({
+  src: '../../public/fonts/Manrope-Bold.ttf',
+  variable: '--font-manrope'
+});
+
 export default function Home() {
   return (
-    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable}`}>
+    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable} ${manrope.variable}`}>
       <Navbar />
       <main>
         <AnimatedSection>
@@ -51,7 +56,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[40px] md:leading-[50px] max-w-[415px] w-[90%] mx-auto tracking-[-2.53px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 [@media(max-width:360px)]:text-[clamp(1.75rem,7vw,40px)] [@media(max-width:360px)]:leading-[1] [@media(max-width:360px)]:tracking-[0.5px]"
+            className="mt-[80px] text-center font-rethink-sans md:font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[40px] md:leading-[50px] max-w-[415px] w-[90%] mx-auto tracking-[-2.53px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:pb-4 [@media(max-width:768px)]:font-manrope [@media(max-width:360px)]:text-[clamp(1.75rem,7vw,40px)] [@media(max-width:360px)]:leading-[1] [@media(max-width:360px)]:tracking-[0.5px]"
           >
             Predict & Maximize<br />
             your Height Potential
@@ -82,7 +87,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
+            href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
             target="_blank"
             rel="noopener noreferrer"
             className="flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] border border-white/15 bg-gradient-to-r from-[#0B0B0B] to-[#191919] transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
@@ -144,7 +149,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
                 <a
-                  href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
+                  href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-white text-black px-8 py-3 rounded-full hover:opacity-90 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"

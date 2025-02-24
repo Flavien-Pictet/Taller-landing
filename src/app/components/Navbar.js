@@ -127,7 +127,7 @@ const Navbar = () => {
             {/* Desktop Buttons */}
             <div className="hidden lg:flex gap-2 flex-shrink-0">
               <a 
-                href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
+                href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-[145px] h-[50px] px-[15px] py-[2px] rounded-[300px] bg-gradient-to-b from-[#8622FF] to-[#B374FF] transition-all duration-300 hover:opacity-90 hover:scale-[1.02]"
