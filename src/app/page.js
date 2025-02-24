@@ -56,10 +56,10 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="mt-[80px] text-center font-rethink-sans md:font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[40px] md:leading-[50px] max-w-[415px] w-[90%] mx-auto tracking-[-2.53px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:pb-4 [@media(max-width:768px)]:font-manrope [@media(max-width:360px)]:text-[clamp(1.75rem,7vw,40px)] [@media(max-width:360px)]:leading-[1] [@media(max-width:360px)]:tracking-[0.5px]"
+            className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope"
           >
-            Predict & Maximize<br />
-            your Height Potential
+            <span className="block">Predict & Maximize</span>
+            <span className="block">your Height Potential</span>
           </motion.h1>
           
           <motion.p
