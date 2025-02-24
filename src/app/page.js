@@ -51,7 +51,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="mt-[80px] text-center font-rethink-sans text-[clamp(1.75rem,7vw,40px)] md:text-[50px] font-bold leading-[1] md:leading-[50px] max-w-[415px] w-[90%] mx-auto tracking-[clamp(0.5px,0.02em,-2.53px)] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8"
+            className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[40px] md:leading-[50px] max-w-[415px] w-[90%] mx-auto tracking-[-2.53px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 [@media(max-width:360px)]:text-[clamp(1.75rem,7vw,40px)] [@media(max-width:360px)]:leading-[1] [@media(max-width:360px)]:tracking-[0.5px]"
           >
             Predict & Maximize<br />
             your Height Potential
