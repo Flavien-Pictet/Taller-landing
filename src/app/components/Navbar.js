@@ -53,7 +53,7 @@ const Navbar = () => {
               alt="Logo" 
               width={50} 
               height={50}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] min-w-[40px] md:min-w-[50px]"
+              className="w-[50px] h-[50px] min-w-[50px]"
             />
 
             {/* Desktop Navigation */}
@@ -88,7 +88,7 @@ const Navbar = () => {
                 href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-[40px] h-[40px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
+                className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
               >
                 <Image 
                   src="/images/apple.svg" 
@@ -103,7 +103,7 @@ const Navbar = () => {
                 href="https://play.google.com/store/apps/details?id=com.virtualnetwork.taller"
                 target="_blank"
                 rel="noopener noreferrer" 
-                className="flex items-center justify-center w-[40px] h-[40px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
+                className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
               >
                 <Image 
                   src="/images/android.svg" 
@@ -118,7 +118,7 @@ const Navbar = () => {
                 href="https://quirky-daphne-313.notion.site/Taller-app-Affiliation-program-139793ad0b078092af4cf12458961c14"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center min-w-[90px] h-[40px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
+                className="flex items-center justify-center min-w-[100px] h-[50px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
               >
                 <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">Affiliation</span>
               </a>
