@@ -56,7 +56,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope"
+            className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
           >
             <span className="block">Predict & Maximize</span>
             <span className="block">your Height Potential</span>
@@ -71,7 +71,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col justify-center max-w-[364px] w-[90%] mx-auto text-center font-rethink-sans text-[18px] font-medium leading-[22.4px] tracking-[0.32px] text-white/50"
+            className="flex flex-col justify-center max-w-[364px] w-[90%] mx-auto text-center font-rethink-sans text-[18px] font-medium leading-[1.2] md:leading-[22.4px] tracking-[0.32px] text-white/50 [@media(max-width:768px)]:text-[16px] [@media(max-width:768px)]:max-w-[300px]"
           >
             You can't control genetics, but you can optimize growth. 500,000+ men agree.
           </motion.p>
