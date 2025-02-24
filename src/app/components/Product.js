@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 
 export default function Product() {
   return (
-    <div id="product" className="w-full max-w-[1200px] mx-auto px-4 mt-[50px] md:mt-[300px]">
+    <section id="product" aria-label="Product Features" className="w-full max-w-[1200px] mx-auto px-4 mt-[50px] md:mt-[300px]">
       {/* Height Prediction Section */}
-      <motion.div 
+      <motion.article 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
@@ -22,10 +22,11 @@ export default function Product() {
         >
           <Image
             src="/images/HeightChart.svg"
-            alt="Height prediction chart"
+            alt="Interactive height prediction chart showing growth projections over time"
             width={500}
             height={350}
             className="w-full h-auto rounded-[20px]"
+            priority
           />
         </motion.div>
         <motion.div 
@@ -35,17 +36,17 @@ export default function Product() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="w-full md:w-1/2 flex flex-col justify-center order-1 md:order-2"
         >
-          <h2 className="text-white font-rethink-sans text-[26px] font-bold mb-4">
+          <h1 className="text-white font-rethink-sans text-[26px] font-bold mb-4">
             Predict your future height
-          </h2>
+          </h1>
           <p className="text-white/50 text-[16px]">
             Our dynamic height prediction updates every month based on your activity and progress tracking. We rely on machine learning and environmental factors to estimate your potential height and track changes over time.
           </p>
         </motion.div>
-      </motion.div>
+      </motion.article>
 
       {/* Maximization Section */}
-      <motion.div 
+      <motion.article 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
@@ -81,10 +82,10 @@ export default function Product() {
             From posture exercises to nutrition, every habit is customized and adapts over time based on your progress. Stay on track, build better habits, and give yourself the best chance to reach your full potential.
           </p>
         </motion.div>
-      </motion.div>
+      </motion.article>
 
       {/* Community Section */}
-      <motion.div 
+      <motion.article 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
@@ -120,10 +121,10 @@ export default function Product() {
             Height growth isn't a solo journey. Our community gives you access to real experiences, shared knowledge, and support from others on the same path.
           </p>
         </motion.div>
-      </motion.div>
+      </motion.article>
 
       {/* AI Section */}
-      <motion.div 
+      <motion.article 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
@@ -159,7 +160,7 @@ export default function Product() {
             Have questions about your height potential? Taller AI gives you real-time, data-driven answers based on your unique profile. Whether you're wondering how much you can grow, what factors influence height, or how to maximize your potential, our AI provides clear, personalized insights.
           </p>
         </motion.div>
-      </motion.div>
-    </div>
+      </motion.article>
+    </section>
   );
 }
