@@ -56,7 +56,7 @@ export default function Features() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-0 max-w-[1200px] mx-auto px-4 relative before:hidden md:before:block before:content-[''] before:absolute before:top-[50%] before:left-0 before:w-full before:h-px before:bg-[linear-gradient(90deg,rgba(180,119,255,0.00)_0%,rgba(180,119,255,0.20)_50%,rgba(180,119,255,0.00)_100%)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-0 max-w-[1200px] mx-auto px-4 relative w-full before:hidden md:before:block before:content-[''] before:absolute before:top-[50%] before:left-0 before:w-full before:h-px before:bg-[linear-gradient(90deg,rgba(180,119,255,0.00)_0%,rgba(180,119,255,0.20)_50%,rgba(180,119,255,0.00)_100%)]">
         {features.map((feature, index) => (
           <motion.div
             key={index}

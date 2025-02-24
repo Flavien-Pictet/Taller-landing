@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Product() {
   return (
-    <div id="product" className="w-full max-w-[1100px] mx-auto px-4 mt-[50px] md:mt-[300px]">
+    <div id="product" className="w-full max-w-[1100px] mx-auto px-4 mt-[50px] md:mt-[300px] min-w-full">
       {/* Height Prediction Section */}
       <motion.div 
         initial={{ opacity: 0 }}

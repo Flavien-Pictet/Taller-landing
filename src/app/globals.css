@@ -18,6 +18,11 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-rethink-sans-medium);
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -26,4 +31,26 @@ h1 {
 
 html {
   scroll-behavior: smooth;
+}
+
+.content {
+  width: 100vw;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Assurer que tous les conteneurs principaux prennent toute la largeur */
+#__next,
+main,
+.content {
+  width: 100vw;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Reset des marges par défaut */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

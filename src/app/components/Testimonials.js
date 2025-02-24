@@ -26,7 +26,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <div className="w-full max-w-[1100px] mx-auto px-4 mt-[100px]">
+    <div className="w-full max-w-[1100px] mx-auto px-4 mt-[100px] min-w-full">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
