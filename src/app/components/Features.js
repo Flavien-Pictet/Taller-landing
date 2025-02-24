@@ -49,7 +49,7 @@ export default function Features() {
         <h2 className="text-white font-rethink-sans text-[26px] md:text-[32px] font-bold leading-[46.8px] mb-4">
           Unlock your full potential.
         </h2>
-        <p className="mx-auto px-4 md:px-0 max-w-[280px] md:max-w-[376px] text-center font-rethink-sans text-[18px] font-medium leading-[1.4] md:leading-[22.4px] tracking-[0.32px] text-white/50">
+        <p className="mx-auto px-4 md:px-0 max-w-[280px] md:max-w-[376px] text-center font-rethink-sans text-[16px] md:text-[18px] font-medium leading-[1.3] md:leading-[22.4px] tracking-[0.32px] text-white/50">
           We analyze your growth potential and{' '}
           give you a custom plan to make sure{' '}
           you reach it
