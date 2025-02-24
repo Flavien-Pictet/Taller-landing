@@ -18,18 +18,24 @@ export default function Privacy() {
       }
       .content {
         flex: 1;
-        padding: 40px;
+        padding: 20px;
         max-width: 620px;
         margin: 0 auto;
-      }
-      h1, h2 {
-        text-transform: uppercase;
       }
       h1 {
         color: white;
         text-align: center;
         margin-top: 50px;
         margin-bottom: 50px;
+        font-size: clamp(24px, 5vw, 48px);
+        line-height: 1.2;
+        max-width: 12ch;
+        margin-left: auto;
+        margin-right: auto;
+        word-break: break-word;
+      }
+      h2 {
+        text-transform: uppercase;
       }
       h2 {
         color: white;
@@ -112,7 +118,7 @@ export default function Privacy() {
 
   return (
     <div className="content">
-      <h1>PRIVACY POLICY</h1>
+      <h1>PRIVACY<br />POLICY</h1>
       <p><strong>Last updated December 11, 2024</strong></p>
 
       <div className="section">
