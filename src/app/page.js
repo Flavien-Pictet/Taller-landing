@@ -41,9 +41,14 @@ const manrope = localFont({
   variable: '--font-manrope'
 });
 
+const interSemiBold = localFont({
+  src: '../../public/fonts/Inter_18pt-SemiBold.ttf',
+  variable: '--font-inter-semi-bold'
+});
+
 export default function Home() {
   return (
-    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable} ${manrope.variable}`}>
+    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable} ${manrope.variable} ${interSemiBold.variable}`}>
       <Navbar />
       <main>
         <AnimatedSection>
@@ -57,7 +62,7 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: false }}
               transition={{ duration: 0.6 }}
-              className="mt-[80px] text-center font-rethink-sans text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
+              className="mt-[80px] text-center font-inter-semi-bold text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
             >
               Predict & Maximize your Height Potential
             </motion.h1>
@@ -91,15 +96,22 @@ export default function Home() {
             href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] border border-white/15 bg-gradient-to-r from-[#0B0B0B] to-[#191919] transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+            className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
           >
-            <Image
-              src="/images/downloads.svg"
-              alt="Download icon"
-              width={17}
-              height={16}
-            />
-            <span className="text-white font-rethink-sans">Download Taller</span>
+            <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>
+            
+            <span className="absolute inset-0 rounded-[200px] border-2 border-transparent bg-[length:400%_400%] animate-border-light"></span>
+            
+            <span className="absolute inset-[2px] rounded-[200px] bg-gradientwha-to-r from-[#0B0B0B] to-[#191919] flex items-center justify-center">
+              <Image
+                src="/images/downloads.svg"
+                alt="Download icon"
+                width={17}
+                height={16}
+                className="mr-2"
+              />
+              <span className="text-white font-rethink-sans">Download Taller</span>
+            </span>
           </motion.a>
         </AnimatedSection>
         <AnimatedSection>
@@ -116,7 +128,7 @@ export default function Home() {
           >
             <Image
               src="/images/mokeup.png"
-              alt="Taller app interface showing height prediction and growth tracking features"
+              alt="Taller app interface showing height prediction and growth tracking features for maximizing height potential"
               width={1000}
               height={600}
               className="w-full h-auto"
@@ -239,5 +251,5 @@ function Counter({ targetNumber, duration = 1000 }) {
     };
   }, [targetNumber, duration, isInView]);
 
-  return <span ref={counterRef}>{count.toFixed(1)}%</span>;
+  return <span ref={counterRef} aria-live="polite" aria-atomic="true">{count.toFixed(1)}%</span>;
 }

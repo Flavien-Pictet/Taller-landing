@@ -26,34 +26,51 @@ export default function Testimonials() {
     }
   ];
 
-  // Add JSON-LD structured data for reviews
+  // Update the useEffect in your Testimonials.js file
   useEffect(() => {
-    const structuredData = {
+    // Instead of using ItemList, let's use individual Review objects
+    const reviewSchemas = testimonials.map((testimonial, index) => ({
       '@context': 'https://schema.org',
-      '@type': 'ItemList',
-      'itemListElement': testimonials.map((testimonial, index) => ({
-        '@type': 'Review',
-        'position': index + 1,
-        'author': {
-          '@type': 'Person',
-          'name': testimonial.name
-        },
-        'reviewRating': {
-          '@type': 'Rating',
-          'ratingValue': '5',
-          'bestRating': '5'
-        },
-        'reviewBody': testimonial.text
-      }))
-    };
+      '@type': 'Review',
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': '5',
+        'bestRating': '5'
+      },
+      'author': {
+        '@type': 'Person',
+        'name': testimonial.name
+      },
+      'reviewBody': testimonial.text,
+      'itemReviewed': {
+        '@type': 'MobileApplication',
+        'name': 'Taller App',
+        'applicationCategory': 'HealthApplication',
+        'operatingSystem': 'iOS, Android',
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD'
+        }
+      }
+    }));
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(structuredData);
-    document.head.appendChild(script);
+    // Add each review schema as a separate script
+    reviewSchemas.forEach(schema => {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(schema);
+      document.head.appendChild(script);
+    });
 
     return () => {
-      document.head.removeChild(script);
+      // Remove all added scripts
+      const scripts = document.head.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent.includes('Review')) {
+          document.head.removeChild(script);
+        }
+      });
     };
   }, []);
 

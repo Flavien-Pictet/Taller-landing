@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+
+# Prevent crawling of any future admin areas
+Disallow: /admin/
+
 Sitemap: https://tallerapp.xyz/sitemap.xml

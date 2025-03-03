@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const features = [
   {
@@ -37,6 +38,29 @@ const features = [
 ];
 
 export default function Features() {
+  // Add JSON-LD structured data for features
+  useEffect(() => {
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      'itemListElement': features.map((feature, index) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': feature.title,
+        'description': feature.description
+      }))
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <section 
       id="features" 

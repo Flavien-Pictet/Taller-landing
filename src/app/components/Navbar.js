@@ -52,7 +52,7 @@ const Navbar = () => {
         >
           <div className="w-full">
             <div className="flex items-center justify-between w-full h-[68px] md:h-[78px] px-4 md:px-6 w-screen overflow-x-hidden gap-4 sm:gap-6">
-              <a href="/" aria-label="Home">
+              <a href="/" aria-label="Taller App - Height Growth & Prediction - Home">
                 <Image 
                   src={Logo} 
                   alt="Taller App Logo"

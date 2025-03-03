@@ -1,8 +1,40 @@
 'use client';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 export default function Product() {
+  // Add breadcrumb schema
+  useEffect(() => {
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Home',
+          'item': 'https://tallerapp.xyz'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Product Features',
+          'item': 'https://tallerapp.xyz/#product'
+        }
+      ]
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <section id="product" aria-label="Product Features" className="w-full max-w-[1200px] mx-auto px-4 mt-[50px] md:mt-[300px]">
       {/* Height Prediction Section */}
