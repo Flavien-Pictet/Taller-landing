@@ -42,9 +42,6 @@ export const metadata = {
       alt: 'Taller App - Height Growth & Prediction',
     },
   },
-  verification: {
-    google: 'YOUR-VERIFICATION-CODE',
-  },
 };
 
 export default function RootLayout({ children }) {
