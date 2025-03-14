@@ -209,7 +209,7 @@ export default function Affiliation() {
                   SETUP MANYCHAT <span className="ml-2">🤖</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Setup a simple Manychat DM automation
+                  Setup a simple Manychat automation
                 </p>
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function Affiliation() {
             </h2>
             
             <p className="text-center text-white/50 text-[18px] max-w-[700px] mx-auto mb-[60px] px-4 md:px-0">
-              Check out these high-performing videos<br className="md:hidden" /> 
+              Check out these high-performing videos <br className="md:hidden" /> 
               from our top affiliates.
               <br className="hidden md:block" />
               <span className="hidden md:inline">Follow their content style, drive clicks, and start earning today!</span>
