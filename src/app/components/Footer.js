@@ -6,23 +6,39 @@ import Logo from "@/public/images/logo.png";
 export default function Footer() {
   const scrollToProduct = (e) => {
     e.preventDefault();
-    const element = document.getElementById('product');
-    if (element) {
-      element.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth'
-      });
+    
+    // Check if we're on the homepage
+    if (window.location.pathname === '/') {
+      // If on homepage, just scroll to the element
+      const element = document.getElementById('product');
+      if (element) {
+        element.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // If not on homepage, navigate to homepage with hash
+      window.location.href = '/#product';
     }
   };
 
   const scrollToFeatures = (e) => {
     e.preventDefault();
-    const element = document.getElementById('features');
-    if (element) {
-      element.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth'
-      });
+    
+    // Check if we're on the homepage
+    if (window.location.pathname === '/') {
+      // If on homepage, just scroll to the element
+      const element = document.getElementById('features');
+      if (element) {
+        element.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      // If not on homepage, navigate to homepage with hash
+      window.location.href = '/#features';
     }
   };
 
@@ -74,9 +90,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link 
-                    href="https://quirky-daphne-313.notion.site/Taller-app-Affiliation-program-139793ad0b078092af4cf12458961c14" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                    href="/affiliation" 
                     className="text-white/60 hover:text-white transition-colors"
                     aria-label="Join our affiliate program"
                   >
