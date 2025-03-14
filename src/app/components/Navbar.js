@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Logo from "@/public/images/logo.png";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -21,6 +22,13 @@ const Navbar = () => {
 
   const scrollToProduct = (e) => {
     e.preventDefault();
+    
+    if (isAffiliationPage) {
+      // Redirect to homepage with anchor
+      window.location.href = '/#product';
+      return;
+    }
+    
     const element = document.getElementById('product');
     if (element) {
       element.scrollIntoView({
@@ -32,6 +40,13 @@ const Navbar = () => {
 
   const scrollToFeatures = (e) => {
     e.preventDefault();
+    
+    if (isAffiliationPage) {
+      // Redirect to homepage with anchor
+      window.location.href = '/#features';
+      return;
+    }
+    
     const element = document.getElementById('features');
     if (element) {
       element.scrollIntoView({
@@ -77,14 +92,14 @@ const Navbar = () => {
                   Become affiliate
                 </a>
                 <a 
-                  href="#features" 
+                  href={isAffiliationPage ? "/#features" : "#features"} 
                   onClick={scrollToFeatures}
                   className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
                 >
                   Features
                 </a>
                 <a 
-                  href="#product" 
+                  href={isAffiliationPage ? "/#product" : "#product"} 
                   onClick={scrollToProduct}
                   className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
                 >
@@ -130,10 +145,12 @@ const Navbar = () => {
                 </a>
 
                 <a 
-                  href="/affiliation"
+                  href={isAffiliationPage ? "/" : "/affiliation"}
                   className="flex items-center justify-center min-w-[100px] h-[50px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
                 >
-                  <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">Affiliation</span>
+                  <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">
+                    {isAffiliationPage ? "Home" : "Affiliation"}
+                  </span>
                 </a>
               </div>
 
