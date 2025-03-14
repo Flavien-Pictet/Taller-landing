@@ -128,7 +128,9 @@ export default function Affiliation() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            href="#"
+            href="https://form.typeform.com/to/FsUtyU9p"
+            target="_blank"
+            rel="noopener noreferrer"
             className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
           >
             <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>

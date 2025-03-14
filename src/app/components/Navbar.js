@@ -60,7 +60,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
     <>
       <header role="banner">
         <nav 
-          className={`w-full border-b border-white/10 fixed top-0 left-0 z-50 transition-all duration-300 ${
+          className={`w-full border-b border-white/10 fixed top-0 left-0 z-50 ${
             isScrolled ? 'bg-black/50 backdrop-blur-lg' : 'bg-transparent'
           }`}
           aria-label="Main navigation"
@@ -117,7 +117,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                   href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
+                  className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 hover:bg-white/5 hover:border-white/25"
                   aria-label="Download on App Store"
                 >
                   <Image 
@@ -133,7 +133,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                   href="https://play.google.com/store/apps/details?id=com.virtualnetwork.taller"
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
+                  className="flex items-center justify-center w-[50px] h-[50px] rounded-[10px] border border-white/15 hover:bg-white/5 hover:border-white/25"
                 >
                   <Image 
                     src="/images/android.svg" 
@@ -164,7 +164,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                   href="https://apps.apple.com/app/apple-store/id6695758303?pt=154158&ct=website&mt=8"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-[145px] h-[50px] px-[15px] py-[2px] rounded-[300px] bg-gradient-to-b from-[#8622FF] to-[#B374FF] transition-all duration-300 hover:opacity-90 hover:scale-[1.02]"
+                  className="flex items-center justify-center gap-2 w-[145px] h-[50px] px-[15px] py-[2px] rounded-[300px] bg-gradient-to-b from-[#8622FF] to-[#B374FF] hover:opacity-90"
                   aria-label="Download Taller App on App Store"
                 >
                   <Image 
@@ -181,7 +181,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                   href="https://play.google.com/store/apps/details?id=com.virtualnetwork.taller"
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="flex items-center justify-center gap-2 w-[145px] h-[50px] px-[15px] py-[2px] rounded-[300px] border border-white/15 transition-all duration-300 hover:bg-white/5 hover:border-white/25"
+                  className="flex items-center justify-center gap-2 w-[145px] h-[50px] px-[15px] py-[2px] rounded-[300px] border border-white/15 hover:bg-white/5 hover:border-white/25"
                 >
                   <Image 
                     src="/images/android.svg" 
