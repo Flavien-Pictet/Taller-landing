@@ -70,9 +70,7 @@ const Navbar = () => {
                 aria-label="Desktop navigation"
               >
                 <a 
-                  href="https://quirky-daphne-313.notion.site/Taller-app-Affiliation-program-139793ad0b078092af4cf12458961c14"
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                  href="/affiliation"
                   className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
                   aria-label="Learn about our affiliate program"
                 >
@@ -132,9 +130,7 @@ const Navbar = () => {
                 </a>
 
                 <a 
-                  href="https://quirky-daphne-313.notion.site/Taller-app-Affiliation-program-139793ad0b078092af4cf12458961c14"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/affiliation"
                   className="flex items-center justify-center min-w-[100px] h-[50px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
                 >
                   <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">Affiliation</span>
