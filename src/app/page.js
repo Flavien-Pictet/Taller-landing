@@ -53,7 +53,7 @@ export default function Home() {
       <main>
         <AnimatedSection>
           <header>
-            <motion.h1 
+            <motion.h1
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 }
@@ -67,7 +67,7 @@ export default function Home() {
               Predict & Maximize your Height Potential
             </motion.h1>
           </header>
-          
+
           <motion.p
             variants={{
               hidden: { opacity: 0, y: 20 },
@@ -84,7 +84,7 @@ export default function Home() {
         </AnimatedSection>
 
         <AnimatedSection>
-          <motion.a 
+          <motion.a
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
@@ -99,9 +99,9 @@ export default function Home() {
             className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
           >
             <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>
-            
+
             <span className="absolute inset-0 rounded-[200px] border-2 border-transparent bg-[length:400%_400%] animate-border-light"></span>
-            
+
             <span className="absolute inset-[2px] rounded-[200px] bg-gradientwha-to-r from-[#0B0B0B] to-[#191919] flex items-center justify-center">
               <Image
                 src="/images/downloads.svg"
@@ -115,7 +115,7 @@ export default function Home() {
           </motion.a>
         </AnimatedSection>
         <AnimatedSection>
-          <motion.div 
+          <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
@@ -128,28 +128,28 @@ export default function Home() {
           >
             <Image
               src="/images/mokeup.png"
-              alt="Taller app interface showing height prediction and growth tracking features for maximizing height potential"
+              alt="Taller app interface showing height prediction calculator and growth tracking dashboard for maximizing height potential"
               width={1000}
               height={600}
+              priority={true}  // Important pour le LCP!
               className="w-full h-auto"
-              priority
             />
           </motion.div>
         </AnimatedSection>
 
         <section aria-label="Accuracy Statistics" className="mt-[100px] mx-auto w-[90%] max-w-[1100px] flex justify-center items-center py-[72px] rounded-[30px] border border-dashed border-white/10 bg-[#0D0D0D]">
           <div className="text-center">
-            <p className="text-white font-shadows text-[24px] mb-4" style={{ fontFamily: 'var(--font-shadows)' }}>Prediction accuracy 🎯</p>
+            <h2 className="text-white font-shadows text-[24px] mb-4" style={{ fontFamily: 'var(--font-shadows)' }}>Prediction accuracy 🎯</h2>
             <div className="text-white font-glancyr text-[60px] md:text-[80px] font-bold tracking-[-2px]" style={{ fontFamily: 'var(--font-glancyr)' }}>
               <Counter targetNumber={98.5} duration={750} />
             </div>
           </div>
         </section>
-        
+
         <Features />
         <Product />
         <Testimonials />
-        
+
         <AnimatedSection>
           <section aria-label="Download Call to Action" className="w-full max-w-[1200px] mx-auto px-4 mt-32 mb-20">
             <div className="w-full rounded-[30px] border border-white/10 bg-gradient-to-b from-[#0B0B0B] to-[#150B1D] p-16 text-center relative overflow-hidden">
@@ -195,6 +195,7 @@ export default function Home() {
                 width={1200}
                 height={300}
                 className="absolute bottom-0 left-0 w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
           </section>
@@ -234,7 +235,7 @@ function Counter({ targetNumber, duration = 1000 }) {
       if (!startTime) startTime = timestamp;
       const progress = timestamp - startTime;
       const percentage = Math.min(progress / duration, 1);
-      
+
       setCount(targetNumber * percentage);
 
       if (progress < duration) {
