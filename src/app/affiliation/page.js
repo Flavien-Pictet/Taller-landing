@@ -6,41 +6,24 @@ import Footer from "../components/Footer";
 import { motion, useInView } from "framer-motion";
 import localFont from 'next/font/local';
 
+// Optimisation: Charger seulement les polices nécessaires
 const rethinkSans = localFont({
   src: '../../../public/fonts/RethinkSans-Bold.ttf',
-  variable: '--font-rethink-sans'
-});
-
-const glancyr = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/Glancyr-Medium.otf',
-      weight: '400',
-      style: 'normal',
-    }
-  ],
-  variable: '--font-glancyr'
-});
-
-const shadowsIntoLight = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/ShadowsIntoLight-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    }
-  ],
-  variable: '--font-shadows'
+  variable: '--font-rethink-sans',
+  display: 'swap', // Améliore le chargement
+  preload: true
 });
 
 const manrope = localFont({
   src: '../../../public/fonts/Manrope-Bold.ttf',
-  variable: '--font-manrope'
+  variable: '--font-manrope',
+  display: 'swap'
 });
 
 const interSemiBold = localFont({
   src: '../../../public/fonts/Inter_18pt-SemiBold.ttf',
-  variable: '--font-inter-semi-bold'
+  variable: '--font-inter-semi-bold',
+  display: 'swap'
 });
 
 export default function Affiliation() {
@@ -80,26 +63,34 @@ export default function Affiliation() {
 
 
   return (
-    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable} ${manrope.variable} ${interSemiBold.variable}`}>
+    <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${manrope.variable} ${interSemiBold.variable}`}>
       <style jsx>{`
         @keyframes scroll {
           0% { transform: translate3d(0, 0, 0); }
           100% { transform: translate3d(-50%, 0, 0); }
         }
         
-        /* Optimisation pour les iframes */
+        /* Optimisations performance */
+        .video-container {
+          will-change: transform;
+          contain: layout style paint;
+          transform: translate3d(0, 0, 0);
+        }
+        
         iframe {
           will-change: transform;
           backface-visibility: hidden;
-          perspective: 1000px;
+          transform: translate3d(0, 0, 0);
         }
         
-        /* Optimisation scroll */
-        * {
-          -webkit-transform: translate3d(0, 0, 0);
-          -moz-transform: translate3d(0, 0, 0);
-          -ms-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
+        /* Optimisation animations */
+        .animate-spin {
+          animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
       <Navbar 
@@ -116,8 +107,8 @@ export default function Affiliation() {
               }}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: false }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
               className="mt-[80px] text-center font-inter-semi-bold text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[600px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
                           >
                 TALLER APP<br />CREATOR PROGRAM
@@ -131,8 +122,8 @@ export default function Affiliation() {
             }}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="flex flex-col justify-center max-w-[600px] w-[90%] mx-auto text-center font-rethink-sans text-[18px] font-medium leading-[1.2] md:leading-[22.4px] tracking-[0.32px] text-white/50 [@media(max-width:768px)]:text-[16px] [@media(max-width:768px)]:max-w-[350px] [@media(max-width:768px)]:leading-[1.35]"
           >
             <div className="hidden md:block"><span className="text-white font-bold">Earn $1 per 1k</span> <span className="text-white font-bold">views</span> by smoothly integrating our app</div>
@@ -151,8 +142,8 @@ export default function Affiliation() {
             }}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             href="https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b"
             target="_blank"
             rel="noopener noreferrer"
@@ -176,23 +167,11 @@ export default function Affiliation() {
             }}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="mt-[60px] w-[90%] max-w-[1000px] mx-auto rounded-[30px] bg-white/10 overflow-hidden relative"
           >
-            <div className="aspect-video w-full">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/zAQsAYt72WE?si=j334hmDg-cS3Q5Hr" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
-                allowFullScreen
-                className="rounded-[20px]"
-              ></iframe>
-            </div>
+            <LazyYouTubeVideo videoId="zAQsAYt72WE" />
           </motion.div>
         </AnimatedSection>
         
@@ -288,14 +267,12 @@ export default function Affiliation() {
             
             <div className="relative w-full overflow-hidden">
               <div 
-                className="flex w-full"
+                className="flex w-full video-container"
                 style={{
                   animation: 'scroll 60s linear infinite',
                   animationPlayState: isPaused ? 'paused' : 'running',
                   width: 'fit-content',
-                  display: 'flex',
-                  willChange: 'transform',
-                  transform: 'translate3d(0, 0, 0)', // Force hardware acceleration
+                  display: 'flex'
                 }}
               >
                 {/* Define links array once outside of the mapping functions */}
@@ -326,22 +303,10 @@ export default function Affiliation() {
                             onMouseLeave={handleResume}
                             onClick={handlePause}
                           >
-                            <div className="aspect-[9/16] w-full bg-black rounded-[20px] overflow-hidden relative">
-                              <iframe
-                                src={links[linkIndex]}
-                                className="w-full h-full rounded-[20px] border-0"
-                                frameBorder="0"
-                                scrolling="no"
-                                allowFullScreen
-                                style={{
-                                  border: 'none',
-                                  outline: 'none',
-                                  backgroundColor: 'black',
-                                  transform: 'scale(1.02)',
-                                  transformOrigin: 'center center'
-                                }}
-                              ></iframe>
-                            </div>
+                            <LazyTikTokVideo 
+                              src={links[linkIndex]} 
+                              index={index}
+                            />
                           </div>
                         );
                       })}
@@ -358,22 +323,10 @@ export default function Affiliation() {
                             onMouseLeave={handleResume}
                             onClick={handlePause}
                           >
-                            <div className="aspect-[9/16] w-full bg-black rounded-[20px] overflow-hidden relative">
-                              <iframe
-                                src={links[linkIndex]}
-                                className="w-full h-full rounded-[20px] border-0"
-                                frameBorder="0"
-                                scrolling="no"
-                                allowFullScreen
-                                style={{
-                                  border: 'none',
-                                  outline: 'none',
-                                  backgroundColor: 'black',
-                                  transform: 'scale(1.02)',
-                                  transformOrigin: 'center center'
-                                }}
-                              ></iframe>
-                            </div>
+                            <LazyTikTokVideo 
+                              src={links[linkIndex]} 
+                              index={`duplicate-${index}`}
+                            />
                           </div>
                         );
                       })}
@@ -395,8 +348,8 @@ export default function Affiliation() {
               }}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: false }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
               className="w-[90%] max-w-[1000px] mx-auto"
             >
               <h2 className="text-center text-white text-[40px] md:text-[48px] font-bold mb-4">
@@ -452,9 +405,9 @@ function FaqItem({ question, answer, isOpen, toggleFaq, id }) {
 function FaqSection() {
   const [openFaqId, setOpenFaqId] = useState(null);
   
-  const toggleFaq = (id) => {
+  const toggleFaq = useCallback((id) => {
     setOpenFaqId(openFaqId === id ? null : id);
-  };
+  }, [openFaqId]);
   
   const faqItems = [
     {
@@ -512,6 +465,130 @@ function FaqSection() {
           toggleFaq={toggleFaq}
         />
       ))}
+    </div>
+  );
+}
+
+// Composant optimisé pour lazy loading des vidéos YouTube
+function LazyYouTubeVideo({ videoId }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={videoRef} className="aspect-video w-full">
+      {isVisible ? (
+        <>
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-[20px]">
+              <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src={`https://www.youtube.com/embed/${videoId}?si=j334hmDg-cS3Q5Hr`}
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerPolicy="strict-origin-when-cross-origin" 
+            allowFullScreen
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            className="rounded-[20px]"
+            style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
+          />
+        </>
+      ) : (
+        <div className="w-full h-full bg-gray-800 flex items-center justify-center rounded-[20px]">
+          <div className="text-white/50">Click to load video</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Composant optimisé pour lazy loading des vidéos TikTok
+function LazyTikTokVideo({ src, index }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '200px' // Commencer à charger 200px avant
+      }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div 
+      ref={videoRef}
+      className="aspect-[9/16] w-full bg-black rounded-[20px] overflow-hidden relative"
+    >
+      {isVisible ? (
+        <>
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-black flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+          <iframe
+            src={src}
+            className="w-full h-full rounded-[20px] border-0"
+            frameBorder="0"
+            scrolling="no"
+            allowFullScreen
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            style={{
+              border: 'none',
+              outline: 'none',
+              backgroundColor: 'black',
+              transform: 'scale(1.02)',
+              transformOrigin: 'center center',
+              opacity: isLoaded ? 1 : 0,
+              transition: 'opacity 0.3s ease'
+            }}
+          />
+        </>
+      ) : (
+        <div className="w-full h-full bg-gray-900 flex items-center justify-center">
+          <div className="text-white/30 text-xs">Loading...</div>
+        </div>
+      )}
     </div>
   );
 }
