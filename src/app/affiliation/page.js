@@ -197,20 +197,16 @@ export default function Affiliation() {
         </AnimatedSection>
         
         <AnimatedSection>
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+          <div 
             className="mt-[120px] md:mt-[120px] mt-[80px] w-[90%] max-w-[700px] mx-auto space-y-4 md:space-y-6 space-y-3"
+            style={{ 
+              willChange: 'transform, opacity',
+              contain: 'layout style paint'
+            }}
           >
             {/* Step 1 */}
             <div 
-              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-300"
+              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
               onClick={() => window.open('https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b', '_blank')}
             >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
@@ -228,7 +224,7 @@ export default function Affiliation() {
             
             {/* Step 2 */}
             <div 
-              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-300"
+              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
               onClick={() => window.open('https://quirky-daphne-313.notion.site/Taller-app-Creator-program-139793ad0b078092af4cf12458961c14?pvs=74', '_blank')}
             >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
@@ -273,7 +269,7 @@ export default function Affiliation() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </AnimatedSection>
         
         {/* Video Examples Section */}
@@ -410,7 +406,7 @@ export default function Affiliation() {
               <p className="text-center text-white/50 text-[18px] max-w-[700px] mx-auto mb-[60px]">
                 Get quick answers to the most common
                 <br />
-                questions about our affiliate program
+                questions about our creator program.
               </p>
               
               <FaqSection />
@@ -524,14 +520,18 @@ function AnimatedSection({ children }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
     once: true, // Change to true pour éviter les re-renders
-    amount: 0.1, // Réduire le threshold
-    margin: "0px 0px -100px 0px" // Trigger plus tôt
+    amount: 0.05, // Réduire encore plus le threshold
+    margin: "0px 0px -50px 0px" // Trigger plus tôt
   });
 
   return (
     <div 
       ref={ref} 
-      className={`transition-opacity duration-500 ease-in-out ${isInView ? 'opacity-100' : 'opacity-0'}`}
+      className={`transition-opacity duration-300 ease-out ${isInView ? 'opacity-100' : 'opacity-0'}`}
+      style={{ 
+        transform: isInView ? 'translateY(0)' : 'translateY(10px)',
+        transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+      }}
     >
       {children}
     </div>
