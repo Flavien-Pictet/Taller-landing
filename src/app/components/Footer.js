@@ -92,9 +92,9 @@ export default function Footer() {
                   <Link 
                     href="/affiliation" 
                     className="text-white/60 hover:text-white transition-colors"
-                    aria-label="Join our affiliate program"
+                    aria-label="Join our creator program"
                   >
-                    Affiliate program
+                    Creator program
                   </Link>
                 </li>
               </ul>

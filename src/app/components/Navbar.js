@@ -87,9 +87,9 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                 <a 
                   href="/affiliation"
                   className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
-                  aria-label="Learn about our affiliate program"
+                  aria-label="Learn about our creator program"
                 >
-                  Become affiliate
+                  Creator program
                 </a>
                 <a 
                   href={isAffiliationPage ? "/#features" : "#features"} 
@@ -149,7 +149,7 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                   className="flex items-center justify-center min-w-[100px] h-[50px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
                 >
                   <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">
-                    {isAffiliationPage ? "Home" : "Affiliation"}
+                    {isAffiliationPage ? "Home" : "Creator program"}
                   </span>
                 </a>
               </div>

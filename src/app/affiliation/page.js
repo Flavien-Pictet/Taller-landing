@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -45,8 +45,16 @@ const interSemiBold = localFont({
 
 export default function Affiliation() {
   const [isPaused, setIsPaused] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const scrollContainerRef = useRef(null);
+  
+  // Optimisation: Debounce les handlers pour éviter les re-renders excessifs
+  const handlePause = useCallback(() => {
+    setIsPaused(true);
+  }, []);
+
+  const handleResume = useCallback(() => {
+    setIsPaused(false);
+  }, []);
 
   useEffect(() => {
     // Add the keyframes animation to the document
@@ -69,18 +77,31 @@ export default function Affiliation() {
     };
   }, []);
 
-  // Function to handle pausing the animation
-  const handlePause = () => {
-    setIsPaused(true);
-  };
 
-  // Function to handle resuming the animation
-  const handleResume = () => {
-    setIsPaused(false);
-  };
 
   return (
     <div className={`min-h-screen bg-[#0B0B0B] ${rethinkSans.variable} ${glancyr.variable} ${shadowsIntoLight.variable} ${manrope.variable} ${interSemiBold.variable}`}>
+      <style jsx>{`
+        @keyframes scroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        
+        /* Optimisation pour les iframes */
+        iframe {
+          will-change: transform;
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        /* Optimisation scroll */
+        * {
+          -webkit-transform: translate3d(0, 0, 0);
+          -moz-transform: translate3d(0, 0, 0);
+          -ms-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+      `}</style>
       <Navbar 
         isAffiliationPage={true} 
         homepageLinks={true}
@@ -97,13 +118,13 @@ export default function Affiliation() {
               whileInView="visible"
               viewport={{ once: false }}
               transition={{ duration: 0.6 }}
-              className="mt-[80px] text-center font-inter-semi-bold text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[415px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
-            >
-              TALLER APP<br />AFFILIATION
-            </motion.h1>
+              className="mt-[80px] text-center font-inter-semi-bold text-[40px] md:text-[50px] font-bold leading-[1.1] md:leading-[1.1] max-w-[600px] w-[90%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3"
+                          >
+                TALLER APP<br />CREATOR PROGRAM
+              </motion.h1>
           </header>
           
-          <motion.p
+          <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
@@ -112,10 +133,14 @@ export default function Affiliation() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col justify-center max-w-[500px] w-[90%] mx-auto text-center font-rethink-sans text-[18px] font-medium leading-[1.2] md:leading-[22.4px] tracking-[0.32px] text-white/50 [@media(max-width:768px)]:text-[16px] [@media(max-width:768px)]:max-w-[300px]"
+            className="flex flex-col justify-center max-w-[600px] w-[90%] mx-auto text-center font-rethink-sans text-[18px] font-medium leading-[1.2] md:leading-[22.4px] tracking-[0.32px] text-white/50 [@media(max-width:768px)]:text-[16px] [@media(max-width:768px)]:max-w-[350px] [@media(max-width:768px)]:leading-[1.35]"
           >
-            Do you have a basketball audience and want an easy way to start monetizing it? We got you!
-          </motion.p>
+            <div className="hidden md:block"><span className="text-white font-bold">Earn $1 per 1k</span> <span className="text-white font-bold">views</span> by smoothly integrating our app</div>
+            <div className="hidden md:block">into your already successful Tiktok & Reels.</div>
+            <div className="md:hidden"><span className="text-white font-bold">Earn $1 per 1k views</span> by smoothly</div>
+            <div className="md:hidden">integrating our app into your already</div>
+            <div className="md:hidden">successful Tiktok & Reels.</div>
+          </motion.div>
         </AnimatedSection>
 
         <AnimatedSection>
@@ -128,7 +153,7 @@ export default function Affiliation() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            href="https://form.typeform.com/to/FsUtyU9p"
+            href="https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b"
             target="_blank"
             rel="noopener noreferrer"
             className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
@@ -155,19 +180,18 @@ export default function Affiliation() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-[60px] w-[90%] max-w-[1000px] mx-auto rounded-[30px] bg-white/10 overflow-hidden relative"
           >
-            <div className="aspect-video w-full flex items-center justify-center">
-              <button 
-                className="absolute z-10 w-[80px] h-[80px] bg-white rounded-full flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-105"
-                aria-label="Play video"
-              >
-                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-black border-b-[12px] border-b-transparent ml-2"></div>
-              </button>
-              
-              {/* Replace with your actual video component or embed */}
-              <div className="w-full h-full bg-black/50 absolute inset-0">
-                {/* Video will be loaded here */}
-                {/* You can replace this with an actual video element or iframe */}
-              </div>
+            <div className="aspect-video w-full">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/zAQsAYt72WE?si=j334hmDg-cS3Q5Hr" 
+                title="YouTube video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen
+                className="rounded-[20px]"
+              ></iframe>
             </div>
           </motion.div>
         </AnimatedSection>
@@ -182,34 +206,40 @@ export default function Affiliation() {
             whileInView="visible"
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-[80px] md:mt-[80px] mt-[40px] w-[90%] max-w-[700px] mx-auto space-y-4 md:space-y-6 space-y-3"
+            className="mt-[120px] md:mt-[120px] mt-[80px] w-[90%] max-w-[700px] mx-auto space-y-4 md:space-y-6 space-y-3"
           >
             {/* Step 1 */}
-            <div className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative">
+            <div 
+              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-300"
+              onClick={() => window.open('https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b', '_blank')}
+            >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
                 1
               </div>
               <div className="flex-1">
                 <h3 className="text-white text-[18px] md:text-[20px] font-bold flex items-center flex-wrap">
-                  JOIN OUR PROGRAM <span className="ml-2">📩</span>
+                  SIGN THE AGREEMENT <span className="ml-2">📩</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Submit your application
+                Join the program by submitting your Paypal & a quick e-signature.
                 </p>
               </div>
             </div>
             
             {/* Step 2 */}
-            <div className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative">
+            <div 
+              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-300"
+              onClick={() => window.open('https://quirky-daphne-313.notion.site/Taller-app-Creator-program-139793ad0b078092af4cf12458961c14?pvs=74', '_blank')}
+            >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
                 2
               </div>
               <div className="flex-1">
                 <h3 className="text-white text-[18px] md:text-[20px] font-bold flex items-center flex-wrap">
-                  SETUP MANYCHAT <span className="ml-2">🤖</span>
+                  READ OUR GUIDELINES <span className="ml-2">🤖</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Setup a simple Manychat automation
+                Discover how to feature the app smoothly in your videos.
                 </p>
               </div>
             </div>
@@ -239,7 +269,7 @@ export default function Affiliation() {
                   EARN MONEY <span className="ml-2">💸</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Get pay 0.07$ for all the clicks you generate
+                  Get pay 1$ for every 1k views
                 </p>
               </div>
             </div>
@@ -247,7 +277,7 @@ export default function Affiliation() {
         </AnimatedSection>
         
         {/* Video Examples Section */}
-        <div className="mt-[100px] md:mt-[100px] mt-[60px] py-[80px] md:py-[80px] py-[40px] bg-[#141414] overflow-hidden">
+        <div className="mt-[140px] md:mt-[140px] mt-[100px] py-[80px] md:py-[80px] py-[40px] bg-[#141414] overflow-hidden">
           <div className="w-full max-w-none">
             <h2 className="text-center text-white text-[40px] md:text-[48px] font-bold mb-4">
               Videos examples
@@ -255,9 +285,9 @@ export default function Affiliation() {
             
             <p className="text-center text-white/50 text-[18px] max-w-[700px] mx-auto mb-[60px] px-4 md:px-0">
               Check out these high-performing videos <br className="md:hidden" /> 
-              from our top affiliates.
+              from our top creators.
               <br className="hidden md:block" />
-              <span className="hidden md:inline">Follow their content style, drive clicks, and start earning today!</span>
+              <span className="hidden md:inline">Follow their content style, farm views, and start earning today!</span>
             </p>
             
             <div className="relative w-full overflow-hidden">
@@ -266,28 +296,31 @@ export default function Affiliation() {
                 style={{
                   animation: 'scroll 60s linear infinite',
                   animationPlayState: isPaused ? 'paused' : 'running',
-                  width: 'fit-content', // Make sure the container fits all items
+                  width: 'fit-content',
                   display: 'flex',
+                  willChange: 'transform',
+                  transform: 'translate3d(0, 0, 0)', // Force hardware acceleration
                 }}
               >
                 {/* Define links array once outside of the mapping functions */}
                 {(() => {
                   const links = [
-                    "https://www.instagram.com/reel/DFmCnk8M9wN/embed/",
-                    "https://www.instagram.com/reel/DG1bk95SI5d/embed/",
-                    "https://www.instagram.com/reel/DG0mnHNR3U8/embed/",
-                    "https://www.instagram.com/reel/DGpEyQOtqe4/embed/",
-                    "https://www.instagram.com/reel/DHBXr1MMt0f/embed/",
-                    "https://www.instagram.com/reel/DGDpOHYT2LQ/embed/",
-                    "https://www.instagram.com/reel/DGyB0IuxjWg/embed/"
+                    "https://www.tiktok.com/embed/v2/7462046421919812886?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7460792937895562504?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7474749431812918530?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7453486785952304406?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7473163099193855254?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7446983956806896902?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7494434758039080238?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7489572799351115030?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz"
                   ];
                   
                   // Render both sets of videos using the same links array
                   return (
                     <>
                       {/* First set of videos */}
-                      {Array.from({ length: 8 }).map((_, index) => {
-                        const linkIndex = index % links.length;
+                      {Array.from({ length: links.length }).map((_, index) => {
+                        const linkIndex = index;
                         
                         return (
                           <div 
@@ -297,13 +330,20 @@ export default function Affiliation() {
                             onMouseLeave={handleResume}
                             onClick={handlePause}
                           >
-                            <div className="aspect-[9/16] w-full">
+                            <div className="aspect-[9/16] w-full bg-black rounded-[20px] overflow-hidden relative">
                               <iframe
                                 src={links[linkIndex]}
-                                className="w-full h-full rounded-[20px]"
+                                className="w-full h-full rounded-[20px] border-0"
                                 frameBorder="0"
                                 scrolling="no"
                                 allowFullScreen
+                                style={{
+                                  border: 'none',
+                                  outline: 'none',
+                                  backgroundColor: 'black',
+                                  transform: 'scale(1.02)',
+                                  transformOrigin: 'center center'
+                                }}
                               ></iframe>
                             </div>
                           </div>
@@ -311,8 +351,8 @@ export default function Affiliation() {
                       })}
                       
                       {/* Duplicate the first set for seamless looping */}
-                      {Array.from({ length: 8 }).map((_, index) => {
-                        const linkIndex = index % links.length;
+                      {Array.from({ length: links.length }).map((_, index) => {
+                        const linkIndex = index;
                         
                         return (
                           <div 
@@ -322,13 +362,20 @@ export default function Affiliation() {
                             onMouseLeave={handleResume}
                             onClick={handlePause}
                           >
-                            <div className="aspect-[9/16] w-full">
+                            <div className="aspect-[9/16] w-full bg-black rounded-[20px] overflow-hidden relative">
                               <iframe
                                 src={links[linkIndex]}
-                                className="w-full h-full rounded-[20px]"
+                                className="w-full h-full rounded-[20px] border-0"
                                 frameBorder="0"
                                 scrolling="no"
                                 allowFullScreen
+                                style={{
+                                  border: 'none',
+                                  outline: 'none',
+                                  backgroundColor: 'black',
+                                  transform: 'scale(1.02)',
+                                  transformOrigin: 'center center'
+                                }}
                               ></iframe>
                             </div>
                           </div>
@@ -417,28 +464,44 @@ function FaqSection() {
     {
       id: 1,
       question: "When are payments processed?",
-      answer: "Taller™ creators are paid on the 1st of each month. We take a snapshot of all the clicks generated during the previous month on ManyChat and pay you the corresponding amount."
+      answer: "Taller™ creators are paid on the 1st of each month. We take a snapshot of all the views generated during the previous month and pay you the corresponding amount."
     },
     {
       id: 2,
       question: "What payment methods do we support?",
-      answer: "We currently only support PayPal payments or Bank payments (this may change in the future)."
+      answer: "We currently only support PayPal or Bank payments for amounts above 500$ (this may change in the future)."
     },
     {
       id: 3,
       question: "Can I post unlimited content?",
-      answer: "Yes, you can post as much content as you want. We will pay you for all the clicks generated."
+      answer: "Yes, you can post as much content as you want. We will pay you for all the views generated."
     },
     {
       id: 4,
       question: "Can I post the same content multiple times?",
-      answer: "Yes! You can post the same video as much times as you want."
+      answer: "No! You need to create new content for each post."
     },
     {
       id: 5,
       question: "When can I start making content?",
-      answer: "Once we review your application (usually within 6 to 12 hours), we will send you an email with a partnership agreement. After you sign it, you can start creating content and earning money."
-    }
+      answer: "Once you sign the agreement, you can start making content. (Takes 2 minutes"
+    },
+    {
+      id: 6,
+      question: "Is there a minimum payout?",
+      answer: "Yes, the minimum payout is 10$."
+    },
+    {
+      id: 7,
+      question: "Is there a revenue cap per video?",
+      answer: "Yes, we have a revenue cap of 500$ per video."
+    },
+    {
+      id: 8,
+      question: "How long are my video views counted towards payment?",
+      answer: "Views are only counted during the same calendar month in which the video is posted. For example, if you post on the 10th of the month, your views will be tracked and counted for 20–21 days, until the end of that month. Views after that won’t be included for payment purposes."
+    },
+
   ];
   
   return (
@@ -459,10 +522,17 @@ function FaqSection() {
 
 function AnimatedSection({ children }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { 
+    once: true, // Change to true pour éviter les re-renders
+    amount: 0.1, // Réduire le threshold
+    margin: "0px 0px -100px 0px" // Trigger plus tôt
+  });
 
   return (
-    <div ref={ref} style={{ opacity: isInView ? 1 : 0, transition: "opacity 0.5s ease-in-out" }}>
+    <div 
+      ref={ref} 
+      className={`transition-opacity duration-500 ease-in-out ${isInView ? 'opacity-100' : 'opacity-0'}`}
+    >
       {children}
     </div>
   );
