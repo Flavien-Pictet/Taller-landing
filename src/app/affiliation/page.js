@@ -220,16 +220,19 @@ export default function Affiliation() {
             </div>
             
             {/* Step 3 */}
-            <div className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative">
+            <div 
+              className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
+              onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdHDpzipdK2Glb8vKd66eb74WlVZfORfIQy2F7uA5K5tHLF0g/viewform?usp=sf_link', '_blank')}
+            >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
                 3
               </div>
               <div className="flex-1">
                 <h3 className="text-white text-[18px] md:text-[20px] font-bold flex items-center flex-wrap">
-                  PUBLISH CONTENT<span className="ml-2">🎥</span>
+                  SUBMIT YOUR CONTENT<span className="ml-2">🎥</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Post height-related content
+                Submit all videos via our Google Form so we can track of your views
                 </p>
               </div>
             </div>
