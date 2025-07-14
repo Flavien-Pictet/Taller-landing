@@ -232,7 +232,7 @@ export default function Affiliation() {
                   SUBMIT YOUR CONTENT<span className="ml-2">🎥</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                Submit all videos via our Google Form so we can track of your views
+                Submit all videos via our Google Form so we can track all your views.
                 </p>
               </div>
             </div>
@@ -247,7 +247,7 @@ export default function Affiliation() {
                   EARN MONEY <span className="ml-2">💸</span>
                 </h3>
                 <p className="text-white/50 text-[14px] md:text-[16px] mt-1">
-                  Get pay 1$ for every 1k views
+                  Get pay 1$ for every 1k views.
                 </p>
               </div>
             </div>
