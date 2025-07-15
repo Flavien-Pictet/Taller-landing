@@ -436,7 +436,7 @@ function FaqSection() {
     {
       id: 5,
       question: "When can I start making content?",
-      answer: "Once you sign the agreement, you can start making content. (Takes 2 minutes"
+      answer: "Once you sign the agreement, you can start making content. (Takes 2 minutes)"
     },
     {
       id: 6,
