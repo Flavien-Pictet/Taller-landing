@@ -134,8 +134,8 @@ export default function Affiliation() {
           </motion.div>
         </AnimatedSection>
 
-        <AnimatedSection>
-          <motion.a 
+                <AnimatedSection>
+          <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
@@ -144,19 +144,38 @@ export default function Affiliation() {
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            href="https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] mx-auto mt-8 rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+            className="flex justify-center items-center gap-2 mt-8"
           >
-            <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>
-            
-            <span className="absolute inset-0 rounded-[200px] border-2 border-transparent bg-[length:400%_400%] animate-border-light"></span>
-            
-            <span className="absolute inset-[2px] rounded-[200px] bg-gradientwha-to-r from-[#0B0B0B] to-[#191919] flex items-center justify-center">
-              <span className="text-white font-rethink-sans">💰 Join our program</span>
-            </span>
-          </motion.a>
+            <motion.a
+              href="https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+            >
+              <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>
+              
+              <span className="absolute inset-0 rounded-[200px] border-2 border-transparent bg-[length:400%_400%] animate-border-light"></span>
+              
+              <span className="absolute inset-[2px] rounded-[200px] bg-gradientwha-to-r from-[#0B0B0B] to-[#191919] flex items-center justify-center">
+                <span className="text-white font-rethink-sans">💰 Join our program</span>
+              </span>
+            </motion.a>
+
+            <motion.a
+              href="https://quirky-daphne-313.notion.site/Taller-app-Creator-program-139793ad0b078092af4cf12458961c14?pvs=74"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative flex justify-center items-center w-[192px] h-[50px] px-[15px] py-[2px] gap-[10px] rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+            >
+              <span className="absolute inset-0 rounded-[200px] border border-white/10"></span>
+              
+              <span className="absolute inset-0 rounded-[200px] border-2 border-transparent bg-[length:400%_400%] animate-border-light"></span>
+              
+              <span className="absolute inset-[2px] rounded-[200px] bg-gradientwha-to-r from-[#0B0B0B] to-[#191919] flex items-center justify-center">
+                <span className="text-white font-rethink-sans">📖 Guidelines</span>
+              </span>
+            </motion.a>
+          </motion.div>
         </AnimatedSection>
         
         <AnimatedSection>
