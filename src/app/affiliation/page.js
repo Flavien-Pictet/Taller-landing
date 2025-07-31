@@ -304,7 +304,7 @@ export default function Affiliation() {
                     "https://www.tiktok.com/embed/v2/7460792937895562504?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7474749431812918530?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7453486785952304406?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
-                    "https://www.tiktok.com/embed/v2/7473163099193855254?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7532284116767624504?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7446983956806896902?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7494434758039080238?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7489572799351115030?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz"
