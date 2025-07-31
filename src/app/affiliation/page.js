@@ -450,7 +450,7 @@ function FaqSection() {
     {
       id: 4,
       question: "Can I post the same content multiple times?",
-      answer: "No! You need to create new content for each post."
+      answer: "Yes! Even though it's not recommended because it will significantly reduce the chances of your video being seen by the algorithm."
     },
     {
       id: 5,
@@ -472,6 +472,30 @@ function FaqSection() {
       question: "How long are my video views counted towards payment?",
       answer: "Views are only counted during the same calendar month in which the video is posted. For example, if you post on the 10th of the month, your views will be tracked and counted for 20–21 days, until the end of that month. Views after that won’t be included for payment purposes."
     },
+          {
+        id: 9,
+        question: "Is there any bonus based on performance?",
+        answer: (
+          <div className="space-y-3">
+            <p>
+              Yes! In addition to the base $1.00 RPM (Revenue per 1,000 views), we offer a performance-based bonus depending on how many eligible videos you post in a given calendar month:
+            </p>
+            <ul className="space-y-2 ml-4">
+              <li className="flex items-center">
+                <span className="text-purple-400 mr-3 text-xl font-bold">•</span>
+                <span><strong>10 to 19 eligible videos:</strong> your RPM increases to $1.10</span>
+              </li>
+              <li className="flex items-center">
+                <span className="text-purple-400 mr-3 text-xl font-bold">•</span>
+                <span><strong>20 to 29 eligible videos:</strong> your RPM increases to $1.20</span>
+              </li>
+            </ul>
+            <p>
+              This bonus applies retroactively to all views on qualifying videos from that month. Only videos that follow our content guidelines and tagging rules will be counted. Please note: low-effort spam, reposts, or attempts to game the system may disqualify you from the bonus at our discretion.
+            </p>
+          </div>
+        )
+      },
 
   ];
   

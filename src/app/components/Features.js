@@ -22,7 +22,7 @@ const features = [
   {
     icon: '/images/bot.svg',
     title: '24/7 AI Coach',
-    description: 'From posture exercises to nutrition, every habit is customized and adapts over time based on your progress.'
+    description: 'From growth potential to posture, nutrition, sleep, and supplements — the AI knows your data and responds instantly to your questions.'
   },
   {
     icon: '/images/todo.svg',
