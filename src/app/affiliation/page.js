@@ -460,7 +460,7 @@ function FaqSection() {
     {
       id: 6,
       question: "Is there a minimum payout?",
-      answer: "Yes, the minimum payout is 10$."
+      answer: "Yes, the minimum payout is 20$."
     },
     {
       id: 7,
