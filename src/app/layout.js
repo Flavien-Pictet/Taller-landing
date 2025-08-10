@@ -3,8 +3,8 @@ import "./globals.css";
 import Script from 'next/script'
 
 export const metadata = {
-  title: 'Taller - Height Growth & Prediction App | Official Website',
-  description: 'The #1 height prediction and maximization app. Used by 500,000+ men to reach their full height potential through personalized plans. Download the official Taller app today.',
+  title: 'Taller App - Official Height Prediction & Growth App | 98.5% Accurate',
+  description: 'Taller app: The #1 height prediction app with 98.5% accuracy. Used by 500,000+ users to maximize height potential through AI-powered plans. Download Taller now.',
   keywords: 'Taller app, height prediction app, grow taller app, height growth tracker, height maximization, height potential, official Taller app',
   metadataBase: new URL('https://tallerapp.xyz'),
   alternates: {

@@ -64,7 +64,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="mt-[80px] text-center font-inter-semi-bold text-[40px] md:text-[50px] leading-[1.1] md:leading-[1.1] max-w-[600px] w-[95%] mx-auto tracking-[-1px] md:tracking-[-2.53px] bg-gradient-to-b from-white from-10% to-[#9844FF] to-75% bg-clip-text text-transparent pb-8 md:pb-8 [@media(max-width:768px)]:text-[32px] [@media(max-width:768px)]:font-manrope [@media(max-width:768px)]:pb-3 [@media(max-width:768px)]:max-w-[350px]"
             >
-              Predict & Maximize your<br/>Height Potential with Taller
+              Predict & Maximize<br/>your Height with Taller
             </motion.h1>
           </header>
 
@@ -128,7 +128,7 @@ export default function Home() {
           >
             <Image
               src="/images/mokeup.png"
-              alt="Taller app interface showing height prediction calculator and growth tracking dashboard for maximizing height potential"
+              alt="Taller app interface - 98.5% accurate height prediction calculator and growth tracking dashboard"
               width={1000}
               height={600}
               priority={true}  // Important pour le LCP!
@@ -139,7 +139,7 @@ export default function Home() {
 
         <section aria-label="Accuracy Statistics" className="mt-[100px] mx-auto w-[90%] max-w-[1100px] flex justify-center items-center py-[72px] rounded-[30px] border border-dashed border-white/10 bg-[#0D0D0D]">
           <div className="text-center">
-            <h2 className="text-white font-shadows text-[24px] mb-4" style={{ fontFamily: 'var(--font-shadows)' }}>Prediction accuracy 🎯</h2>
+            <h2 className="text-white font-shadows text-[24px] mb-4" style={{ fontFamily: 'var(--font-shadows)' }}>Taller App Prediction Accuracy 🎯</h2>
             <div className="text-white font-glancyr text-[60px] md:text-[80px] font-bold tracking-[-2px]" style={{ fontFamily: 'var(--font-glancyr)' }}>
               <Counter targetNumber={98.5} duration={750} />
             </div>
