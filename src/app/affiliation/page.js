@@ -310,6 +310,15 @@ export default function Affiliation() {
                     "https://www.tiktok.com/embed/v2/7489572799351115030?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz"
                   ];
                   
+                  // Function to convert embed URL to TikTok URL
+                  const convertToTikTokUrl = (embedUrl) => {
+                    const videoIdMatch = embedUrl.match(/\/v2\/(\d+)/);
+                    if (videoIdMatch) {
+                      return `https://www.tiktok.com/@user/video/${videoIdMatch[1]}`;
+                    }
+                    return embedUrl;
+                  };
+                  
                   // Render both sets of videos using the same links array
                   return (
                     <>
@@ -320,15 +329,51 @@ export default function Affiliation() {
                         return (
                           <div 
                             key={`video-${index}`} 
-                            className="flex-shrink-0 w-[280px] md:w-[320px] mx-3"
+                            className="flex-shrink-0 w-[280px] md:w-[320px] mx-3 relative group cursor-pointer"
                             onMouseEnter={handlePause}
                             onMouseLeave={handleResume}
-                            onClick={handlePause}
                           >
                             <LazyTikTokVideo 
                               src={links[linkIndex]} 
                               index={index}
                             />
+                            {/* Four corner overlays that leave center free for play button */}
+                            {/* Top overlay */}
+                            <div 
+                              className="absolute top-0 left-0 right-0 z-10 cursor-pointer"
+                              style={{ height: '35%' }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Bottom overlay */}
+                            <div 
+                              className="absolute bottom-0 left-0 right-0 z-10 cursor-pointer"
+                              style={{ height: '35%' }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Left overlay */}
+                            <div 
+                              className="absolute left-0 z-10 cursor-pointer"
+                              style={{ 
+                                top: '35%', 
+                                bottom: '35%', 
+                                width: '25%' 
+                              }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Right overlay */}
+                            <div 
+                              className="absolute right-0 z-10 cursor-pointer"
+                              style={{ 
+                                top: '35%', 
+                                bottom: '35%', 
+                                width: '25%' 
+                              }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Visual indicator on hover */}
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/70 text-white text-xs px-2 py-1 rounded pointer-events-none">
+                              Click to open
+                            </div>
                           </div>
                         );
                       })}
@@ -340,15 +385,51 @@ export default function Affiliation() {
                         return (
                           <div 
                             key={`video-duplicate-${index}`} 
-                            className="flex-shrink-0 w-[280px] md:w-[320px] mx-3"
+                            className="flex-shrink-0 w-[280px] md:w-[320px] mx-3 relative group cursor-pointer"
                             onMouseEnter={handlePause}
                             onMouseLeave={handleResume}
-                            onClick={handlePause}
                           >
                             <LazyTikTokVideo 
                               src={links[linkIndex]} 
                               index={`duplicate-${index}`}
                             />
+                            {/* Four corner overlays that leave center free for play button */}
+                            {/* Top overlay */}
+                            <div 
+                              className="absolute top-0 left-0 right-0 z-10 cursor-pointer"
+                              style={{ height: '35%' }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Bottom overlay */}
+                            <div 
+                              className="absolute bottom-0 left-0 right-0 z-10 cursor-pointer"
+                              style={{ height: '35%' }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Left overlay */}
+                            <div 
+                              className="absolute left-0 z-10 cursor-pointer"
+                              style={{ 
+                                top: '35%', 
+                                bottom: '35%', 
+                                width: '25%' 
+                              }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Right overlay */}
+                            <div 
+                              className="absolute right-0 z-10 cursor-pointer"
+                              style={{ 
+                                top: '35%', 
+                                bottom: '35%', 
+                                width: '25%' 
+                              }}
+                              onClick={() => window.open(convertToTikTokUrl(links[linkIndex]), '_blank')}
+                            />
+                            {/* Visual indicator on hover */}
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/70 text-white text-xs px-2 py-1 rounded pointer-events-none">
+                              Click to open
+                            </div>
                           </div>
                         );
                       })}
