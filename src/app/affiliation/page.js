@@ -299,9 +299,11 @@ export default function Affiliation() {
               >
                 {/* Define links array once outside of the mapping functions */}
                 {(() => {
-                  const links = [
+                                      const links = [
                     "https://www.tiktok.com/embed/v2/7462046421919812886?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7460792937895562504?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7431970083469151510?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
+                    "https://www.tiktok.com/embed/v2/7491073433032477998?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7474749431812918530?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7453486785952304406?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
                     "https://www.tiktok.com/embed/v2/7532284116767624504?lang=en&referrer=https%3A%2F%2Ftallerapp.xyz",
