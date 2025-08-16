@@ -147,7 +147,7 @@ export default function Affiliation() {
             className="flex justify-center items-center gap-2 md:gap-4 mt-8 flex-wrap"
           >
             <motion.a
-              href="https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b"
+              href="https://eu.jotform.com/sign/252272337687061/invite/01k2ryw1zaf53d11bf3b478dcc"
               target="_blank"
               rel="noopener noreferrer"
               className="relative flex justify-center items-center w-[140px] md:w-[192px] h-[42px] md:h-[50px] px-[12px] md:px-[15px] py-[2px] gap-[8px] md:gap-[10px] rounded-[200px] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
