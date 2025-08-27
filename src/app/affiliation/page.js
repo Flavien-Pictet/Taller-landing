@@ -205,7 +205,7 @@ export default function Affiliation() {
             {/* Step 1 */}
             <div 
               className="flex items-center rounded-[20px] md:rounded-[200px] bg-[#111111] border border-white/5 p-3 md:p-4 min-h-[90px] md:min-h-[90px] min-h-[70px] overflow-hidden relative cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
-              onClick={() => window.open('https://eu.jotform.com/sign/251796473251059/invite/01jyyqbk9f73c9a238dcdac73b', '_blank')}
+              onClick={() => window.open('https://eu.jotform.com/sign/252376407366058/invite/01k3m3yn7g13f429d00b96c690', '_blank')}
             >
               <div className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] bg-[#9844FF] rounded-full flex items-center justify-center text-white text-[24px] md:text-[30px] font-bold mr-3 md:mr-6">
                 1
@@ -277,14 +277,14 @@ export default function Affiliation() {
         <div className="mt-[140px] md:mt-[140px] mt-[100px] py-[80px] md:py-[80px] py-[40px] bg-[#141414] overflow-hidden">
           <div className="w-full max-w-none">
             <h2 className="text-center text-white text-[40px] md:text-[48px] font-bold mb-4">
-              Videos examples
+              Copy these videos
             </h2>
             
             <p className="text-center text-white/50 text-[18px] max-w-[700px] mx-auto mb-[60px] px-4 md:px-0">
               Check out these high-performing videos <br className="md:hidden" /> 
               from our top creators.
               <br className="hidden md:block" />
-              <span className="hidden md:inline">Follow their content style, farm views, and start earning today!</span>
+              <span className="hidden md:inline">Copy their content style, farm views, and start earning today!</span>
             </p>
             
             <div className="relative w-full overflow-hidden">
