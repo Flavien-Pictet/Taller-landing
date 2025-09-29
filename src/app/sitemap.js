@@ -14,6 +14,12 @@ export default function sitemap() {
         priority: 0.8,
       },
       {
+        url: 'https://www.tallerapp.xyz/tiktok',
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      },
+      {
         url: 'https://www.tallerapp.xyz/privacy',
         lastModified: new Date(),
         changeFrequency: 'yearly',
