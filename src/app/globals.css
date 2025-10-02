@@ -3,26 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B0B0B;
+  --foreground: #ffffff;
 }
 
+/* Keep the same colors in light/dark to avoid white flashes on mobile */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0B0B0B;
+    --foreground: #ffffff;
   }
 }
 
-body {
+html, body {
+  background: var(--background) !important;
   color: var(--foreground);
-  background: var(--background);
+}
+
+body {
   font-family: var(--font-rethink-sans-medium);
   width: 100vw;
   min-width: 100vw;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  min-height: 100dvh; /* cover mobile dynamic viewport, avoids white at bottom */
 }
 
 h1 {
