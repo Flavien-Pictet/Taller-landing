@@ -29,9 +29,10 @@ export default function TikTokLanding() {
                         aria-label="Open menu"
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="w-10 h-10 p-0 m-0 bg-transparent border-0 rounded-none flex items-center justify-center"
-                        animate={{ rotate: menuOpen ? 90 : 0, scale: menuOpen ? 1.05 : 1 }}
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                        animate={{ scale: menuOpen ? 1.02 : 1 }}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ duration: 0.15, ease: 'easeOut' }}
                     >
                         <Image src="/images/hamburger.png" alt="Menu" width={22} height={22} />
                     </motion.button>
@@ -56,6 +57,7 @@ export default function TikTokLanding() {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.2, ease: 'easeOut' }}
+                                onClick={() => setMenuOpen(false)}
                             >
                                 <motion.div
                                     className="w-[300px] md:w-[360px] bg-[#0F0F0F] border border-white/10 rounded-[16px] overflow-hidden shadow-2xl"
@@ -63,6 +65,7 @@ export default function TikTokLanding() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.98 }}
                                     transition={{ duration: 0.2, ease: 'easeOut' }}
+                                    onClick={(e) => e.stopPropagation()}
                                 >
                                     <a
                                         href="https://apps.apple.com/us/app/taller-maximize-your-height/id6695758303"
@@ -83,7 +86,7 @@ export default function TikTokLanding() {
                                         Google Play Store
                                     </a>
                                     <Link href="/affiliation" className="block px-5 py-4 hover:bg-white/5" role="menuitem">
-                                        Creator program
+                                        Become a creator
                                     </Link>
                                 </motion.div>
                             </motion.nav>
@@ -92,19 +95,33 @@ export default function TikTokLanding() {
                 </AnimatePresence>
             </header>
 
-            {copied && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50">
-                    <div className="px-3 py-1 rounded-[10px] bg-[#0F0F0F] border border-white/10 text-white text-[14px] shadow">
-                        Copied
-                    </div>
-                </div>
-            )}
+            <AnimatePresence>
+                {copied && (
+                    <motion.div
+                        className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                    >
+                        <motion.div
+                            className="px-4 py-2 rounded-[12px] bg-[#0F0F0F] border border-white/10 text-white text-[14px] shadow-lg pointer-events-auto"
+                            initial={{ scale: 0.95 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0.95 }}
+                            transition={{ duration: 0.18, ease: 'easeOut' }}
+                        >
+                            Copied
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-            <main className="max-w-[1100px] mx-auto mt-[40px] mb-[60px] px-4 md:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+            <main className="max-w-[1100px] mx-auto mt-6 md:mt-10 mb-[60px] px-4 md:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 min-[1070px]:grid-cols-[500px_500px] min-[1070px]:justify-center gap-[14px]">
                         {/* Android Card */}
                         <motion.div
-                            className="rounded-[20px] bg-white/[0.025] border border-white/5 p-6"
+                            className="rounded-[20px] bg-white/[0.025] border border-white/5 p-6 w-full min-[1070px]:w-[500px]"
                             initial={{ opacity: 0, y: 12 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
@@ -126,7 +143,7 @@ export default function TikTokLanding() {
 
                         {/* iPhone Card */}
                         <motion.div
-                            className="rounded-[20px] bg-white/[0.025] border border-white/5 p-6 flex flex-col"
+                            className="rounded-[20px] bg-white/[0.025] border border-white/5 p-6 flex flex-col w-full min-[1070px]:w-[500px]"
                             initial={{ opacity: 0, y: 12 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
