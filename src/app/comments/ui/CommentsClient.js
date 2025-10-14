@@ -219,16 +219,22 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
     try {
       const pngBlob = await loadImageAsPngBlob(src);
       const fileName = `comment_${groupId}_${(index ?? 0) + 1}.png`;
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
       // On mobile, prefer the native share sheet
       if (navigator.share) {
         try {
           const file = new File([pngBlob], fileName, { type: 'image/png' });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ title: 'Taller Asset', text: 'Check this out', files: [file] });
+            await navigator.share({ title: 'Taller Asset', files: [file] });
           } else {
+            // iOS Safari cannot share binary files from the web. Avoid copying placeholder text.
+            // Prefer download on iOS, otherwise share URL on other mobile browsers.
+            if (isIOS) {
+              throw new Error('ios-no-file-share');
+            }
             const absoluteUrl = new URL(src, window.location.origin).toString();
-            await navigator.share({ title: 'Taller Asset', text: 'Check this out', url: absoluteUrl });
+            await navigator.share({ title: 'Taller Asset', url: absoluteUrl });
           }
           setIsCopied(true);
           onCount && onCount();
