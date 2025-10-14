@@ -167,6 +167,81 @@ function CopyButton({ value, onCopied, onCount, groupId, itemType, index }) {
   );
 }
 
+async function loadImageAsPngBlob(src) {
+  // If the image is already a PNG, return as-is
+  const res = await fetch(src, { cache: 'no-store' });
+  const blob = await res.blob();
+  if (blob.type === 'image/png') return blob;
+
+  // Convert to PNG using a canvas for maximum compatibility
+  const dataUrl = await new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+
+  const binary = atob(dataUrl.split(',')[1]);
+  const array = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
+  return new Blob([array], { type: 'image/png' });
+}
+
+function ImageCopyButton({ src, groupId, index, onCount }) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  async function handleCopyImage() {
+    try {
+      const pngBlob = await loadImageAsPngBlob(src);
+      if (navigator.clipboard && window.ClipboardItem) {
+        const item = new ClipboardItem({ 'image/png': pngBlob });
+        await navigator.clipboard.write([item]);
+        setIsCopied(true);
+        onCount && onCount();
+        setTimeout(() => setIsCopied(false), 1000);
+        trackCopy({ groupId, itemType: 'image', index });
+        return;
+      }
+      // Fallback: copy the URL if binary clipboard not supported
+      await navigator.clipboard.writeText(src);
+      setIsCopied(true);
+      onCount && onCount();
+      setTimeout(() => setIsCopied(false), 1000);
+      trackCopy({ groupId, itemType: 'image', index });
+    } catch (e) {
+      console.error('Image copy failed', e);
+      try {
+        await navigator.clipboard.writeText(src);
+        setIsCopied(true);
+        onCount && onCount();
+        setTimeout(() => setIsCopied(false), 1000);
+        trackCopy({ groupId, itemType: 'image', index });
+      } catch {}
+    }
+  }
+
+  return (
+    <button
+      onClick={handleCopyImage}
+      className={`h-7 px-2 rounded-[8px] border text-xs transition ${isCopied ? 'border-[#954CEE] bg-[#954CEE]/10 text-[#954CEE]' : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10'}`}
+    >
+      {isCopied ? 'Copied' : 'Copy'}
+    </button>
+  );
+}
+
 export default function CommentsClient() {
   const [selectedApp, setSelectedApp] = useState('taller');
   const [counts, setCounts] = useState({});
@@ -282,10 +357,9 @@ export default function CommentsClient() {
                           <span className="text-white/40 text-xs tabular-nums">
                             {counts[`comments:copy:${group.id}:image:${i}`] ?? 0}
                           </span>
-                          <CopyButton
-                            value={src}
+                          <ImageCopyButton
+                            src={src}
                             groupId={group.id}
-                            itemType="image"
                             index={i}
                             onCount={() => incrementLocalCount(group.id, 'image', i)}
                           />
