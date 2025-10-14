@@ -218,17 +218,30 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
   async function handleCopyImage() {
     try {
       const pngBlob = await loadImageAsPngBlob(src);
-      if (navigator.clipboard && window.ClipboardItem) {
-        const item = new ClipboardItem({ 'image/png': pngBlob });
-        await navigator.clipboard.write([item]);
-        setIsCopied(true);
-        onCount && onCount();
-        setTimeout(() => setIsCopied(false), 1000);
-        trackCopy({ groupId, itemType: 'image', index });
-        return;
+      const fileName = `comment_${groupId}_${(index ?? 0) + 1}.png`;
+
+      // On mobile, prefer the native share sheet
+      if (navigator.share) {
+        try {
+          const file = new File([pngBlob], fileName, { type: 'image/png' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ title: 'Taller Asset', text: 'Check this out', files: [file] });
+          } else {
+            const absoluteUrl = new URL(src, window.location.origin).toString();
+            await navigator.share({ title: 'Taller Asset', text: 'Check this out', url: absoluteUrl });
+          }
+          setIsCopied(true);
+          onCount && onCount();
+          setTimeout(() => setIsCopied(false), 1000);
+          trackCopy({ groupId, itemType: 'image', index });
+          return;
+        } catch (e) {
+          // If user cancels share, silently ignore; if it's another error, fall back to download
+        }
       }
-      // Fallback: auto-download the PNG for easy paste/use
-      triggerDownload(pngBlob);
+
+      // Desktop or fallback: auto-download PNG
+      triggerDownload(pngBlob, fileName);
       setIsCopied(true);
       onCount && onCount();
       setTimeout(() => setIsCopied(false), 1000);
@@ -238,7 +251,8 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
       try {
         // As last resort, fetch and download
         const pngBlob = await loadImageAsPngBlob(src);
-        triggerDownload(pngBlob);
+        const fileName = `comment_${groupId}_${(index ?? 0) + 1}.png`;
+        triggerDownload(pngBlob, fileName);
         setIsCopied(true);
         onCount && onCount();
         setTimeout(() => setIsCopied(false), 1000);
@@ -252,7 +266,7 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
       onClick={handleCopyImage}
       className={`h-7 px-2 rounded-[8px] border text-xs transition ${isCopied ? 'border-[#954CEE] bg-[#954CEE]/10 text-[#954CEE]' : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10'}`}
     >
-      {isCopied ? 'Copied' : 'Copy'}
+      {isCopied ? 'Done' : '📎 Share or Copy'}
     </button>
   );
 }
