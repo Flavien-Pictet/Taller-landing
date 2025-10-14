@@ -202,6 +202,19 @@ async function loadImageAsPngBlob(src) {
 function ImageCopyButton({ src, groupId, index, onCount }) {
   const [isCopied, setIsCopied] = useState(false);
 
+  function triggerDownload(blob, name) {
+    try {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name || `comment_${groupId}_${(index ?? 0) + 1}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch {}
+  }
+
   async function handleCopyImage() {
     try {
       const pngBlob = await loadImageAsPngBlob(src);
@@ -214,8 +227,8 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
         trackCopy({ groupId, itemType: 'image', index });
         return;
       }
-      // Fallback: copy the URL if binary clipboard not supported
-      await navigator.clipboard.writeText(src);
+      // Fallback: auto-download the PNG for easy paste/use
+      triggerDownload(pngBlob);
       setIsCopied(true);
       onCount && onCount();
       setTimeout(() => setIsCopied(false), 1000);
@@ -223,7 +236,9 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
     } catch (e) {
       console.error('Image copy failed', e);
       try {
-        await navigator.clipboard.writeText(src);
+        // As last resort, fetch and download
+        const pngBlob = await loadImageAsPngBlob(src);
+        triggerDownload(pngBlob);
         setIsCopied(true);
         onCount && onCount();
         setTimeout(() => setIsCopied(false), 1000);
