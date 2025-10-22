@@ -25,7 +25,7 @@ const commentGroups = [
       "I\'m literally drinking milk again bc of this app 😭",
       'you better start stretching fr'
     ],
-    images: ['/images/comment_2.png']
+    images: ['/images/comment_2.png', '/images/comment_16.png', '/images/comment_18.png']
   },
   {
     id: 'grp-app-name',
@@ -60,7 +60,7 @@ const commentGroups = [
       'nah this app starting family beef 💀',
       'mine did that and now he walks around like he already passed me 😭'
     ],
-    images: ['/images/comment_5.png']
+    images: ['/images/comment_5.png', '/images/comment_19.png']
   },
   {
     id: 'grp-peak-19',
@@ -80,7 +80,7 @@ const commentGroups = [
     title: "I'm so cooked 💀",
     main: "I'm so cooked 💀",
     replies: [],
-    images: ['/images/comment_7.png']
+    images: ['/images/comment_7.png', '/images/comment_14.png', '/images/comment_15.png']
   },
   {
     id: 'grp-beat-dad',
@@ -114,9 +114,15 @@ const commentGroups = [
       'mine just gave me a flat line at 19',
       'bro it said my predicted height is exactly what i am now 💀'
     ],
-    images: [
-      // '/images/comments/glitched-screenshot.png'
-    ]
+    images: ['/images/comment_11.png', '/images/comment_13.png']
+  },
+  {
+    id: 'grp-64-at-15',
+    app: 'taller',
+    title: "6'4 at 15 is that good?",
+    main: "6'4 at 15 is that good?",
+    replies: [],
+    images: ['/images/comment_17.png']
   },
   {
     id: 'grp-what-app',
@@ -127,7 +133,7 @@ const commentGroups = [
       'its called Taller',
       "I think it's called taller"
     ],
-    images: ['/images/comment_11.png']
+    images: []
   }
 ];
 
