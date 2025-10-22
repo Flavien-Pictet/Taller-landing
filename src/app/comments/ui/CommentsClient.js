@@ -155,7 +155,7 @@ async function trackCopy({ groupId, itemType, index }) {
   } catch {}
 }
 
-function CopyButton({ value, onCopied, onCount, groupId, itemType, index }) {
+function CopyButton({ value, onCopied, groupId, itemType, index }) {
   const [isCopied, setIsCopied] = useState(false);
 
   async function handleCopy() {
@@ -163,7 +163,6 @@ function CopyButton({ value, onCopied, onCount, groupId, itemType, index }) {
       await navigator.clipboard.writeText(value);
       setIsCopied(true);
       onCopied && onCopied();
-      onCount && onCount();
       setTimeout(() => setIsCopied(false), 1000);
       trackCopy({ groupId, itemType, index });
     } catch (e) {
@@ -213,7 +212,7 @@ async function loadImageAsPngBlob(src) {
   return new Blob([array], { type: 'image/png' });
 }
 
-function ImageCopyButton({ src, groupId, index, onCount }) {
+function ImageCopyButton({ src, groupId, index }) {
   const [isCopied, setIsCopied] = useState(false);
 
   function triggerDownload(blob, name) {
@@ -251,7 +250,6 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
             await navigator.share({ title: 'Taller Asset', url: absoluteUrl });
           }
           setIsCopied(true);
-          onCount && onCount();
           setTimeout(() => setIsCopied(false), 1000);
           trackCopy({ groupId, itemType: 'image', index });
           return;
@@ -263,7 +261,6 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
       // Desktop or fallback: auto-download PNG
       triggerDownload(pngBlob, fileName);
       setIsCopied(true);
-      onCount && onCount();
       setTimeout(() => setIsCopied(false), 1000);
       trackCopy({ groupId, itemType: 'image', index });
     } catch (e) {
@@ -274,7 +271,6 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
         const fileName = `comment_${groupId}_${(index ?? 0) + 1}.png`;
         triggerDownload(pngBlob, fileName);
         setIsCopied(true);
-        onCount && onCount();
         setTimeout(() => setIsCopied(false), 1000);
         trackCopy({ groupId, itemType: 'image', index });
       } catch {}
@@ -293,33 +289,6 @@ function ImageCopyButton({ src, groupId, index, onCount }) {
 
 export default function CommentsClient() {
   const [selectedApp, setSelectedApp] = useState('taller');
-  const [counts, setCounts] = useState({});
-
-  async function refreshCounts(groups) {
-    try {
-      const keys = [];
-      groups.forEach((g) => {
-        keys.push(`comments:copy:${g.id}:main`);
-        g.replies.forEach((_, i) => keys.push(`comments:copy:${g.id}:reply:${i}`));
-        g.images.forEach((_, i) => keys.push(`comments:copy:${g.id}:image:${i}`));
-      });
-      const url = `/api/comments/copy?${keys.map((k) => `keys=${encodeURIComponent(k)}`).join('&')}`;
-      const res = await fetch(url, { cache: 'no-store' });
-      const data = await res.json();
-      if (data?.ok) setCounts(data.data || {});
-    } catch {}
-  }
-
-  // initial load
-  if (typeof window !== 'undefined' && Object.keys(counts).length === 0) {
-    // fire and forget without blocking first paint
-    setTimeout(() => refreshCounts(commentGroups), 0);
-  }
-
-  function incrementLocalCount(groupId, itemType, index) {
-    const key = `comments:copy:${groupId}:${itemType}${typeof index === 'number' ? `:${index}` : ''}`;
-    setCounts((prev) => ({ ...prev, [key]: (prev[key] ?? 0) + 1 }));
-  }
   // No free-text search for now; app filter is applied at render-time.
 
   return (
@@ -360,14 +329,10 @@ export default function CommentsClient() {
                   {group.main}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/40 text-xs tabular-nums">
-                    {counts[`comments:copy:${group.id}:main`] ?? 0}
-                  </span>
                   <CopyButton
                     value={group.main}
                     groupId={group.id}
                     itemType="main"
-                    onCount={() => incrementLocalCount(group.id, 'main')}
                   />
                 </div>
               </div>
@@ -378,15 +343,11 @@ export default function CommentsClient() {
                     <div key={idx} className="flex items-start justify-between gap-3">
                       <div className="text-white/80 text-[14px] md:text-[16px] leading-snug">{reply}</div>
                       <div className="flex items-center gap-2">
-                        <span className="text-white/40 text-xs tabular-nums">
-                          {counts[`comments:copy:${group.id}:reply:${idx}`] ?? 0}
-                        </span>
                         <CopyButton
                           value={reply}
                           groupId={group.id}
                           itemType="reply"
                           index={idx}
-                          onCount={() => incrementLocalCount(group.id, 'reply', idx)}
                         />
                       </div>
                     </div>
@@ -402,15 +363,11 @@ export default function CommentsClient() {
                       <div key={i} className="rounded-[12px] overflow-hidden bg-black/40 border border-white/10 p-2 flex flex-col gap-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={src} alt={`asset-${i}`} className="w-full h-auto rounded-[8px]" />
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/40 text-xs tabular-nums">
-                            {counts[`comments:copy:${group.id}:image:${i}`] ?? 0}
-                          </span>
+                        <div className="flex items-center justify-end">
                           <ImageCopyButton
                             src={src}
                             groupId={group.id}
                             index={i}
-                            onCount={() => incrementLocalCount(group.id, 'image', i)}
                           />
                         </div>
                       </div>
