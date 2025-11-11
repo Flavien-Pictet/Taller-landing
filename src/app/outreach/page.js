@@ -53,8 +53,7 @@ export default function OutreachPage() {
 		"Cool! So that’s exactly the kind of videos we are looking for",
 		'https://www.tiktok.com/@dobbingotall/video/7565657663913200910',
 		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
-		'If that’s sounds like something you could do please join our discord &',
-		"we’ll share the next steps to get started + send you the agreement :)",
+		"If that’s sounds like something you could do please join our discord & we'll share the next steps to get started + send you the agreement :)",
 		'https://discord.gg/ukunXdjMNC',
 		"Just let me know once you're inside & share your discord username here please",
 	]
