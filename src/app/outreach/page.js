@@ -45,17 +45,14 @@ function MessageRow({ label, text }) {
 
 export default function OutreachPage() {
 	const outreach1Template =
-		"Hey {name}! we have a collab offer we’d like to share! We could basically pay you 300$ / month to create one short video each day (takes 15 minutes to create & it’s always the same). The content could be on a fresh account & not this one if you prefer + we would add some bonuses based on views milestone so you could reach +1k$ / month. Let us know if you’d like more info."
+		"Hey {name}! We would love to collab with you, let us know if you'd like more info"
 
 	const outreach1Text = outreach1Template
 
 	const outreach2Messages = [
-		"Cool! So that’s exactly the kind of videos we are looking for",
-		'https://www.tiktok.com/@dobbingotall/video/7565657663913200910',
-		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
-		"If that’s sounds like something you could do please join our discord & we'll share the next steps to get started + send you the agreement :)",
+		"Great! So we could basically pay you $1 for every 1k views you generate promoting Taller, without any video amount limitation. It would be the most seamless integrations, not sales-y at all. You'll simply need to reproduce our winning formats (your choice) while smoothly integrating Taller into your content.",
+		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
 		'https://discord.gg/ukunXdjMNC',
-		"Just let me know once you're inside & share your discord username here please",
 	]
 
 	return (
