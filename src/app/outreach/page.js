@@ -51,6 +51,9 @@ export default function OutreachPage() {
 
 	const outreach2Messages = [
 		"Great! So we could basically pay you $1 for every 1k views you generate promoting Taller, without any video amount limitation. It would be the most seamless integrations, not sales-y at all. You'll simply need to reproduce our winning formats (your choice) while smoothly integrating Taller into your content.",
+		"here's some examples:",
+		'https://www.tiktok.com/@dobbingotall/video/7565657663913200910',
+		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
 		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
 		'https://discord.gg/ukunXdjMNC',
 	]
