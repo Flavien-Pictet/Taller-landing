@@ -55,7 +55,7 @@ export default function OutreachPage() {
 		'https://www.tiktok.com/@dobbingotall/video/7565657663913200910',
 		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
 		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
-		'https://discord.gg/ukunXdjMNC',
+		'https://discord.gg/ud34eGVzSN',
 	]
 
 	return (
