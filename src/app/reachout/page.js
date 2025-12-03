@@ -45,7 +45,7 @@ function MessageRow({ label, text }) {
 
 export default function ReachoutPage() {
 	const outreach1Template =
-		"hey what's up! we have a collab offer we’d like to share! We could basically pay you 300$ / month to create one short video each day (takes 15 minutes to create & it’s always the same). the content could be on a fresh account not this one if you prefer + we would add some bonuses based on views milestone so you could reach +1k$ / month. Let us know if you’d like more info"
+		"hey what's up! we have a collab offer we’d like to share! We could basically pay you 300$ / month to create one short video each day (takes 15 minutes to create & we are flexible on the frequency). the content could be on a fresh account not this one if you prefer + we would add 1$ for every 1k views you generate with a 5k$ monthly cap. Let us know if you’d like more info"
 
 	const outreach1Text = outreach1Template
 
@@ -56,7 +56,7 @@ export default function ReachoutPage() {
 		'https://www.tiktok.com/@tel.taller/video/7576557452963958038',
 		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
 		'https://discord.gg/5DY6DZUhzm',
-		'we can also chat on Imessage if you prefer! my number is +41 79 379 71 72',
+		'we can also chat on Imessage/Whatsapp if you prefer! my number is +41 79 379 71 72',
 	]
 
 	return (
