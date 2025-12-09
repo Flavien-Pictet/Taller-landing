@@ -57,7 +57,7 @@ export default function ReachoutPage() {
 		'https://www.tiktok.com/@beck13213/video/7453486785952304406',
 		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
 		'https://discord.gg/GhAb3npQuD',
-		'we can also chat on Imessage/Whatsapp if you prefer! my number is +41 79 379 71 72',
+		'we can also chat on Imessage/Whatsapp if you\'d like to! my number is +41 79 379 71 72',
 	]
 
 	return (
