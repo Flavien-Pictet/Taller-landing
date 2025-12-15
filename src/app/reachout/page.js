@@ -52,6 +52,7 @@ export default function ReachoutPage() {
 	const outreach2Messages = [
 		"Great! So here's the kind of videos we are looking for:",
 		'https://www.tiktok.com/@dobbin.chong/video/7492930138611617070?q=dobbin%20&t=1764921282597',
+		'https://www.tiktok.com/@jays.taller/video/7582335457204112671',
 		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
 		'https://www.tiktok.com/@rytsotall/video/7580971456901893431',
 		'https://www.tiktok.com/@beck13213/video/7453486785952304406',
