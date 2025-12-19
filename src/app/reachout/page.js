@@ -44,10 +44,10 @@ function MessageRow({ label, text }) {
 }
 
 export default function ReachoutPage() {
-	const outreach1Template =
-		"hey what's up! we have a collab offer we’d like to share! We could basically pay you 300$ / month to create one short video each day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 1$ for every 1k views you generate with a 5,000$ monthly cap. Let us know if you’d like more info"
-
-	const outreach1Text = outreach1Template
+	const outreach1Templates = [
+		"hey what's up! we have a collab offer we'd like to share! We could basically pay you 300$ / month to create one short video each day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 1$ for every 1k views you generate with a 5,000$ monthly cap. Let us know if you'd like more info",
+		"hey what's up! we have a collab offer we'd like to share! We could basically pay you 600$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 1$ for every 1k views you generate with a 5,000$ monthly cap. Let us know if you'd like more info",
+	]
 
 	const outreach2Messages = [
 		"Great! So here's the kind of videos we are looking for:",
@@ -70,7 +70,9 @@ export default function ReachoutPage() {
 			<section className="mt-8 space-y-4">
 				<h2 className="text-lg font-semibold text-white">Outreach 1</h2>
 
-				<MessageRow text={outreach1Text} />
+				{outreach1Templates.map((template, idx) => (
+					<MessageRow key={idx} label={`Option ${idx + 1}`} text={template} />
+				))}
 			</section>
 
 			<section className="mt-10 space-y-4">
