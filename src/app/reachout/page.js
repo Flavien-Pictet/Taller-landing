@@ -45,7 +45,7 @@ function MessageRow({ label, text }) {
 
 export default function ReachoutPage() {
 	const outreach1Templates = [
-		"hey what's up! we have a collab offer we'd like to share! We could basically pay you 750$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 1$ for every 1k views you generate with a 5,000$ monthly cap. Let us know if you'd like more info",
+		"hey what's up! we have a collab offer we'd like to share! We could basically pay you 750$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 0.70$ for every 1k views you generate with a 5,000$ monthly cap. Let us know if you'd like more info",
 	]
 
 	const outreach2Messages = [
