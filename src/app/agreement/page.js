@@ -640,7 +640,7 @@ export default function AgreementPage() {
 			{/* Header */}
 			<div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-					<h1 className="text-2xl font-semibold text-gray-900">Taller -UGC Agreement</h1>
+					<h1 className="text-2xl font-semibold text-gray-900">Taller - UGC Agreement</h1>
 					<p className="text-sm text-gray-500 mt-1">Please complete all fields to submit</p>
 				</div>
 			</div>
@@ -777,9 +777,9 @@ export default function AgreementPage() {
 												initial={{ opacity: 0, height: 0 }}
 												animate={{ opacity: 1, height: 'auto' }}
 												exit={{ opacity: 0, height: 0 }}
-												className="space-y-3"
+												className="mt-2.5"
 											>
-												<div className="p-3 rounded-md bg-green-50 border border-green-200">
+												<div className="p-3 sm:p-4 rounded-md bg-green-50 border border-green-200">
 													<p className="text-sm text-green-800 text-center">
 														Thank you! Your agreement has been submitted.
 													</p>
@@ -787,7 +787,7 @@ export default function AgreementPage() {
 												<button
 													type="button"
 													onClick={generatePDF}
-													className="w-full px-4 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 active:scale-[0.98] transition-all duration-200 shadow-sm flex items-center justify-center gap-2"
+													className="w-full px-4 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 active:scale-[0.98] transition-all duration-200 shadow-sm flex items-center justify-center gap-2 mt-2.5"
 												>
 													<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
