@@ -670,16 +670,28 @@ export default function AgreementPage() {
 									{errors.signature && <p className="text-xs text-red-600">{errors.signature}</p>}
 								</div>
 
-								<FormField
-									label="Date"
-									name="date"
-									type="date"
-									value={formData.date}
-									onChange={(value) => handleInputChange('date', value)}
-									inputRef={dateRef}
-									required
-									error={errors.date}
-								/>
+								<div className="space-y-1.5">
+									<label htmlFor="date" className="block text-sm font-medium text-gray-700">
+										Date <span className="text-red-500 ml-0.5">*</span>
+									</label>
+									<div className="relative">
+										<input
+											ref={dateRef}
+											type="date"
+											id="date"
+											name="date"
+											value={formData.date}
+											readOnly
+											required
+											className="w-full px-4 py-2.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 cursor-not-allowed outline-none appearance-none"
+											style={{
+												WebkitAppearance: 'none',
+												MozAppearance: 'textfield',
+												textAlign: 'left'
+											}}
+										/>
+									</div>
+								</div>
 
 								<div className="pt-4 border-t border-gray-200 space-y-4">
 									<div className="p-3 rounded-md bg-gray-50 border border-gray-200">
