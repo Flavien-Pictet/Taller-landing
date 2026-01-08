@@ -202,7 +202,12 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 							: isFocused
 							? 'border-blue-500 bg-white focus:ring-2 focus:ring-blue-500/20'
 							: 'border-gray-300 bg-white hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20'
-					} outline-none placeholder:text-gray-400`}
+					} outline-none placeholder:text-gray-400 ${type === 'date' ? 'appearance-none' : ''}`}
+					style={type === 'date' ? {
+						WebkitAppearance: 'none',
+						MozAppearance: 'textfield',
+						textAlign: 'left'
+					} : undefined}
 				/>
 			</div>
 			{error && <p className="text-xs text-red-600">{error}</p>}
