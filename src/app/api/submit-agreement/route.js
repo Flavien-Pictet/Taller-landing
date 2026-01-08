@@ -64,7 +64,7 @@ export async function POST(request) {
 		// Column order: A=tiktok username, B=instagram username, C=discord username, 
 		//               D=deal type, E=cost/video, F=CPM, G=Bonus eligibility, 
 		//               H=Contract has changed?, I=Contract changed date, J=Total paid,
-		//               K=Tier, L=Cap per video, M=Paid December, N=reffered?, O=Type
+		//               K=Tier, L=Cap per video, M=Paid December, N=reffered?, O=Type, P=paypal
 		const row = [
 			tiktokUsername || '',        // A: tiktok username
 			'',                          // B: instagram username (empty)
@@ -81,6 +81,7 @@ export async function POST(request) {
 			'',                          // M: Paid December (empty)
 			'',                          // N: reffered? (empty)
 			'Voice-over',                // O: Type
+			paypalUsername,              // P: paypal
 		]
 
 		console.log('Row data to append:', row)
@@ -89,7 +90,7 @@ export async function POST(request) {
 		try {
 			const response = await sheets.spreadsheets.values.append({
 				spreadsheetId: process.env.GOOGLE_SHEET_ID,
-				range: `${process.env.GOOGLE_SHEET_NAME}!A:O`, // A to O covers all 15 columns
+				range: `${process.env.GOOGLE_SHEET_NAME}!A:P`, // A to P covers all 16 columns
 				valueInputOption: 'USER_ENTERED',
 				requestBody: {
 					values: [row],
