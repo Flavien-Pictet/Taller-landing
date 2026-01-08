@@ -254,7 +254,6 @@ export default function AgreementPage() {
 		const newErrors = {}
 		if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
 		if (!formData.paypalUsername.trim()) newErrors.paypalUsername = 'PayPal username is required'
-		if (!formData.tiktokUsername.trim()) newErrors.tiktokUsername = 'TikTok username is required'
 		if (!formData.discordUsername.trim()) newErrors.discordUsername = 'Discord username is required'
 		if (!formData.signature) newErrors.signature = 'Signature is required'
 		if (!formData.date) newErrors.date = 'Date is required'
@@ -666,7 +665,6 @@ export default function AgreementPage() {
 									onChange={(value) => handleInputChange('tiktokUsername', value)}
 									onEnter={() => discordRef.current?.focus()}
 									inputRef={tiktokRef}
-									required
 									placeholder="@username"
 									error={errors.tiktokUsername}
 									autoComplete="username"
