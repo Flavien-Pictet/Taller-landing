@@ -595,7 +595,7 @@ export default function AgreementPage() {
 						transition={{ duration: 0.4 }}
 						className="max-w-2xl mx-auto"
 					>
-						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8">
+						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-8">
 							<form onSubmit={handleSubmit} className="space-y-5">
 								<h3 className="text-lg font-semibold text-gray-900 mb-6 pb-4 border-b border-gray-200">
 									Creator Information
@@ -606,9 +606,12 @@ export default function AgreementPage() {
 									name="fullName"
 									value={formData.fullName}
 									onChange={(value) => handleInputChange('fullName', value)}
+									onEnter={() => paypalRef.current?.focus()}
+									inputRef={fullNameRef}
 									required
 									placeholder="John Doe"
 									error={errors.fullName}
+									autoComplete="name"
 								/>
 
 								<FormField
@@ -616,9 +619,12 @@ export default function AgreementPage() {
 									name="paypalUsername"
 									value={formData.paypalUsername}
 									onChange={(value) => handleInputChange('paypalUsername', value)}
+									onEnter={() => tiktokRef.current?.focus()}
+									inputRef={paypalRef}
 									required
 									placeholder="your.paypal@email.com"
 									error={errors.paypalUsername}
+									autoComplete="email"
 								/>
 
 								<FormField
@@ -626,9 +632,12 @@ export default function AgreementPage() {
 									name="tiktokUsername"
 									value={formData.tiktokUsername}
 									onChange={(value) => handleInputChange('tiktokUsername', value)}
+									onEnter={() => discordRef.current?.focus()}
+									inputRef={tiktokRef}
 									required
 									placeholder="@username"
 									error={errors.tiktokUsername}
+									autoComplete="username"
 								/>
 
 								<FormField
@@ -636,9 +645,12 @@ export default function AgreementPage() {
 									name="discordUsername"
 									value={formData.discordUsername}
 									onChange={(value) => handleInputChange('discordUsername', value)}
+									onEnter={() => dateRef.current?.focus()}
+									inputRef={discordRef}
 									required
 									placeholder="username#1234"
 									error={errors.discordUsername}
+									autoComplete="username"
 								/>
 
 								<div className="space-y-1.5">
@@ -659,6 +671,7 @@ export default function AgreementPage() {
 									type="date"
 									value={formData.date}
 									onChange={(value) => handleInputChange('date', value)}
+									inputRef={dateRef}
 									required
 									error={errors.date}
 								/>
