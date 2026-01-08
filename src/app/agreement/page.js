@@ -588,13 +588,36 @@ export default function AgreementPage() {
 		setIsSubmitting(true)
 		setSubmitStatus(null)
 
-		// TODO: Add backend API call here
-		// For now, just simulate submission
-		setTimeout(() => {
+		try {
+			// Submit to backend API
+			const response = await fetch('/api/submit-agreement', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					fullName: formData.fullName,
+					paypalUsername: formData.paypalUsername,
+					tiktokUsername: formData.tiktokUsername,
+					discordUsername: formData.discordUsername,
+					date: formData.date,
+				}),
+			})
+
+			const data = await response.json()
+
+			if (!response.ok) {
+				throw new Error(data.error || 'Failed to submit agreement')
+			}
+
 			setIsSubmitting(false)
 			setSubmitStatus('success')
-			console.log('Form data:', formData)
-		}, 1500)
+		} catch (error) {
+			console.error('Error submitting form:', error)
+			setIsSubmitting(false)
+			setSubmitStatus('error')
+			setErrors({ submit: error.message || 'Failed to submit agreement. Please try again.' })
+		}
 	}
 
 	const isFormValid = () => {
