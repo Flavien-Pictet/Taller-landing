@@ -548,6 +548,34 @@ export default function AgreementPage() {
 
 		// Save PDF
 		const filename = `Taller_Agreement_${formData.fullName.replace(/\s+/g, '_')}_${formData.date}.pdf`
+
+		// Check if on mobile device and Web Share API is available
+		const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
+		if (isMobile && navigator.share && navigator.canShare) {
+			try {
+				// Get PDF as blob
+				const pdfBlob = doc.output('blob')
+
+				// Create file from blob
+				const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' })
+
+				// Check if we can share this file
+				if (navigator.canShare({ files: [pdfFile] })) {
+					await navigator.share({
+						files: [pdfFile],
+						title: 'Taller Agreement',
+						text: 'Your signed UGC agreement'
+					})
+					return // Exit after successful share
+				}
+			} catch (error) {
+				console.error('Error sharing PDF:', error)
+				// Fall back to regular download if sharing fails
+			}
+		}
+
+		// Default download behavior for desktop or if sharing not available
 		doc.save(filename)
 	}
 
@@ -598,9 +626,8 @@ export default function AgreementPage() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.4 }}
-						className="max-w-2xl mx-auto"
 					>
-						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-8">
+						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-10">
 							<form onSubmit={handleSubmit} className="space-y-5">
 								<h3 className="text-lg font-semibold text-gray-900 mb-6 pb-4 border-b border-gray-200">
 									Creator Information
