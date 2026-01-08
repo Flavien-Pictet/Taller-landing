@@ -165,8 +165,15 @@ function SignaturePad({ value, onChange, onClear }) {
 	)
 }
 
-function FormField({ label, name, type = 'text', value, onChange, required = false, placeholder, error }) {
+function FormField({ label, name, type = 'text', value, onChange, required = false, placeholder, error, onEnter, inputRef, autoComplete = 'off' }) {
 	const [isFocused, setIsFocused] = useState(false)
+
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter' && onEnter) {
+			e.preventDefault()
+			onEnter()
+		}
+	}
 
 	return (
 		<div className="space-y-1.5">
@@ -176,6 +183,7 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 			</label>
 			<div className="relative">
 				<input
+					ref={inputRef}
 					type={type}
 					id={name}
 					name={name}
@@ -183,8 +191,11 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 					onChange={(e) => onChange(e.target.value)}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
+					onKeyDown={handleKeyDown}
 					required={required}
 					placeholder={placeholder}
+					autoComplete={autoComplete}
+					inputMode={type === 'email' ? 'email' : type === 'tel' ? 'tel' : 'text'}
 					className={`w-full px-4 py-2.5 text-sm text-gray-900 border rounded-md transition-all duration-200 ${
 						error
 							? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500'
@@ -212,6 +223,13 @@ export default function AgreementPage() {
 	const [errors, setErrors] = useState({})
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [submitStatus, setSubmitStatus] = useState(null)
+
+	// Create refs for each input field
+	const fullNameRef = useRef(null)
+	const paypalRef = useRef(null)
+	const tiktokRef = useRef(null)
+	const discordRef = useRef(null)
+	const dateRef = useRef(null)
 
 	const handleInputChange = (field, value) => {
 		setFormData((prev) => ({ ...prev, [field]: value }))
