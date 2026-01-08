@@ -607,7 +607,11 @@ export default function AgreementPage() {
 			const data = await response.json()
 
 			if (!response.ok) {
-				throw new Error(data.error || 'Failed to submit agreement')
+				// Show more detailed error message
+				const errorMsg = data.details 
+					? `${data.error}: ${data.details}`
+					: data.error || 'Failed to submit agreement'
+				throw new Error(errorMsg)
 			}
 
 			setIsSubmitting(false)
@@ -857,7 +861,7 @@ export default function AgreementPage() {
 											not eligible for the CPM; only views above that count.
 										</p>
 										<p>
-											The creator may cross-post the same video on Instagram & YouTube shorts and earn a{' '}
+											The creator may cross-post the same video on Instagram and earn a{' '}
 											<strong className="font-semibold">$0.50 CPM</strong> capped at <strong className="font-semibold">$200 per video</strong>, allowing up to <strong className="font-semibold">225
 											uploads per month</strong>. All Instagram/YouTube views are eligible for this CPM.
 										</p>
