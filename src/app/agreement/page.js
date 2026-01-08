@@ -745,12 +745,7 @@ export default function AgreementPage() {
 									</div>
 								</div>
 
-								<div className="pt-4 border-t border-gray-200 space-y-4">
-									<div className="p-3 rounded-md bg-gray-50 border border-gray-200">
-										<p className="text-xs font-medium text-gray-500 mb-1">Advertiser</p>
-										<p className="text-sm font-semibold text-gray-900">Asymmetric Labs FZC</p>
-									</div>
-
+								<div className="pt-4 border-t border-gray-200">
 									<button
 										type="submit"
 										disabled={!isFormValid() || isSubmitting}
