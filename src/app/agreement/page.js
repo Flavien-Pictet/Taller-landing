@@ -601,6 +601,7 @@ export default function AgreementPage() {
 					tiktokUsername: formData.tiktokUsername,
 					discordUsername: formData.discordUsername,
 					date: formData.date,
+					signature: formData.signature,
 				}),
 			})
 
