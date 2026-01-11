@@ -16,11 +16,19 @@ export default function AdminAgreements() {
     const fetchSubmissions = async () => {
         try {
             setLoading(true)
-            const response = await fetch('/api/admin/get-submissions')
+            // Add cache busting to prevent stale data in production
+            const response = await fetch('/api/admin/get-submissions', {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                }
+            })
             if (!response.ok) {
                 throw new Error('Failed to fetch submissions')
             }
             const data = await response.json()
+            console.log('Fetched submissions:', data.submissions?.length || 0)
             setSubmissions(data.submissions || [])
         } catch (err) {
             setError(err.message)
@@ -80,18 +88,50 @@ export default function AdminAgreements() {
             })
 
             if (!response.ok) {
-                throw new Error('Failed to generate PDF')
+                const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+                console.error('PDF generation failed:', errorData)
+                throw new Error(errorData.details || errorData.error || 'Failed to generate PDF')
             }
 
             const blob = await response.blob()
+            console.log('PDF blob received, size:', blob.size, 'bytes')
+            console.log('PDF blob type:', blob.type)
+
+            // Verify blob is valid PDF
+            if (blob.size === 0) {
+                throw new Error('Received empty PDF blob')
+            }
+
             const url = window.URL.createObjectURL(blob)
+            console.log('Blob URL created:', url)
+
             const a = document.createElement('a')
+            a.style.display = 'none'
             a.href = url
             a.download = `Taller_Agreement_${submission.fullName.replace(/\s+/g, '_')}_${submission.date}.pdf`
+
             document.body.appendChild(a)
-            a.click()
-            window.URL.revokeObjectURL(url)
-            document.body.removeChild(a)
+            console.log('Download link created and appended to body')
+
+            // Small delay before clicking to ensure DOM is ready
+            setTimeout(() => {
+                try {
+                    a.click()
+                    console.log('PDF download triggered successfully')
+                } catch (clickError) {
+                    console.error('Click failed, opening in new tab:', clickError)
+                    window.open(url, '_blank')
+                }
+
+                // Clean up after a longer delay to ensure download starts
+                setTimeout(() => {
+                    window.URL.revokeObjectURL(url)
+                    if (document.body.contains(a)) {
+                        document.body.removeChild(a)
+                    }
+                    console.log('Cleanup completed')
+                }, 2000)
+            }, 10)
         } catch (err) {
             alert('Error downloading PDF: ' + err.message)
         } finally {

@@ -1,6 +1,10 @@
 import { google } from 'googleapis'
 import { NextResponse } from 'next/server'
 
+// Disable caching for this route to ensure fresh data
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET() {
 	try {
 		// Check environment variables
@@ -88,6 +92,12 @@ export async function GET() {
 				success: true,
 				submissions: submissions,
 				total: submissions.length,
+			}, {
+				headers: {
+					'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+					'Pragma': 'no-cache',
+					'Expires': '0',
+				}
 			})
 
 		} catch (sheetsError) {

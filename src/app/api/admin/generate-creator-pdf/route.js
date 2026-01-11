@@ -8,6 +8,8 @@ export async function POST(request) {
 		const body = await request.json()
 		const { fullName, paypalUsername, tiktokUsername, discordUsername, date, signature } = body
 
+		console.log('Generating PDF for:', { fullName, date, hasSignature: !!signature })
+
 		// Validate required fields
 		if (!fullName || !paypalUsername || !discordUsername || !date) {
 			return NextResponse.json(
@@ -249,11 +251,18 @@ export async function POST(request) {
 		// Add advertiser signature
 		try {
 			const advertiserSigPath = path.join(process.cwd(), 'public', 'images', 'signature.png')
-			const advertiserSigData = fs.readFileSync(advertiserSigPath)
-			const advertiserSigBase64 = `data:image/png;base64,${advertiserSigData.toString('base64')}`
-			const sigWidth = 25
-			const sigHeight = sigWidth / 0.91
-			doc.addImage(advertiserSigBase64, 'PNG', leftCol, advertiserSigY, sigWidth, sigHeight)
+			console.log('Looking for advertiser signature at:', advertiserSigPath)
+
+			if (!fs.existsSync(advertiserSigPath)) {
+				console.error('Advertiser signature file not found at:', advertiserSigPath)
+			} else {
+				const advertiserSigData = fs.readFileSync(advertiserSigPath)
+				const advertiserSigBase64 = `data:image/png;base64,${advertiserSigData.toString('base64')}`
+				const sigWidth = 25
+				const sigHeight = sigWidth / 0.91
+				doc.addImage(advertiserSigBase64, 'PNG', leftCol, advertiserSigY, sigWidth, sigHeight)
+				console.log('Advertiser signature added successfully')
+			}
 		} catch (error) {
 			console.error('Error adding advertiser signature:', error)
 		}
@@ -261,13 +270,17 @@ export async function POST(request) {
 		// Add creator signature if available
 		if (signature) {
 			try {
+				console.log('Adding creator signature (length:', signature.length, ')')
 				// Use same dimensions as frontend for consistency
 				const sigWidth = 35
 				const sigHeight = 15
 				doc.addImage(signature, 'PNG', rightCol, creatorSigY, sigWidth, sigHeight)
+				console.log('Creator signature added successfully')
 			} catch (error) {
 				console.error('Error adding creator signature:', error)
 			}
+		} else {
+			console.log('No creator signature provided')
 		}
 
 		yPos += 40
@@ -281,7 +294,9 @@ export async function POST(request) {
 		doc.line(dateX, yPos + 1, dateX + dateUnderlineWidth, yPos + 1)
 
 		// Get PDF as buffer
+		console.log('PDF generation complete, creating buffer...')
 		const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
+		console.log('PDF buffer size:', pdfBuffer.length, 'bytes')
 
 		// Return PDF as response
 		return new NextResponse(pdfBuffer, {
@@ -293,10 +308,12 @@ export async function POST(request) {
 
 	} catch (error) {
 		console.error('Error generating PDF:', error)
+		console.error('Error stack:', error.stack)
 		return NextResponse.json(
 			{
 				error: 'Failed to generate PDF',
 				details: error.message,
+				stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
 			},
 			{ status: 500 }
 		)
