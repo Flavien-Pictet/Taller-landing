@@ -405,7 +405,7 @@ export default function AgreementPage() {
 
 		doc.setFont('times', 'normal')
 		// First paragraph
-		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 75 posts, meaning the monthly retainer can go up to $940. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram & YouTube shorts and earn a $0.60 CPM capped at $200 per video, allowing up to 225 uploads per month. All Instagram/YouTube views are eligible for this CPM. The $12.5 retainer applies only to TikTok.'
+		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $750. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.60 CPM capped at $200 per video, allowing up to 120 uploads per month. Every views under the $200 cap are eligible on Instagram. The $12.5 retainer applies only to TikTok.'
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)
@@ -853,7 +853,7 @@ export default function AgreementPage() {
 									<div className="space-y-4 text-gray-700">
 										<p>
 											The Advertiser pays the Creator <strong className="font-semibold">$12.5 per video</strong>, with a monthly
-											cap of <strong className="font-semibold">75 posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">$940</strong>.
+											cap of <strong className="font-semibold">60 posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">$750</strong>.
 										</p>
 										<p>
 											There's a <strong className="font-semibold">$0.60 CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
@@ -862,8 +862,8 @@ export default function AgreementPage() {
 										</p>
 										<p>
 											The creator may cross-post the same video on Instagram and earn a{' '}
-											<strong className="font-semibold">$0.50 CPM</strong> capped at <strong className="font-semibold">$200 per video</strong>, allowing up to <strong className="font-semibold">225
-											uploads per month</strong>. All Instagram/YouTube views are eligible for this CPM.
+											<strong className="font-semibold">$0.60 CPM</strong> capped at <strong className="font-semibold">$200 per video</strong>, allowing up to <strong className="font-semibold">120
+											uploads per month</strong>. Every views under the $200 cap are eligible on Instagram.
 										</p>
 										<p>The <strong className="font-semibold">$12.5 retainer applies only to TikTok</strong>.</p>
 										<p>

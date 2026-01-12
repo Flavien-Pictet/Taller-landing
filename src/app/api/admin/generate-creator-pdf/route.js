@@ -151,7 +151,7 @@ export async function POST(request) {
 		doc.text(paymentTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 75 posts, meaning the monthly retainer can go up to $940. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram & YouTube shorts and earn a $0.60 CPM capped at $200 per video, allowing up to 225 uploads per month. All Instagram/YouTube views are eligible for this CPM. The $12.5 retainer applies only to TikTok.'
+		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $750. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.60 CPM capped at $200 per video, allowing up to 120 uploads per month. Every views under the $200 cap are eligible on Instagram. The $12.5 retainer applies only to TikTok.'
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)
