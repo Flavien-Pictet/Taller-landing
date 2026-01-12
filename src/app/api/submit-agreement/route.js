@@ -75,7 +75,7 @@ export async function POST(request) {
 			discordUsername,             // C: discord username
 			'CPM + UGC',                 // D: deal type
 			'$12.50',                    // E: cost / video
-			'$1.00',                     // F: CPM
+			'$0.70',                     // F: CPM
 			'no',                        // G: Bonus eligibility
 			'no',                        // H: Contract has changed?
 			'',                          // I: Contract changed date (empty)
