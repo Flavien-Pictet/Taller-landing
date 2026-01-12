@@ -165,7 +165,7 @@ function SignaturePad({ value, onChange, onClear }) {
 	)
 }
 
-function FormField({ label, name, type = 'text', value, onChange, required = false, placeholder, error, onEnter, inputRef, autoComplete = 'off' }) {
+function FormField({ label, name, type = 'text', value, onChange, required = false, placeholder, error, onEnter, inputRef, autoComplete = 'off', helperText }) {
 	const [isFocused, setIsFocused] = useState(false)
 
 	const handleKeyDown = (e) => {
@@ -181,6 +181,9 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 				{label}
 				{required && <span className="text-red-500 ml-0.5">*</span>}
 			</label>
+			{helperText && (
+				<p className="text-xs text-gray-500 -mt-0.5 mb-1.5">{helperText}</p>
+			)}
 			<div className="relative">
 				<input
 					ref={inputRef}
@@ -687,13 +690,14 @@ export default function AgreementPage() {
 								/>
 
 								<FormField
-									label="TikTok Username"
+									label="TikTok Username (Taller Content Account)"
 									name="tiktokUsername"
 									value={formData.tiktokUsername}
 									onChange={(value) => handleInputChange('tiktokUsername', value)}
 									onEnter={() => discordRef.current?.focus()}
 									inputRef={tiktokRef}
-									placeholder="@username"
+									placeholder="@username.taller"
+									helperText="Account where you'll post Taller videos. Use a fresh account or rebrand an existing one with '.taller' in the name."
 									error={errors.tiktokUsername}
 									autoComplete="username"
 								/>
