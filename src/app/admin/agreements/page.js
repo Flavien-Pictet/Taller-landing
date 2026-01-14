@@ -84,6 +84,7 @@ export default function AdminAgreements() {
                     discordUsername: submission.discordUsername,
                     date: submission.date,
                     signature: submission.signature,
+                    contractType: submission.contractType || 'default',
                 }),
             })
 

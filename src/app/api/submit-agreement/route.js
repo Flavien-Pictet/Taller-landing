@@ -1,13 +1,17 @@
 import { google } from 'googleapis'
 import { NextResponse } from 'next/server'
 import { generateAgreementPDF } from '../../../lib/generateAgreementPDF.js'
+import { getContractConfig } from '../../../lib/contractConfig.js'
 import fs from 'fs'
 import path from 'path'
 
 export async function POST(request) {
 	try {
 		const body = await request.json()
-		const { fullName, paypalUsername, tiktokUsername, discordUsername, date, signature } = body
+		const { fullName, paypalUsername, tiktokUsername, discordUsername, date, signature, contractType } = body
+
+		// Get contract configuration
+		const contract = getContractConfig(contractType || 'default')
 
 		// Validate required fields
 		if (!fullName || !paypalUsername || !discordUsername || !date) {
@@ -68,20 +72,21 @@ export async function POST(request) {
 		//               D=deal type, E=cost/video, F=CPM, G=Bonus eligibility,
 		//               H=Contract has changed?, I=Contract changed date, J=Total paid,
 		//               K=Tier, L=Cap per video, M=Paid December, N=reffered?, O=Type, P=paypal,
-		//               Q=Full Name, R=Date Signed, S=Signature
+		//               Q=Full Name, R=Date Signed, S=Signature, T=Contract Type
+		const dealType = contract.retainer > 0 ? 'CPM + UGC' : 'CPM Only'
 		const row = [
 			tiktokUsername || '',        // A: tiktok username
 			'',                          // B: instagram username (empty)
 			discordUsername,             // C: discord username
-			'CPM + UGC',                 // D: deal type
-			'$12.50',                    // E: cost / video
-			'$0.60',                     // F: CPM
+			dealType,                    // D: deal type (dynamic)
+			`$${contract.retainer.toFixed(2)}`, // E: cost / video (dynamic)
+			`$${contract.cpm.toFixed(2)}`,      // F: CPM (dynamic)
 			'no',                        // G: Bonus eligibility
 			'no',                        // H: Contract has changed?
 			'',                          // I: Contract changed date (empty)
 			'',                          // J: Total paid (empty)
-			'',                          // K: Tier (empty)
-			'$200.00',                   // L: Cap per video
+			contract.name,               // K: Tier (Standard/Lite/Pro)
+			`$${contract.capPerVideo}.00`, // L: Cap per video (dynamic)
 			'',                          // M: Paid December (empty)
 			'',                          // N: reffered? (empty)
 			'Voice-over',                // O: Type
@@ -89,6 +94,7 @@ export async function POST(request) {
 			fullName,                    // Q: Full Name
 			date,                        // R: Date Signed
 			signature || '',             // S: Signature (base64 image data)
+			contractType || 'default',   // T: Contract Type
 		]
 
 		console.log('Row data to append:', row)
@@ -98,7 +104,7 @@ export async function POST(request) {
 		try {
 			sheetResponse = await sheets.spreadsheets.values.append({
 				spreadsheetId: process.env.GOOGLE_SHEET_ID,
-				range: `${process.env.GOOGLE_SHEET_NAME}!A:S`, // A to S covers all 19 columns
+				range: `${process.env.GOOGLE_SHEET_NAME}!A:T`, // A to T covers all 20 columns (added Contract Type)
 				valueInputOption: 'USER_ENTERED',
 				requestBody: {
 					values: [row],

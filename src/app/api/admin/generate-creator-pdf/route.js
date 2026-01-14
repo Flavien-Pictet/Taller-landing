@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server'
 import { jsPDF } from 'jspdf'
+import { getContractConfig } from '../../../../lib/contractConfig.js'
 import fs from 'fs'
 import path from 'path'
 
 export async function POST(request) {
 	try {
 		const body = await request.json()
-		const { fullName, paypalUsername, tiktokUsername, discordUsername, date, signature } = body
+		const { fullName, paypalUsername, tiktokUsername, discordUsername, date, signature, contractType } = body
 
-		console.log('Generating PDF for:', { fullName, date, hasSignature: !!signature })
+		// Get contract configuration
+		const contract = getContractConfig(contractType || 'default')
+
+		console.log('Generating PDF for:', { fullName, date, hasSignature: !!signature, contractType })
 
 		// Validate required fields
 		if (!fullName || !paypalUsername || !discordUsername || !date) {
@@ -151,7 +155,8 @@ export async function POST(request) {
 		doc.text(paymentTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $750. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.60 CPM capped at $200 per video, allowing up to 120 uploads per month. Every views under the $200 cap are eligible on Instagram. The $12.5 retainer applies only to TikTok.'
+		// Use dynamic contract config text
+		const paymentText1 = ' ' + contract.paymentText
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)

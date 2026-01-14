@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import NextImage from 'next/image'
 import jsPDF from 'jspdf'
+import { useSearchParams } from 'next/navigation'
+import { getContractConfig } from '../../lib/contractConfig'
 
 function SignaturePad({ value, onChange, onClear }) {
 	const canvasRef = useRef(null)
@@ -218,7 +220,12 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 	)
 }
 
-export default function AgreementPage() {
+function AgreementPageContent() {
+	// Get contract type from URL
+	const searchParams = useSearchParams()
+	const contractType = searchParams.get('type') || 'default'
+	const contract = getContractConfig(contractType)
+
 	const [formData, setFormData] = useState({
 		fullName: '',
 		paypalUsername: '',
@@ -226,6 +233,7 @@ export default function AgreementPage() {
 		discordUsername: '',
 		signature: '',
 		date: new Date().toISOString().split('T')[0],
+		contractType, // Store contract type in form data
 	})
 
 	const [errors, setErrors] = useState({})
@@ -404,8 +412,8 @@ export default function AgreementPage() {
 		doc.text(paymentTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		// First paragraph
-		const paymentText1 = ' The Advertiser pays the Creator $12.5 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $750. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.60 CPM capped at $200 per video, allowing up to 120 uploads per month. Every views under the $200 cap are eligible on Instagram. The $12.5 retainer applies only to TikTok.'
+		// First paragraph - Use dynamic contract config
+		const paymentText1 = ' ' + contract.paymentText
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)
@@ -605,6 +613,7 @@ export default function AgreementPage() {
 					discordUsername: formData.discordUsername,
 					date: formData.date,
 					signature: formData.signature,
+					contractType: formData.contractType,
 				}),
 			})
 
@@ -851,21 +860,38 @@ export default function AgreementPage() {
 								<section>
 									<h3 className="text-base font-semibold text-gray-900 mb-3">IV. PAYMENT</h3>
 									<div className="space-y-4 text-gray-700">
+										{contract.retainer > 0 ? (
+											<p>
+												The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video</strong>, with a monthly
+												cap of <strong className="font-semibold">{contract.monthlyCapPosts} posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">${contract.monthlyRetainerMax}</strong>.
+											</p>
+										) : (
+											<p>
+												The Advertiser pays the Creator based on <strong className="font-semibold">performance only (no retainer)</strong>.
+											</p>
+										)}
 										<p>
-											The Advertiser pays the Creator <strong className="font-semibold">$12.5 per video</strong>, with a monthly
-											cap of <strong className="font-semibold">60 posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">$750</strong>.
+											There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
+											<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
+											{contract.viewThreshold > 0 ? (
+												<>The first <strong className="font-semibold">{contract.viewThreshold.toLocaleString()} views per video</strong> are
+												not eligible for the CPM; only views above that count.</>
+											) : (
+												<>All views are eligible for the CPM from the first view.</>
+											)}
 										</p>
-										<p>
-											There's a <strong className="font-semibold">$0.60 CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
-											<strong className="font-semibold">$200 per video</strong>. The first <strong className="font-semibold">10,000 views per video</strong> are
-											not eligible for the CPM; only views above that count.
-										</p>
-										<p>
-											The creator may cross-post the same video on Instagram and earn a{' '}
-											<strong className="font-semibold">$0.60 CPM</strong> capped at <strong className="font-semibold">$200 per video</strong>, allowing up to <strong className="font-semibold">120
-											uploads per month</strong>. Every views under the $200 cap are eligible on Instagram.
-										</p>
-										<p>The <strong className="font-semibold">$12.5 retainer applies only to TikTok</strong>.</p>
+										{contract.crossPost.enabled && (
+											<p>
+												The creator may cross-post the same video on {contract.crossPost.platform} and earn a{' '}
+												<strong className="font-semibold">${contract.crossPost.cpm.toFixed(2)} CPM</strong> capped at <strong className="font-semibold">${contract.crossPost.capPerVideo} per video</strong>
+												{contract.crossPost.totalUploadsPerMonth && (
+													<>, allowing up to <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} uploads per month</strong></>
+												)}. Every views under the ${contract.crossPost.capPerVideo} cap are eligible on {contract.crossPost.platform}.
+											</p>
+										)}
+										{contract.retainer > 0 && (
+											<p>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</p>
+										)}
 										<p>
 											Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong>. Payouts are
 											based on views generated in the <strong className="font-semibold">previous month</strong>.
@@ -924,5 +950,17 @@ export default function AgreementPage() {
 				</div>
 			</div>
 		</div>
+	)
+}
+
+export default function AgreementPage() {
+	return (
+		<Suspense fallback={
+			<div className="min-h-screen bg-gray-50 flex items-center justify-center">
+				<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+			</div>
+		}>
+			<AgreementPageContent />
+		</Suspense>
 	)
 }
