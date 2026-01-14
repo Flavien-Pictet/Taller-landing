@@ -58,7 +58,7 @@ export async function GET() {
 		try {
 			sheetResponse = await sheets.spreadsheets.values.get({
 				spreadsheetId: process.env.GOOGLE_SHEET_ID,
-				range: `${process.env.GOOGLE_SHEET_NAME}!A:S`,
+				range: `${process.env.GOOGLE_SHEET_NAME}!A:T`, // Include column T for contractType
 			})
 
 			const rows = sheetResponse.data.values || []
@@ -67,7 +67,7 @@ export async function GET() {
 			// Column order: A=tiktok, B=instagram, C=discord, D=deal type, E=cost/video,
 			//               F=CPM, G=Bonus, H=Contract changed?, I=Contract changed date,
 			//               J=Total paid, K=Tier, L=Cap, M=Paid December, N=referred?,
-			//               O=Type, P=paypal, Q=Full Name, R=Date Signed, S=Signature
+			//               O=Type, P=paypal, Q=Full Name, R=Date Signed, S=Signature, T=Contract Type
 			const submissions = rows.slice(1).map((row) => {
 				return {
 					tiktokUsername: row[0] || '',
@@ -80,6 +80,7 @@ export async function GET() {
 					fullName: row[16] || '',
 					date: row[17] || '',
 					signature: row[18] || '',
+					contractType: row[19] || 'default', // T: Contract Type
 				}
 			}).filter(submission =>
 				// Filter out empty rows
