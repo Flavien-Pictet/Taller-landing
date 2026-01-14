@@ -874,7 +874,7 @@ function AgreementPageContent() {
 											There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
 											<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
 											{contract.viewThreshold > 0 ? (
-												<>The first <strong className="font-semibold">{contract.viewThreshold.toLocaleString()} views per video</strong> are
+												<>The first <strong className="font-semibold">{contract.viewThreshold >= 10000 ? '10,000' : contract.viewThreshold} views per video</strong> are
 												not eligible for the CPM; only views above that count.</>
 											) : (
 												<>All views are eligible for the CPM from the first view.</>
