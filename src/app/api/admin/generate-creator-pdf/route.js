@@ -263,7 +263,7 @@ export async function POST(request) {
 			} else {
 				const advertiserSigData = fs.readFileSync(advertiserSigPath)
 				const advertiserSigBase64 = `data:image/png;base64,${advertiserSigData.toString('base64')}`
-				const sigWidth = 25
+				const sigWidth = 20  // Reduced from 25 to 20
 				const sigHeight = sigWidth / 0.91
 				doc.addImage(advertiserSigBase64, 'PNG', leftCol, advertiserSigY, sigWidth, sigHeight)
 				console.log('Advertiser signature added successfully')

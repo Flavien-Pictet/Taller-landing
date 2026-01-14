@@ -528,7 +528,7 @@ function AgreementPageContent() {
 				img.src = '/images/signature.png'
 			})
 			// Smaller signature dimensions
-			const sigWidth = 25
+			const sigWidth = 20  // Reduced from 25 to 20
 			const sigHeight = sigWidth / 0.91
 			doc.addImage(advertiserSigImg, 'PNG', leftCol, advertiserSigY, sigWidth, sigHeight)
 		} catch (error) {

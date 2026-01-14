@@ -73,7 +73,7 @@ export async function POST(request) {
 		//               H=Contract has changed?, I=Contract changed date, J=Total paid,
 		//               K=Tier, L=Cap per video, M=Paid December, N=reffered?, O=Type, P=paypal,
 		//               Q=Full Name, R=Date Signed, S=Signature, T=Contract Type
-		const dealType = contract.retainer > 0 ? 'CPM + UGC' : 'CPM Only'
+		const dealType = contract.retainer > 0 ? 'CPM + UGC' : 'CPM'
 		const row = [
 			tiktokUsername || '',        // A: tiktok username
 			'',                          // B: instagram username (empty)
