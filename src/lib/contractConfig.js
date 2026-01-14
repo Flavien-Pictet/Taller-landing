@@ -53,7 +53,7 @@ export const CONTRACT_TYPES = {
 			totalUploadsPerMonth: null, // No limit
 			viewThreshold: 0,
 		},
-		paymentText: 'The Advertiser pays the Creator based on performance only (no retainer). There\'s a $1.00 CPM on every 1,000 views generated, capped at $150 per video. All views are eligible for the CPM from the first view. The creator may cross-post the same video on Instagram and earn a $1.00 CPM capped at $150 per video. Every views under the $150 cap are eligible on Instagram.',
+		paymentText: 'The Advertiser pays the Creator based on performance only (no retainer). There\'s a $1.00 CPM on every 1,000 views generated, capped at $150 per video. All views are eligible for the CPM from the first view. The creator may cross-post the same video on Instagram and earn a $1.00 CPM capped at $150 per video.',
 	},
 }
 
