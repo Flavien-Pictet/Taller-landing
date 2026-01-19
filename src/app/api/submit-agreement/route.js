@@ -91,9 +91,9 @@ export async function POST(request) {
 			'',                          // N: reffered? (empty)
 			'Voice-over',                // O: Type
 			paypalUsername,              // P: paypal
-			fullName,                    // Q: Full Name
-			date,                        // R: Date Signed
-			signature || '',             // S: Signature (base64 image data)
+			'',                          // Q: Full Name (not stored)
+			'',                          // R: Date Signed (not stored)
+			'',                          // S: Signature (not stored)
 			contractType || 'default',   // T: Contract Type
 		]
 
