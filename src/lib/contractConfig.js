@@ -2,7 +2,7 @@
 
 export const CONTRACT_TYPES = {
 	default: {
-		name: 'Standard',
+		name: 'None',
 		retainer: 12.5,
 		monthlyCapPosts: 60,
 		monthlyRetainerMax: 750, // 60 * 12.5
