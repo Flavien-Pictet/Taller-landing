@@ -94,7 +94,7 @@ export async function POST(request) {
 			'',                          // Q: Full Name (not stored)
 			'',                          // R: Date Signed (not stored)
 			'',                          // S: Signature (not stored)
-			contractType || 'default',   // T: Contract Type
+			'',                          // T: Contract Type (not stored)
 		]
 
 		console.log('Row data to append:', row)
