@@ -73,13 +73,6 @@ export async function GET() {
 					tiktokUsername: row[0] || '',
 					discordUsername: row[2] || '',
 					paypalUsername: row[15] || '',
-					dealType: row[3] || '',
-					costPerVideo: row[4] || '',
-					cpm: row[5] || '',
-					type: row[14] || '',
-					fullName: row[16] || '',
-					date: row[17] || '',
-					signature: row[18] || '',
 					contractType: row[19] || 'default', // T: Contract Type
 				}
 			}).filter(submission =>
