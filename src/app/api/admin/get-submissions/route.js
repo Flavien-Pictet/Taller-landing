@@ -58,7 +58,7 @@ export async function GET() {
 		try {
 			sheetResponse = await sheets.spreadsheets.values.get({
 				spreadsheetId: process.env.GOOGLE_SHEET_ID,
-				range: `${process.env.GOOGLE_SHEET_NAME}!A:T`, // Include column T for contractType
+				range: `${process.env.GOOGLE_SHEET_NAME}!A:Q`, // Include column Q for email
 			})
 
 			const rows = sheetResponse.data.values || []
@@ -67,17 +67,16 @@ export async function GET() {
 			// Column order: A=tiktok, B=instagram, C=discord, D=deal type, E=cost/video,
 			//               F=CPM, G=Bonus, H=Contract changed?, I=Contract changed date,
 			//               J=Total paid, K=Tier, L=Cap, M=Paid December, N=referred?,
-			//               O=Type, P=paypal, Q=Full Name, R=Date Signed, S=Signature, T=Contract Type
+			//               O=Type, P=(empty), Q=e-mail
 			const submissions = rows.slice(1).map((row) => {
 				return {
 					tiktokUsername: row[0] || '',
 					discordUsername: row[2] || '',
-					paypalUsername: row[15] || '',
-					contractType: row[19] || 'default', // T: Contract Type
+					email: row[16] || '', // Q: e-mail
 				}
 			}).filter(submission =>
 				// Filter out empty rows
-				submission.tiktokUsername || submission.discordUsername || submission.paypalUsername
+				submission.tiktokUsername || submission.discordUsername || submission.email
 			)
 
 			console.log('Successfully fetched submissions:', submissions.length)

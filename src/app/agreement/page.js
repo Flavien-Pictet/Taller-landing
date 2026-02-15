@@ -264,7 +264,7 @@ function AgreementPageContent() {
 	const validateForm = () => {
 		const newErrors = {}
 		if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-		if (!formData.paypalUsername.trim()) newErrors.paypalUsername = 'PayPal username is required'
+		if (!formData.paypalUsername.trim()) newErrors.paypalUsername = 'Payout email is required'
 		if (!formData.discordUsername.trim()) newErrors.discordUsername = 'Discord username is required'
 		if (!formData.signature) newErrors.signature = 'Signature is required'
 		if (!formData.date) newErrors.date = 'Date is required'
@@ -333,7 +333,7 @@ function AgreementPageContent() {
 
 		// PayPal, TikTok and Discord usernames
 		doc.setFont('times', 'bold')
-		const paypalLabel = 'PayPal username: '
+		const paypalLabel = 'Payout Email: '
 		doc.text(paypalLabel, margin, yPos)
 		const paypalX = margin + doc.getTextWidth(paypalLabel)
 		doc.setFont('times', 'normal')
@@ -685,18 +685,40 @@ function AgreementPageContent() {
 									autoComplete="name"
 								/>
 
-								<FormField
-									label="PayPal Username"
-									name="paypalUsername"
-									value={formData.paypalUsername}
-									onChange={(value) => handleInputChange('paypalUsername', value)}
-									onEnter={() => tiktokRef.current?.focus()}
-									inputRef={paypalRef}
-									required
-									placeholder="your.paypal@email.com"
-									error={errors.paypalUsername}
-									autoComplete="email"
-								/>
+								<div className="space-y-1.5">
+									<FormField
+										label="Payout Email"
+										name="paypalUsername"
+										value={formData.paypalUsername}
+										onChange={(value) => handleInputChange('paypalUsername', value)}
+										onEnter={() => tiktokRef.current?.focus()}
+										inputRef={paypalRef}
+										required
+										placeholder="you@email.com"
+										error={errors.paypalUsername}
+										autoComplete="email"
+										helperText="Email used to receive payouts via Grade (supports PayPal, Wise & more)"
+									/>
+									<div className="flex items-center justify-between">
+										<a
+											href="https://usegrade.com/get-paid"
+											target="_blank"
+											rel="noopener noreferrer"
+											className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 transition-colors duration-200"
+										>
+											Learn more about Grade
+											<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+												<path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+											</svg>
+										</a>
+										<span className="inline-flex items-center gap-1 text-xs text-amber-600">
+											<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+												<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+											</svg>
+											Make sure you have access to this email
+										</span>
+									</div>
+								</div>
 
 								<FormField
 									label="TikTok Username (Taller Content Account)"

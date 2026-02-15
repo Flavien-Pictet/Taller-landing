@@ -90,11 +90,8 @@ export async function POST(request) {
 			'',                          // M: Paid December (empty)
 			'',                          // N: reffered? (empty)
 			'Voice-over',                // O: Type
-			paypalUsername,              // P: paypal
-			'',                          // Q: Full Name (not stored)
-			'',                          // R: Date Signed (not stored)
-			'',                          // S: Signature (not stored)
-			'',                          // T: Contract Type (not stored)
+			'',                          // P: (empty)
+			paypalUsername,              // Q: e-mail (payout email)
 		]
 
 		console.log('Row data to append:', row)

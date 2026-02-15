@@ -74,9 +74,9 @@ export async function POST(request) {
 
 		yPos += 10
 
-		// PayPal, TikTok and Discord usernames
+		// Payout email, TikTok and Discord usernames
 		doc.setFont('times', 'bold')
-		const paypalLabel = 'PayPal username: '
+		const paypalLabel = 'Payout Email: '
 		doc.text(paypalLabel, margin, yPos)
 		const paypalX = margin + doc.getTextWidth(paypalLabel)
 		doc.setFont('times', 'normal')
