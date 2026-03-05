@@ -3,21 +3,21 @@
 export const CONTRACT_TYPES = {
 	default: {
 		name: 'None',
-		retainer: 12.5,
+		retainer: 10,
 		monthlyCapPosts: 60,
-		monthlyRetainerMax: 750, // 60 * 12.5
-		cpm: 0.60,
-		capPerVideo: 200,
+		monthlyRetainerMax: 600, // 60 * 10
+		cpm: 0.50,
+		capPerVideo: 150,
 		viewThreshold: 10000, // First 10k views not eligible
 		crossPost: {
 			enabled: true,
 			platform: 'Instagram',
-			cpm: 0.60,
-			capPerVideo: 200,
+			cpm: 0.50,
+			capPerVideo: 150,
 			totalUploadsPerMonth: 120, // 60 TikTok + 60 Instagram
 			viewThreshold: 0, // All views count on Instagram
 		},
-		paymentText: 'The Advertiser pays the Creator $12.5 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $750. There\'s a $0.60 CPM on every 1,000 views generated, capped at $200 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.60 CPM capped at $200 per video, allowing up to 120 uploads per month. Every views under the $200 cap are eligible on Instagram. The $12.5 retainer applies only to TikTok.',
+		paymentText: 'The Advertiser pays the Creator $10 per video, with a monthly cap of 60 posts, meaning the monthly retainer can go up to $600. There\'s a $0.50 CPM on every 1,000 views generated, capped at $150 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.50 CPM capped at $150 per video, allowing up to 120 uploads per month. Every views under the $150 cap are eligible on Instagram. The $10 retainer applies only to TikTok.',
 	},
 	lite: {
 		name: 'Lite',
