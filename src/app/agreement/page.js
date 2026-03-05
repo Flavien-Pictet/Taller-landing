@@ -857,7 +857,7 @@ function AgreementPageContent() {
 						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-10">
 							{/* Document Header */}
 							<div className="mb-8 pb-6 border-b border-gray-200">
-								<h2 className="text-2xl font-bold text-gray-900 mb-2 break-words">Taller - Agreement</h2>
+								<h2 className="text-2xl font-bold text-gray-900 mb-2 break-words"> Taller - Agreement</h2>
 								<p className="text-sm text-gray-600">Asymmetric Labs FZC</p>
 							</div>
 
