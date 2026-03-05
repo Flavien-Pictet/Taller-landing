@@ -148,7 +148,7 @@ export async function POST(request) {
 		yPos += 5
 
 		if (contract.retainer > 0) {
-			const dailyCapText = 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement.'
+			const dailyCapText = 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to 4 uploads per day across both platforms.'
 			const dailyCapLines = doc.splitTextToSize(dailyCapText, contentWidth)
 			for (let i = 0; i < dailyCapLines.length; i++) {
 				doc.text(dailyCapLines[i], margin, yPos)
