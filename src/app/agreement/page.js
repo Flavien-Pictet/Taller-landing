@@ -402,7 +402,17 @@ function AgreementPageContent() {
 				yPos += 5
 			}
 		}
-		yPos += 8
+		yPos += 5
+
+		if (contract.retainer > 0) {
+			const dailyCapText = 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement.'
+			const dailyCapLines = doc.splitTextToSize(dailyCapText, contentWidth)
+			for (let i = 0; i < dailyCapLines.length; i++) {
+				doc.text(dailyCapLines[i], margin, yPos)
+				yPos += 5
+			}
+		}
+		yPos += 3
 
 		// Section IV - PAYMENT
 		doc.setFontSize(10)
@@ -876,6 +886,11 @@ function AgreementPageContent() {
 										The Creator agrees to post User-Generated Content (UGC) for Taller by replicating <strong className="font-semibold">two
 										recommended formats</strong> provided.
 									</p>
+									{contract.retainer > 0 && (
+										<p className="text-gray-700 mt-2">
+											The Creator agrees to post a maximum of <strong className="font-semibold">2 videos per day</strong> for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement.
+										</p>
+									)}
 								</section>
 
 								{/* Section IV */}

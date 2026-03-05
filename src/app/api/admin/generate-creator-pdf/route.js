@@ -145,7 +145,17 @@ export async function POST(request) {
 				yPos += 5
 			}
 		}
-		yPos += 8
+		yPos += 5
+
+		if (contract.retainer > 0) {
+			const dailyCapText = 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement.'
+			const dailyCapLines = doc.splitTextToSize(dailyCapText, contentWidth)
+			for (let i = 0; i < dailyCapLines.length; i++) {
+				doc.text(dailyCapLines[i], margin, yPos)
+				yPos += 5
+			}
+		}
+		yPos += 3
 
 		// Section IV - PAYMENT
 		doc.setFontSize(10)
