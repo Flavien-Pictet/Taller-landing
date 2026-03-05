@@ -888,7 +888,7 @@ function AgreementPageContent() {
 									</p>
 									{contract.retainer > 0 && (
 										<p className="text-gray-700 mt-2">
-											The Creator agrees to post a maximum of <strong className="font-semibold">2 videos per day</strong> for Taller. Posting more than 2 Taller-related videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to <strong className="font-semibold">4 uploads per day</strong> across both platforms.
+											The Creator agrees to post a maximum of <strong className="font-semibold">2 videos per day</strong> for Taller. Posting more than 2 videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to <strong className="font-semibold">4 uploads per day</strong> across both platforms.
 										</p>
 									)}
 								</section>
