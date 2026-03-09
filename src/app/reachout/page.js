@@ -66,7 +66,7 @@ const LANGUAGES = {
 		label: 'FR',
 		flag: '🇫🇷',
 		outreach1: [
-			"hey, quoi de neuf ! On a une offre de collab à te partager ! En gros on pourrait te payer 600$ / mois pour créer 2 courtes vidéos par jour (ça prend 15 minutes à faire et on est flexibles sur la fréquence). Le contenu serait posté sur un nouveau compte, pas le tien + on t'ajouterait 0,50$ pour chaque 1k vues que tu génères, avec un plafond de 10 000$ par mois. Dis-nous si tu veux plus d'infos !",
+			"Hello! On a une collab à te proposer! En gros on pourrait te payer 600$ / mois pour créer 2 vidéos UGC par jour (ça prend 15 minutes à faire et on est flexibles sur le volume). Le contenu serait posté sur un nouveau compte pas le tien + on t'ajouterait 0,50$ pour chaque 1k vues que tu génères avec un plafond de 10 000$ par mois. Let me know si tu veux plus d'infos :)",
 		],
 		outreach2: [
 			"Super ! Voici le genre de vidéos qu'on recherche :",
@@ -84,7 +84,7 @@ const LANGUAGES = {
 		label: 'DE',
 		flag: '🇩🇪',
 		outreach1: [
-			"Hey, wie läuft's! Wir haben ein Collab-Angebot, das wir gerne mit dir teilen würden! Wir könnten dir im Grunde 600$ / Monat zahlen, um 2 kurze Videos pro Tag zu erstellen (dauert 15 Minuten und wir sind flexibel bei der Häufigkeit). Der Content würde auf einem neuen Account gepostet, nicht auf deinem + wir würden 0,50$ für je 1.000 Views hinzufügen, die du generierst, mit einer monatlichen Obergrenze von 10.000$. Meld dich, wenn du mehr Infos möchtest!",
+			"Hallo! we have a collab offer we'd like to share! We could basically pay you 600$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 0.50$ for every 1k views you generate with a 10,000$ monthly cap. Let us know if you'd like more info",
 		],
 		outreach2: [
 			"Super! Hier sind die Arten von Videos, nach denen wir suchen:",
