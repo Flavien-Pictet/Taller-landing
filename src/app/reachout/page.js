@@ -43,33 +43,95 @@ function MessageRow({ label, text }) {
 	)
 }
 
-export default function ReachoutPage() {
-	const outreach1Templates = [
-		"hey what's up! we have a collab offer we'd like to share! We could basically pay you 600$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 0.50$ for every 1k views you generate with a 10,000$ monthly cap. Let us know if you'd like more info",
-	]
+const LANGUAGES = {
+	en: {
+		label: 'EN',
+		flag: '🇬🇧',
+		outreach1: [
+			"hey what's up! we have a collab offer we'd like to share! We could basically pay you 600$ / month to create 2 short videos a day (takes 15 minutes to create & we are flexible on the frequency). the content would be on a fresh account not this one + we would add 0.50$ for every 1k views you generate with a 10,000$ monthly cap. Let us know if you'd like more info",
+		],
+		outreach2: [
+			"Great! So here's the kind of videos we are looking for:",
+			'https://www.tiktok.com/@dobbin.chong/video/7492930138611617070?q=dobbin%20&t=1764921282597',
+			'https://www.tiktok.com/@jays.taller/video/7582335457204112671',
+			'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
+			'https://www.tiktok.com/@rytsotall/video/7580971456901893431',
+			'https://www.tiktok.com/@beck13213/video/7453486785952304406',
+			"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
+			'https://discord.gg/GhAb3npQuD',
+			"we can also chat on Imessage/Whatsapp if you'd like to! my number is +41 79 379 71 72",
+		],
+	},
+	fr: {
+		label: 'FR',
+		flag: '🇫🇷',
+		outreach1: [
+			"hey, quoi de neuf ! On a une offre de collab à te partager ! En gros on pourrait te payer 600$ / mois pour créer 2 courtes vidéos par jour (ça prend 15 minutes à faire et on est flexibles sur la fréquence). Le contenu serait posté sur un nouveau compte, pas le tien + on t'ajouterait 0,50$ pour chaque 1k vues que tu génères, avec un plafond de 10 000$ par mois. Dis-nous si tu veux plus d'infos !",
+		],
+		outreach2: [
+			"Super ! Voici le genre de vidéos qu'on recherche :",
+			'https://www.tiktok.com/@dobbin.chong/video/7492930138611617070?q=dobbin%20&t=1764921282597',
+			'https://www.tiktok.com/@jays.taller/video/7582335457204112671',
+			'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
+			'https://www.tiktok.com/@rytsotall/video/7580971456901893431',
+			'https://www.tiktok.com/@beck13213/video/7453486785952304406',
+			"Si ça t'intéresse, rejoins notre discord et on te partagera les prochaines étapes pour commencer + l'accord :)",
+			'https://discord.gg/GhAb3npQuD',
+			"On peut aussi discuter sur iMessage/WhatsApp si tu préfères ! Mon numéro est le +41 79 379 71 72",
+		],
+	},
+	de: {
+		label: 'DE',
+		flag: '🇩🇪',
+		outreach1: [
+			"Hey, wie läuft's! Wir haben ein Collab-Angebot, das wir gerne mit dir teilen würden! Wir könnten dir im Grunde 600$ / Monat zahlen, um 2 kurze Videos pro Tag zu erstellen (dauert 15 Minuten und wir sind flexibel bei der Häufigkeit). Der Content würde auf einem neuen Account gepostet, nicht auf deinem + wir würden 0,50$ für je 1.000 Views hinzufügen, die du generierst, mit einer monatlichen Obergrenze von 10.000$. Meld dich, wenn du mehr Infos möchtest!",
+		],
+		outreach2: [
+			"Super! Hier sind die Arten von Videos, nach denen wir suchen:",
+			'https://www.tiktok.com/@dobbin.chong/video/7492930138611617070?q=dobbin%20&t=1764921282597',
+			'https://www.tiktok.com/@jays.taller/video/7582335457204112671',
+			'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
+			'https://www.tiktok.com/@rytsotall/video/7580971456901893431',
+			'https://www.tiktok.com/@beck13213/video/7453486785952304406',
+			"Wenn dich das interessiert, tritt unserem Discord bei und wir teilen die nächsten Schritte + die Vereinbarung mit dir :)",
+			'https://discord.gg/GhAb3npQuD',
+			"Wir können auch über iMessage/WhatsApp schreiben, wenn du möchtest! Meine Nummer ist +41 79 379 71 72",
+		],
+	},
+}
 
-	const outreach2Messages = [
-		"Great! So here's the kind of videos we are looking for:",
-		'https://www.tiktok.com/@dobbin.chong/video/7492930138611617070?q=dobbin%20&t=1764921282597',
-		'https://www.tiktok.com/@jays.taller/video/7582335457204112671',
-		'https://www.tiktok.com/@quickclips4life/video/7565878110944595214',
-		'https://www.tiktok.com/@rytsotall/video/7580971456901893431',
-		'https://www.tiktok.com/@beck13213/video/7453486785952304406',
-		"If that's sounds like something you'd be interested in please join our discord & we'll share the next steps to get started + the agreement :)",
-		'https://discord.gg/GhAb3npQuD',
-		'we can also chat on Imessage/Whatsapp if you\'d like to! my number is +41 79 379 71 72',
-	]
+export default function ReachoutPage() {
+	const [lang, setLang] = useState('en')
+	const content = LANGUAGES[lang]
 
 	return (
 		<div className="mx-auto max-w-3xl px-6 py-10">
-			<h1 className="text-2xl font-bold tracking-tight text-white">
-				TikTok Outreach Helper
-			</h1>
+			<div className="flex items-center justify-between">
+				<h1 className="text-2xl font-bold tracking-tight text-white">
+					TikTok Outreach Helper
+				</h1>
+
+				{/* Language switcher */}
+				<div className="flex items-center gap-1 rounded-xl bg-white/10 p-1">
+					{Object.entries(LANGUAGES).map(([key, { label, flag }]) => (
+						<button
+							key={key}
+							onClick={() => setLang(key)}
+							className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
+								lang === key
+									? 'bg-white text-black shadow'
+									: 'text-white/70 hover:text-white'
+							}`}
+						>
+							{flag} {label}
+						</button>
+					))}
+				</div>
+			</div>
 
 			<section className="mt-8 space-y-4">
 				<h2 className="text-lg font-semibold text-white">Outreach 1</h2>
-
-				{outreach1Templates.map((template, idx) => (
+				{content.outreach1.map((template, idx) => (
 					<MessageRow key={idx} label={`Option ${idx + 1}`} text={template} />
 				))}
 			</section>
@@ -78,11 +140,10 @@ export default function ReachoutPage() {
 				<h2 className="text-lg font-semibold text-white">
 					Outreach 2 (after reply)
 				</h2>
-				{outreach2Messages.map((msg, idx) => (
+				{content.outreach2.map((msg, idx) => (
 					<MessageRow key={idx} label={`Message ${idx + 1}`} text={msg} />
 				))}
 			</section>
 		</div>
 	)
 }
-
