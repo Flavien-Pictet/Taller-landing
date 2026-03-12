@@ -66,7 +66,7 @@ const LANGUAGES = {
 		label: 'FR',
 		flag: '🇫🇷',
 		outreach1: [
-			"Hello! On a une collab à te proposer! En gros on pourrait te payer 600$ / mois pour créer 2 vidéos UGC par jour (ça prend 15 minutes à faire et on est flexibles sur le volume). Le contenu serait posté sur un nouveau compte pas le tien + on t'ajouterait 0,50$ pour chaque 1k vues que tu génères avec un plafond de 10 000$ par mois. Let me know si tu veux plus d'infos :)",
+			"Hello! On a une collab à te proposer! En gros on pourrait te payer 600$ / mois pour créer 2 vidéos UGC par jour (ça prend 15 minutes à faire et on est flexibles sur le volume). Le contenu serait posté sur un nouveau compte pas le tien + on t'ajouterait 0,50$ pour chaque 1k vues que tu génères avec un plafond de 5,000$ par mois. Let me know si tu veux plus d'infos :)",
 		],
 		outreach2: [
 			"Super ! Voici le genre de vidéos qu'on recherche :",
