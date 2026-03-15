@@ -88,15 +88,6 @@ export default function Footer() {
                     Product
                   </a>
                 </li>
-                <li>
-                  <Link 
-                    href="/affiliation" 
-                    className="text-white/60 hover:text-white transition-colors"
-                    aria-label="Join our creator program"
-                  >
-                    Creator program
-                  </Link>
-                </li>
               </ul>
             </div>
             <div>

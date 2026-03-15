@@ -85,13 +85,6 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                 aria-label="Desktop navigation"
               >
                 <a 
-                  href="/affiliation"
-                  className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
-                  aria-label="Learn about our creator program"
-                >
-                  Creator program
-                </a>
-                <a 
                   href={isAffiliationPage ? "/#features" : "#features"} 
                   onClick={scrollToFeatures}
                   className="text-white/50 text-[14px] whitespace-nowrap transition-colors duration-300 hover:text-white"
@@ -142,15 +135,6 @@ const Navbar = ({ isAffiliationPage = false, homepageLinks = false }) => {
                     height={14}
                     className="w-[15px] h-[14px] sm:w-[17px] sm:h-[16px]"
                   />
-                </a>
-
-                <a 
-                  href={isAffiliationPage ? "/" : "/affiliation"}
-                  className="flex items-center justify-center min-w-[100px] h-[50px] px-3 py-[2px] rounded-[10px] bg-gradient-to-b from-[#8622FF] to-[#B374FF]"
-                >
-                  <span className="text-white text-[13px] sm:text-[14px] whitespace-nowrap">
-                    {isAffiliationPage ? "Home" : "Creator program"}
-                  </span>
                 </a>
               </div>
 

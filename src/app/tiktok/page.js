@@ -85,9 +85,6 @@ export default function TikTokLanding() {
                                     >
                                         Google Play Store
                                     </a>
-                                    <Link href="/affiliation" className="block px-5 py-4 hover:bg-white/5" role="menuitem">
-                                        Become a creator
-                                    </Link>
                                 </motion.div>
                             </motion.nav>
                         </>
