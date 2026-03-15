@@ -8,7 +8,7 @@ export const CONTRACT_TYPES = {
 		monthlyRetainerMax: 600, // 60 * 10
 		cpm: 0.50,
 		capPerVideo: 150,
-		viewThreshold: 5,000, // First 10k views not eligible
+		viewThreshold: 5000, // First 10k views not eligible
 		crossPost: {
 			enabled: true,
 			platform: 'Instagram',
@@ -26,7 +26,7 @@ export const CONTRACT_TYPES = {
 		monthlyRetainerMax: 300, // 60 * 5
 		cpm: 0.70,
 		capPerVideo: 200,
-		viewThreshold: 5,000,
+		viewThreshold: 5000,
 		crossPost: {
 			enabled: true,
 			platform: 'Instagram',
