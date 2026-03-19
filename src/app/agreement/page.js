@@ -7,7 +7,7 @@ import jsPDF from 'jspdf'
 import { useSearchParams } from 'next/navigation'
 import { getContractConfig } from '../../lib/contractConfig'
 
-function SignaturePad({ value, onChange, onClear }) {
+function SignaturePad({ value, onChange, onClear, isFrench = false }) {
 	const canvasRef = useRef(null)
 	const [isDrawing, setIsDrawing] = useState(false)
 	const [hasSignature, setHasSignature] = useState(false)
@@ -153,14 +153,14 @@ function SignaturePad({ value, onChange, onClear }) {
 							onClick={handleClear}
 							className="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-50 hover:text-gray-900 transition-all"
 						>
-							Clear
+							{isFrench ? 'Effacer' : 'Clear'}
 						</motion.button>
 					)}
 				</AnimatePresence>
 			</div>
 			{!hasSignature && (
 				<p className="mt-2 text-xs text-gray-500 text-center">
-					Sign above with your mouse or touch
+					{isFrench ? 'Signez ci-dessus avec votre souris ou tactile' : 'Sign above with your mouse or touch'}
 				</p>
 			)}
 		</div>
@@ -221,9 +221,11 @@ function FormField({ label, name, type = 'text', value, onChange, required = fal
 }
 
 function AgreementPageContent() {
-	// Get contract type from URL
+	// Get contract type and language from URL
 	const searchParams = useSearchParams()
 	const contractType = searchParams.get('type') || 'default'
+	const lang = searchParams.get('lang') || 'en'
+	const isFrench = lang === 'fr'
 	const contract = getContractConfig(contractType)
 
 	const [formData, setFormData] = useState({
@@ -263,11 +265,11 @@ function AgreementPageContent() {
 
 	const validateForm = () => {
 		const newErrors = {}
-		if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-		if (!formData.paypalUsername.trim()) newErrors.paypalUsername = 'Payout email is required'
-		if (!formData.discordUsername.trim()) newErrors.discordUsername = 'Discord username is required'
-		if (!formData.signature) newErrors.signature = 'Signature is required'
-		if (!formData.date) newErrors.date = 'Date is required'
+		if (!formData.fullName.trim()) newErrors.fullName = isFrench ? 'Le nom complet est requis' : 'Full name is required'
+		if (!formData.paypalUsername.trim()) newErrors.paypalUsername = isFrench ? 'L\'email de paiement est requis' : 'Payout email is required'
+		if (!formData.discordUsername.trim()) newErrors.discordUsername = isFrench ? 'Le nom d\'utilisateur Discord est requis' : 'Discord username is required'
+		if (!formData.signature) newErrors.signature = isFrench ? 'La signature est requise' : 'Signature is required'
+		if (!formData.date) newErrors.date = isFrench ? 'La date est requise' : 'Date is required'
 
 		setErrors(newErrors)
 		return Object.keys(newErrors).length === 0
@@ -283,18 +285,20 @@ function AgreementPageContent() {
 		// Title
 		doc.setFontSize(16)
 		doc.setFont('times', 'bold')
-		doc.text('TALLER APP - UGC AGREEMENT', pageWidth / 2, yPos, { align: 'center' })
+		doc.text(isFrench ? 'TALLER APP - CONTRAT UGC' : 'TALLER APP - UGC AGREEMENT', pageWidth / 2, yPos, { align: 'center' })
 		yPos += 12
 
 		// Section I - PARTIES
 		doc.setFontSize(10)
 		doc.setFont('times', 'bold')
-		const partiesTitle = 'I. PARTIES: '
+		const partiesTitle = isFrench ? 'I. PARTIES : ' : 'I. PARTIES: '
 		const partiesTitleWidth = doc.getTextWidth(partiesTitle)
 		doc.text(partiesTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const partiesText = `This agreement ("Contract") is between Asymmetric Labs FZC (the "Advertiser") and the content creator `
+		const partiesText = isFrench 
+			? `Ce contrat ("Contrat") est conclu entre Asymmetric Labs FZC (l'"Annonceur") et le createur de contenu `
+			: `This agreement ("Contract") is between Asymmetric Labs FZC (the "Advertiser") and the content creator `
 
 		// Write first part of text
 		doc.text(partiesText, margin + partiesTitleWidth, yPos)
@@ -327,13 +331,14 @@ function AgreementPageContent() {
 
 		// Write remaining text
 		doc.setFont('times', 'normal')
-		doc.text(remainingText, nameX + nameUnderlineWidth, yPos)
+		const remainingTextFinal = isFrench ? ' (le "Createur").' : remainingText
+		doc.text(remainingTextFinal, nameX + nameUnderlineWidth, yPos)
 
 		yPos += 10
 
 		// PayPal, TikTok and Discord usernames
 		doc.setFont('times', 'bold')
-		const paypalLabel = 'Payout Email: '
+		const paypalLabel = isFrench ? 'Email de paiement : ' : 'Payout Email: '
 		doc.text(paypalLabel, margin, yPos)
 		const paypalX = margin + doc.getTextWidth(paypalLabel)
 		doc.setFont('times', 'normal')
@@ -343,7 +348,7 @@ function AgreementPageContent() {
 		yPos += 8
 
 		doc.setFont('times', 'bold')
-		const tiktokLabel = 'TikTok username: '
+		const tiktokLabel = isFrench ? 'Nom d\'utilisateur TikTok : ' : 'TikTok username: '
 		doc.text(tiktokLabel, margin, yPos)
 		const tiktokX = margin + doc.getTextWidth(tiktokLabel)
 		doc.setFont('times', 'normal')
@@ -353,7 +358,7 @@ function AgreementPageContent() {
 		yPos += 8
 
 		doc.setFont('times', 'bold')
-		const discordLabel = 'Discord username: '
+		const discordLabel = isFrench ? 'Nom d\'utilisateur Discord : ' : 'Discord username: '
 		doc.text(discordLabel, margin, yPos)
 		const discordX = margin + doc.getTextWidth(discordLabel)
 		doc.setFont('times', 'normal')
@@ -365,12 +370,14 @@ function AgreementPageContent() {
 		// Section II - TERM
 		doc.setFontSize(10)
 		doc.setFont('times', 'bold')
-		const termTitle = 'II. TERM: '
+		const termTitle = isFrench ? 'II. DUREE : ' : 'II. TERM: '
 		const termTitleWidth = doc.getTextWidth(termTitle)
 		doc.text(termTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const termText = 'This Contract is ongoing and can be terminated by either party with a 3-day notice.'
+		const termText = isFrench 
+			? 'Le contrat est en cours et peut etre resilie par l\'une ou l\'autre partie avec un preavis de 3 jours.'
+			: 'This Contract is ongoing and can be terminated by either party with a 3-day notice.'
 		const termLines = doc.splitTextToSize(termText, contentWidth - termTitleWidth)
 		doc.text(termLines[0], margin + termTitleWidth, yPos)
 
@@ -386,12 +393,14 @@ function AgreementPageContent() {
 		// Section III - CONTENT REQUIREMENTS
 		doc.setFontSize(10)
 		doc.setFont('times', 'bold')
-		const contentTitle = 'III. CONTENT REQUIREMENTS: '
+		const contentTitle = isFrench ? 'III. EXIGENCES DE CONTENU : ' : 'III. CONTENT REQUIREMENTS: '
 		const contentTitleWidth = doc.getTextWidth(contentTitle)
 		doc.text(contentTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const contentReqText = 'The Creator agrees to post User-Generated Content (UGC) for Taller by replicating two recommended formats provided.'
+		const contentReqText = isFrench 
+			? 'Le Createur s\'engage a publier du Contenu Genere par l\'Utilisateur (UGC) pour Taller en repliquant deux formats recommandes fournis.'
+			: 'The Creator agrees to post User-Generated Content (UGC) for Taller by replicating two recommended formats provided.'
 		const contentReqLines = doc.splitTextToSize(contentReqText, contentWidth - contentTitleWidth)
 		doc.text(contentReqLines[0], margin + contentTitleWidth, yPos)
 
@@ -405,7 +414,9 @@ function AgreementPageContent() {
 		yPos += 5
 
 		if (contract.retainer > 0) {
-			const dailyCapText = 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to 4 uploads per day across both platforms.'
+			const dailyCapText = isFrench
+				? 'Le Createur s\'engage a publier un maximum de 2 videos par jour pour Taller. Publier plus de 2 videos en une seule journee n\'est pas autorise selon cet accord. Comme la cross-publication sur Instagram est autorisee, cela equivaut effectivement a un maximum de 4 publications par jour sur les deux plateformes.'
+				: 'The Creator agrees to post a maximum of 2 videos per day for Taller. Posting more than 2 videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to 4 uploads per day across both platforms.'
 			const dailyCapLines = doc.splitTextToSize(dailyCapText, contentWidth)
 			for (let i = 0; i < dailyCapLines.length; i++) {
 				doc.text(dailyCapLines[i], margin, yPos)
@@ -417,13 +428,15 @@ function AgreementPageContent() {
 		// Section IV - PAYMENT
 		doc.setFontSize(10)
 		doc.setFont('times', 'bold')
-		const paymentTitle = 'IV. PAYMENT: '
+		const paymentTitle = isFrench ? 'IV. PAIEMENT : ' : 'IV. PAYMENT: '
 		const paymentTitleWidth = doc.getTextWidth(paymentTitle)
 		doc.text(paymentTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		// First paragraph - Use dynamic contract config
-		const paymentText1 = ' ' + contract.paymentText
+		// First paragraph - Use dynamic contract config with French translation
+		const paymentText1 = isFrench
+			? ' L\'Annonceur paie le Createur 10$ par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600$. Il y a un 0,50$ CPM pour chaque 1 000 vues generees, plafonne a 150$ par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50$ CPM plafonne a 150$ par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150$ sont eligibles sur Instagram. L\'acompte de 10$ s\'applique uniquement a TikTok.'
+			: ' ' + contract.paymentText
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)
@@ -439,7 +452,9 @@ function AgreementPageContent() {
 		yPos += 3
 
 		// Second paragraph
-		const paymentText2 = 'Payments are made between the 1st and 4th of each month. Payouts are based on views generated in the previous month. Only views generated during the same calendar month in which a video is originally posted will be eligible for payout. For example, if a video is published on July 21st, only views accrued from July 21st through July 31st will be counted. Views from subsequent months for that same video will not be considered for payment.'
+		const paymentText2 = isFrench
+			? 'Les paiements sont effectues entre le 1er et le 4 de chaque mois. Les paiements sont bases sur les vues generees le mois precedent. Seules les vues generees pendant le meme mois calendaire ou une video est initialement publiee seront eligibles au paiement. Par exemple, si une video est publiee le 21 juillet, seules les vues accumulees du 21 au 31 juillet seront comptabilisees. Les vues des mois suivants pour cette meme video ne seront pas prises en compte pour le paiement.'
+			: 'Payments are made between the 1st and 4th of each month. Payouts are based on views generated in the previous month. Only views generated during the same calendar month in which a video is originally posted will be eligible for payout. For example, if a video is published on July 21st, only views accrued from July 21st through July 31st will be counted. Views from subsequent months for that same video will not be considered for payment.'
 
 		const paymentLines2 = doc.splitTextToSize(paymentText2, contentWidth)
 		paymentLines2.forEach(line => {
@@ -451,12 +466,14 @@ function AgreementPageContent() {
 		// Section V - HIGH PERFORMANCE VIEWS BONUS
 		doc.setFontSize(10)
 		doc.setFont('times', 'bold')
-		const bonusTitle = 'V. HIGH PERFORMANCE VIEWS BONUS: '
+		const bonusTitle = isFrench ? 'V. BONUS DE HAUTE PERFORMANCE : ' : 'V. HIGH PERFORMANCE VIEWS BONUS: '
 		const bonusTitleWidth = doc.getTextWidth(bonusTitle)
 		doc.text(bonusTitle, margin, yPos)
 
 		doc.setFont('times', 'normal')
-		const bonusText = 'If a creator publishes a video that exceeds 1,000,000 views, they will receive a one-time bonus payment of USD 100 for that video.'
+		const bonusText = isFrench
+			? 'Si un createur publie une video qui depasse 1 000 000 de vues, il recevra un paiement bonus unique de 100 USD pour cette video.'
+			: 'If a creator publishes a video that exceeds 1,000,000 views, they will receive a one-time bonus payment of USD 100 for that video.'
 		const bonusLines = doc.splitTextToSize(bonusText, contentWidth - bonusTitleWidth)
 		doc.text(bonusLines[0], margin + bonusTitleWidth, yPos)
 
@@ -469,51 +486,55 @@ function AgreementPageContent() {
 		}
 		yPos += 8
 
-		// Section VI - INTELLECTUAL PROPERTY
-		doc.setFontSize(10)
-		doc.setFont('times', 'bold')
-		const ipTitle = 'VI. INTELLECTUAL PROPERTY & USAGE RIGHTS: '
-		const ipTitleWidth = doc.getTextWidth(ipTitle)
-		doc.text(ipTitle, margin, yPos)
+		// Section VI - INTELLECTUAL PROPERTY (Only for English version)
+		if (!isFrench) {
+			doc.setFontSize(10)
+			doc.setFont('times', 'bold')
+			const ipTitle = 'VI. INTELLECTUAL PROPERTY & USAGE RIGHTS: '
+			const ipTitleWidth = doc.getTextWidth(ipTitle)
+			doc.text(ipTitle, margin, yPos)
 
-		doc.setFont('times', 'normal')
-		const ipText = 'The Creator grants the Advertiser a perpetual, worldwide, royalty-free license to use, reproduce, modify, and distribute any content created under this Contract for any commercial or promotional purpose.'
+			doc.setFont('times', 'normal')
+			const ipText = 'The Creator grants the Advertiser a perpetual, worldwide, royalty-free license to use, reproduce, modify, and distribute any content created under this Contract for any commercial or promotional purpose.'
 
-		// Split text considering full width for better wrapping
-		const firstLineMaxWidth = contentWidth - ipTitleWidth
-		const words = ipText.split(' ')
-		let firstLine = ''
-		let ipRemainingText = ipText
+			// Split text considering full width for better wrapping
+			const firstLineMaxWidth = contentWidth - ipTitleWidth
+			const words = ipText.split(' ')
+			let firstLine = ''
+			let ipRemainingText = ipText
 
-		// Build first line that fits after title
-		for (let i = 0; i < words.length; i++) {
-			const testLine = words.slice(0, i + 1).join(' ')
-			if (doc.getTextWidth(testLine) <= firstLineMaxWidth) {
-				firstLine = testLine
-				ipRemainingText = words.slice(i + 1).join(' ')
-			} else {
-				break
+			// Build first line that fits after title
+			for (let i = 0; i < words.length; i++) {
+				const testLine = words.slice(0, i + 1).join(' ')
+				if (doc.getTextWidth(testLine) <= firstLineMaxWidth) {
+					firstLine = testLine
+					ipRemainingText = words.slice(i + 1).join(' ')
+				} else {
+					break
+				}
 			}
-		}
 
-		// Write first line next to title
-		doc.text(firstLine, margin + ipTitleWidth, yPos)
-		yPos += 5
+			// Write first line next to title
+			doc.text(firstLine, margin + ipTitleWidth, yPos)
+			yPos += 5
 
-		// Write remaining text using full width
-		if (ipRemainingText) {
-			const remainingLines = doc.splitTextToSize(ipRemainingText, contentWidth)
-			remainingLines.forEach(line => {
-				doc.text(line, margin, yPos)
-				yPos += 5
-			})
+			// Write remaining text using full width
+			if (ipRemainingText) {
+				const remainingLines = doc.splitTextToSize(ipRemainingText, contentWidth)
+				remainingLines.forEach(line => {
+					doc.text(line, margin, yPos)
+					yPos += 5
+				})
+			}
+			yPos += 22
+		} else {
+			yPos += 15
 		}
-		yPos += 22
 
 		// Signatures section
 		doc.setFont('times', 'normal')
 		doc.setFontSize(10)
-		doc.text('Company: Asymmetric Labs FZC', margin, yPos)
+		doc.text(isFrench ? 'Entreprise : Asymmetric Labs FZC' : 'Company: Asymmetric Labs FZC', margin, yPos)
 		yPos += 10
 
 		// Two columns for signatures
@@ -521,11 +542,11 @@ function AgreementPageContent() {
 		const rightCol = pageWidth / 2 + 10
 
 		// Advertiser signature (left)
-		doc.text("Advertiser's Signature:", leftCol, yPos)
+		doc.text(isFrench ? "Signature de l'Annonceur :" : "Advertiser's Signature:", leftCol, yPos)
 		const advertiserSigY = yPos + 6
 
 		// Creator signature (right)
-		doc.text("Creator's Signature:", rightCol, yPos)
+		doc.text(isFrench ? "Signature du Createur :" : "Creator's Signature:", rightCol, yPos)
 		const creatorSigY = yPos + 6
 
 		// Load and add advertiser signature image
@@ -559,15 +580,18 @@ function AgreementPageContent() {
 		yPos += 40
 
 		// Date
-		doc.text('Date: ', leftCol, yPos)
-		const dateX = leftCol + doc.getTextWidth('Date: ')
+		const dateLabel = isFrench ? 'Date : ' : 'Date: '
+		doc.text(dateLabel, leftCol, yPos)
+		const dateX = leftCol + doc.getTextWidth(dateLabel)
 		doc.setFont('times', 'bold')
 		doc.text(formData.date, dateX, yPos)
 		const dateUnderlineWidth = Math.max(doc.getTextWidth(formData.date), 35)
 		doc.line(dateX, yPos + 1, dateX + dateUnderlineWidth, yPos + 1)
 
 		// Save PDF
-		const filename = `Taller_Agreement_${formData.fullName.replace(/\s+/g, '_')}_${formData.date}.pdf`
+		const filename = isFrench 
+			? `Taller_Contrat_${formData.fullName.replace(/\s+/g, '_')}_${formData.date}.pdf`
+			: `Taller_Agreement_${formData.fullName.replace(/\s+/g, '_')}_${formData.date}.pdf`
 
 		// Check if on mobile device and Web Share API is available
 		const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -584,8 +608,8 @@ function AgreementPageContent() {
 				if (navigator.canShare({ files: [pdfFile] })) {
 					await navigator.share({
 						files: [pdfFile],
-						title: 'Taller Agreement',
-						text: 'Your signed UGC agreement'
+						title: isFrench ? 'Contrat Taller' : 'Taller Agreement',
+						text: isFrench ? 'Votre contrat UGC signe' : 'Your signed UGC agreement'
 					})
 					return // Exit after successful share
 				}
@@ -624,6 +648,7 @@ function AgreementPageContent() {
 					date: formData.date,
 					signature: formData.signature,
 					contractType: formData.contractType,
+					lang: lang,
 				}),
 			})
 
@@ -633,7 +658,7 @@ function AgreementPageContent() {
 				// Show more detailed error message
 				const errorMsg = data.details 
 					? `${data.error}: ${data.details}`
-					: data.error || 'Failed to submit agreement'
+					: data.error || (isFrench ? 'Échec de la soumission du contrat' : 'Failed to submit agreement')
 				throw new Error(errorMsg)
 			}
 
@@ -643,7 +668,7 @@ function AgreementPageContent() {
 			console.error('Error submitting form:', error)
 			setIsSubmitting(false)
 			setSubmitStatus('error')
-			setErrors({ submit: error.message || 'Failed to submit agreement. Please try again.' })
+			setErrors({ submit: error.message || (isFrench ? 'Échec de la soumission du contrat. Veuillez réessayer.' : 'Failed to submit agreement. Please try again.') })
 		}
 	}
 
@@ -663,8 +688,12 @@ function AgreementPageContent() {
 			{/* Header */}
 			<div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-					<h1 className="text-2xl font-semibold text-gray-900">Taller - UGC Agreement</h1>
-					<p className="text-sm text-gray-500 mt-1">Please complete all fields to submit</p>
+					<h1 className="text-2xl font-semibold text-gray-900">
+						{isFrench ? 'Taller - Contrat UGC' : 'Taller - UGC Agreement'}
+					</h1>
+					<p className="text-sm text-gray-500 mt-1">
+						{isFrench ? 'Veuillez compléter tous les champs pour soumettre' : 'Please complete all fields to submit'}
+					</p>
 				</div>
 			</div>
 
@@ -679,35 +708,35 @@ function AgreementPageContent() {
 						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-10">
 							<form onSubmit={handleSubmit} className="space-y-5">
 								<h3 className="text-lg font-semibold text-gray-900 mb-6 pb-4 border-b border-gray-200">
-									Creator Information
+									{isFrench ? 'Informations du Créateur' : 'Creator Information'}
 								</h3>
 
 								<FormField
-									label="Full Name"
+									label={isFrench ? "Nom Complet" : "Full Name"}
 									name="fullName"
 									value={formData.fullName}
 									onChange={(value) => handleInputChange('fullName', value)}
 									onEnter={() => paypalRef.current?.focus()}
 									inputRef={fullNameRef}
 									required
-									placeholder="John Doe"
+									placeholder={isFrench ? "Jean Dupont" : "John Doe"}
 									error={errors.fullName}
 									autoComplete="name"
 								/>
 
 								<div className="space-y-1.5">
 									<FormField
-										label="Payout Email"
+										label={isFrench ? "Email de Paiement" : "Payout Email"}
 										name="paypalUsername"
 										value={formData.paypalUsername}
 										onChange={(value) => handleInputChange('paypalUsername', value)}
 										onEnter={() => tiktokRef.current?.focus()}
 										inputRef={paypalRef}
 										required
-										placeholder="you@email.com"
+										placeholder={isFrench ? "vous@email.com" : "you@email.com"}
 										error={errors.paypalUsername}
 										autoComplete="email"
-										helperText="Email used to receive payouts via Grade (supports PayPal, Wise & more)"
+										helperText={isFrench ? "Email utilisé pour recevoir les paiements via Grade (supporte PayPal, Wise & plus)" : "Email used to receive payouts via Grade (supports PayPal, Wise & more)"}
 									/>
 									<div className="flex items-center justify-between">
 										<a
@@ -716,7 +745,7 @@ function AgreementPageContent() {
 											rel="noopener noreferrer"
 											className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 transition-colors duration-200"
 										>
-											Learn more about Grade
+											{isFrench ? 'En savoir plus sur Grade' : 'Learn more about Grade'}
 											<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
 												<path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
 											</svg>
@@ -725,26 +754,26 @@ function AgreementPageContent() {
 											<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
 												<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 											</svg>
-											Make sure you have access to this email
+											{isFrench ? 'Assurez-vous d\'avoir accès à cet email' : 'Make sure you have access to this email'}
 										</span>
 									</div>
 								</div>
 
 								<FormField
-									label="TikTok Username (Taller Content Account)"
+									label={isFrench ? "Nom d'utilisateur TikTok (Compte Contenu Taller)" : "TikTok Username (Taller Content Account)"}
 									name="tiktokUsername"
 									value={formData.tiktokUsername}
 									onChange={(value) => handleInputChange('tiktokUsername', value)}
 									onEnter={() => discordRef.current?.focus()}
 									inputRef={tiktokRef}
 									placeholder="@username.taller"
-									helperText="Account where you'll post Taller videos. Use a fresh account or rebrand an existing one with '.taller' in the name."
+									helperText={isFrench ? "Compte où vous publierez les vidéos Taller. Utilisez un nouveau compte ou renommez-en un avec '.taller' dans le nom." : "Account where you'll post Taller videos. Use a fresh account or rebrand an existing one with '.taller' in the name."}
 									error={errors.tiktokUsername}
 									autoComplete="username"
 								/>
 
 								<FormField
-									label="Discord Username"
+									label={isFrench ? "Nom d'utilisateur Discord" : "Discord Username"}
 									name="discordUsername"
 									value={formData.discordUsername}
 									onChange={(value) => handleInputChange('discordUsername', value)}
@@ -758,19 +787,20 @@ function AgreementPageContent() {
 
 								<div className="space-y-1.5">
 									<label className="block text-sm font-medium text-gray-700">
-										Creator's Signature <span className="text-red-500 ml-0.5">*</span>
+										{isFrench ? 'Signature du Créateur' : "Creator's Signature"} <span className="text-red-500 ml-0.5">*</span>
 									</label>
 									<SignaturePad
 										value={formData.signature}
 										onChange={handleSignatureChange}
 										onClear={() => handleInputChange('signature', '')}
+										isFrench={isFrench}
 									/>
 									{errors.signature && <p className="text-xs text-red-600">{errors.signature}</p>}
 								</div>
 
 								<div className="space-y-1.5">
 									<label htmlFor="date" className="block text-sm font-medium text-gray-700">
-										Date <span className="text-red-500 ml-0.5">*</span>
+										{isFrench ? 'Date' : 'Date'} <span className="text-red-500 ml-0.5">*</span>
 									</label>
 									<div className="relative">
 										<input
@@ -803,17 +833,17 @@ function AgreementPageContent() {
 													<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
 													<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
 												</svg>
-												Submitting...
+												{isFrench ? 'Envoi en cours...' : 'Submitting...'}
 											</span>
 										) : submitStatus === 'success' ? (
 											<span className="flex items-center justify-center gap-2">
 												<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
 												</svg>
-												Submitted
+												{isFrench ? 'Soumis' : 'Submitted'}
 											</span>
 										) : (
-											'Submit Agreement'
+											isFrench ? 'Soumettre le Contrat' : 'Submit Agreement'
 										)}
 									</button>
 
@@ -827,7 +857,7 @@ function AgreementPageContent() {
 											>
 												<div className="p-3 sm:p-4 rounded-md bg-green-50 border border-green-200">
 													<p className="text-sm text-green-800 text-center">
-														Thank you! Your agreement has been submitted.
+														{isFrench ? 'Merci ! Votre contrat a été soumis.' : 'Thank you! Your agreement has been submitted.'}
 													</p>
 												</div>
 												<button
@@ -838,7 +868,7 @@ function AgreementPageContent() {
 													<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 													</svg>
-													Download Agreement PDF
+													{isFrench ? 'Télécharger le Contrat PDF' : 'Download Agreement PDF'}
 												</button>
 											</motion.div>
 										)}
@@ -857,109 +887,236 @@ function AgreementPageContent() {
 						<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 md:p-10">
 							{/* Document Header */}
 							<div className="mb-8 pb-6 border-b border-gray-200">
-								<h2 className="text-2xl font-bold text-gray-900 mb-2 break-words"> Taller - Agreement</h2>
+								<h2 className="text-2xl font-bold text-gray-900 mb-2 break-words">
+									{isFrench ? 'Taller - Contrat' : 'Taller - Agreement'}
+								</h2>
 								<p className="text-sm text-gray-600">Asymmetric Labs FZC</p>
 							</div>
 
 							<div className="space-y-8 text-sm leading-relaxed text-gray-700">
 								{/* Section I */}
 								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">I. PARTIES</h3>
+									<h3 className="text-base font-semibold text-gray-900 mb-3">
+										{isFrench ? 'I. PARTIES' : 'I. PARTIES'}
+									</h3>
 									<p className="text-gray-700">
-										This agreement ("Contract") is between <strong className="font-semibold text-gray-900">Asymmetric Labs FZC</strong> (the
-										"Advertiser") and the content creator (the "Creator").
+										{isFrench ? (
+											<>
+												Ce contrat ("Contrat") est conclu entre <strong className="font-semibold text-gray-900">Asymmetric Labs FZC</strong> (l'"Annonceur")
+												et le créateur de contenu (le "Créateur").
+											</>
+										) : (
+											<>
+												This agreement ("Contract") is between <strong className="font-semibold text-gray-900">Asymmetric Labs FZC</strong> (the
+												"Advertiser") and the content creator (the "Creator").
+											</>
+										)}
 									</p>
 								</section>
 
 								{/* Section II */}
 								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">II. TERM</h3>
+									<h3 className="text-base font-semibold text-gray-900 mb-3">
+										{isFrench ? 'II. DURÉE' : 'II. TERM'}
+									</h3>
 									<p className="text-gray-700">
-										The contract is ongoing and can be terminated by either party with a <strong className="font-semibold">3-day notice</strong>.
+										{isFrench ? (
+											<>
+												Le contrat est en cours et peut être résilié par l'une ou l'autre partie avec un <strong className="font-semibold">préavis de 3 jours</strong>.
+											</>
+										) : (
+											<>
+												The contract is ongoing and can be terminated by either party with a <strong className="font-semibold">3-day notice</strong>.
+											</>
+										)}
 									</p>
 								</section>
 
 								{/* Section III */}
 								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">III. CONTENT REQUIREMENTS</h3>
+									<h3 className="text-base font-semibold text-gray-900 mb-3">
+										{isFrench ? 'III. EXIGENCES DE CONTENU' : 'III. CONTENT REQUIREMENTS'}
+									</h3>
 									<p className="text-gray-700">
-										The Creator agrees to post User-Generated Content (UGC) for Taller by replicating <strong className="font-semibold">two
-										recommended formats</strong> provided.
+										{isFrench ? (
+											<>
+												Le Créateur s'engage à publier du Contenu Généré par l'Utilisateur (UGC) pour Taller en répliquant <strong className="font-semibold">deux
+												formats recommandés</strong> fournis.
+											</>
+										) : (
+											<>
+												The Creator agrees to post User-Generated Content (UGC) for Taller by replicating <strong className="font-semibold">two
+												recommended formats</strong> provided.
+											</>
+										)}
 									</p>
 									{contract.retainer > 0 && (
 										<p className="text-gray-700 mt-2">
-											The Creator agrees to post a maximum of <strong className="font-semibold">2 videos per day</strong> for Taller. Posting more than 2 videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to <strong className="font-semibold">4 uploads per day</strong> across both platforms.
+											{isFrench ? (
+												<>
+													Le Créateur s'engage à publier un maximum de <strong className="font-semibold">2 vidéos par jour</strong> pour Taller. Publier plus de 2 vidéos en une seule journée n'est pas autorisé selon cet accord. Comme la cross-publication sur Instagram est autorisée, cela équivaut effectivement à un maximum de <strong className="font-semibold">4 publications par jour</strong> sur les deux plateformes.
+												</>
+											) : (
+												<>
+													The Creator agrees to post a maximum of <strong className="font-semibold">2 videos per day</strong> for Taller. Posting more than 2 videos in a single day is not permitted under this agreement. As cross-posting on Instagram is allowed, this effectively equals up to <strong className="font-semibold">4 uploads per day</strong> across both platforms.
+												</>
+											)}
 										</p>
 									)}
 								</section>
 
 								{/* Section IV */}
 								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">IV. PAYMENT</h3>
+									<h3 className="text-base font-semibold text-gray-900 mb-3">
+										{isFrench ? 'IV. PAIEMENT' : 'IV. PAYMENT'}
+									</h3>
 									<div className="space-y-4 text-gray-700">
 										{contract.retainer > 0 ? (
 											<p>
-												The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video</strong>, with a monthly
-												cap of <strong className="font-semibold">{contract.monthlyCapPosts} posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">${contract.monthlyRetainerMax}</strong>.
+												{isFrench ? (
+													<>
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}$ par vidéo</strong>, avec un plafond mensuel
+														de <strong className="font-semibold">{contract.monthlyCapPosts} publications</strong>, ce qui signifie que l'acompte mensuel peut aller jusqu'à <strong className="font-semibold">{contract.monthlyRetainerMax}$</strong>.
+													</>
+												) : (
+													<>
+														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video</strong>, with a monthly
+														cap of <strong className="font-semibold">{contract.monthlyCapPosts} posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">${contract.monthlyRetainerMax}</strong>.
+													</>
+												)}
 											</p>
 										) : (
 											<p>
-												The Advertiser pays the Creator based on <strong className="font-semibold">performance only (no retainer)</strong>.
+												{isFrench ? (
+													<>
+														L'Annonceur paie le Créateur sur la base de la <strong className="font-semibold">performance uniquement (pas d'acompte)</strong>.
+													</>
+												) : (
+													<>
+														The Advertiser pays the Creator based on <strong className="font-semibold">performance only (no retainer)</strong>.
+													</>
+												)}
 											</p>
 										)}
 										<p>
-											There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
-											<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
-											{contract.viewThreshold > 0 ? (
-												<>The first <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10,000' : contract.viewThreshold} views per video</strong> are
-												not eligible for the CPM; only views above that count.</>
+											{isFrench ? (
+												<>
+													Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}$ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
+													<strong className="font-semibold">{contract.capPerVideo}$ par vidéo</strong>.{' '}
+													{contract.viewThreshold > 0 ? (
+														<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
+														pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
+													) : (
+														<>Toutes les vues sont éligibles au CPM dès la première vue.</>
+													)}
+												</>
 											) : (
-												<>All views are eligible for the CPM from the first view.</>
+												<>
+													There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
+													<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
+													{contract.viewThreshold > 0 ? (
+														<>The first <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10,000' : contract.viewThreshold} views per video</strong> are
+														not eligible for the CPM; only views above that count.</>
+													) : (
+														<>All views are eligible for the CPM from the first view.</>
+													)}
+												</>
 											)}
 										</p>
 										{contract.crossPost.enabled && (
 											<p>
-												The creator may cross-post the same video on {contract.crossPost.platform} and earn a{' '}
-												<strong className="font-semibold">${contract.crossPost.cpm.toFixed(2)} CPM</strong> capped at <strong className="font-semibold">${contract.crossPost.capPerVideo} per video</strong>
-												{contract.crossPost.totalUploadsPerMonth && (
-													<>, allowing up to <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} uploads per month</strong></>
-												)}. Every views under the ${contract.crossPost.capPerVideo} cap are eligible on {contract.crossPost.platform}.
+												{isFrench ? (
+													<>
+														Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
+														<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}$ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}$ par vidéo</strong>
+														{contract.crossPost.totalUploadsPerMonth && (
+															<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
+														)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}$ sont éligibles sur {contract.crossPost.platform}.
+													</>
+												) : (
+													<>
+														The creator may cross-post the same video on {contract.crossPost.platform} and earn a{' '}
+														<strong className="font-semibold">${contract.crossPost.cpm.toFixed(2)} CPM</strong> capped at <strong className="font-semibold">${contract.crossPost.capPerVideo} per video</strong>
+														{contract.crossPost.totalUploadsPerMonth && (
+															<>, allowing up to <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} uploads per month</strong></>
+														)}. Every views under the ${contract.crossPost.capPerVideo} cap are eligible on {contract.crossPost.platform}.
+													</>
+												)}
 											</p>
 										)}
 										{contract.retainer > 0 && (
-											<p>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</p>
+											<p>
+												{isFrench ? (
+													<>L'<strong className="font-semibold">acompte de {contract.retainer}$ s'applique uniquement à TikTok</strong>.</>
+												) : (
+													<>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</>
+												)}
+											</p>
 										)}
 										<p>
-											Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong>. Payouts are
-											based on views generated in the <strong className="font-semibold">previous month</strong>.
+											{isFrench ? (
+												<>
+													Les paiements sont effectués entre le <strong className="font-semibold">1er et le 4 de chaque mois</strong>. Les paiements sont
+													basés sur les vues générées le <strong className="font-semibold">mois précédent</strong>.
+												</>
+											) : (
+												<>
+													Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong>. Payouts are
+													based on views generated in the <strong className="font-semibold">previous month</strong>.
+												</>
+											)}
 										</p>
 										<p>
-											Only views generated during the <strong className="font-semibold">same calendar month</strong> in which a video is
-											originally posted will be eligible for payout. For example, if a video is published on
-											July 21st, only views accrued from July 21st through July 31st will be counted. Views
-											from subsequent months for that same video will not be considered for payment.
+											{isFrench ? (
+												<>
+													Seules les vues générées pendant le <strong className="font-semibold">même mois calendaire</strong> où une vidéo est
+													initialement publiée seront éligibles au paiement. Par exemple, si une vidéo est publiée le
+													21 juillet, seules les vues accumulées du 21 au 31 juillet seront comptabilisées. Les vues
+													des mois suivants pour cette même vidéo ne seront pas prises en compte pour le paiement.
+												</>
+											) : (
+												<>
+													Only views generated during the <strong className="font-semibold">same calendar month</strong> in which a video is
+													originally posted will be eligible for payout. For example, if a video is published on
+													July 21st, only views accrued from July 21st through July 31st will be counted. Views
+													from subsequent months for that same video will not be considered for payment.
+												</>
+											)}
 										</p>
 									</div>
 								</section>
 
 								{/* Section V */}
 								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">V. HIGH PERFORMANCE VIEWS BONUS</h3>
+									<h3 className="text-base font-semibold text-gray-900 mb-3">
+										{isFrench ? 'V. BONUS DE HAUTE PERFORMANCE' : 'V. HIGH PERFORMANCE VIEWS BONUS'}
+									</h3>
 									<p className="text-gray-700">
-										If a creator publishes a video that exceeds <strong className="font-semibold">1,000,000 views</strong>, they will receive
-										a <strong className="font-semibold">one-time bonus payment of USD 100</strong> for that video.
+										{isFrench ? (
+											<>
+												Si un créateur publie une vidéo qui dépasse <strong className="font-semibold">1 000 000 de vues</strong>, il recevra
+												un <strong className="font-semibold">paiement bonus unique de 100 USD</strong> pour cette vidéo.
+											</>
+										) : (
+											<>
+												If a creator publishes a video that exceeds <strong className="font-semibold">1,000,000 views</strong>, they will receive
+												a <strong className="font-semibold">one-time bonus payment of USD 100</strong> for that video.
+											</>
+										)}
 									</p>
 								</section>
 
-								{/* Section VI */}
-								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">VI. INTELLECTUAL PROPERTY & USAGE RIGHTS</h3>
-									<p className="text-gray-700">
-										The Creator grants the Advertiser a perpetual, worldwide, royalty-free license to use,
-										reproduce, modify, and distribute any content created under this Contract for any commercial or
-										promotional purpose.
-									</p>
-								</section>
+								{/* Section VI - Only show if NOT French */}
+								{!isFrench && (
+									<section>
+										<h3 className="text-base font-semibold text-gray-900 mb-3">VI. INTELLECTUAL PROPERTY & USAGE RIGHTS</h3>
+										<p className="text-gray-700">
+											The Creator grants the Advertiser a perpetual, worldwide, royalty-free license to use,
+											reproduce, modify, and distribute any content created under this Contract for any commercial or
+											promotional purpose.
+										</p>
+									</section>
+								)}
 							</div>
 
 							{/* Advertiser Signature */}
@@ -970,11 +1127,13 @@ function AgreementPageContent() {
 								className="mt-12 pt-8 border-t border-gray-200"
 							>
 								<div className="flex flex-col items-start space-y-2">
-									<p className="text-xs font-medium text-gray-500 mb-4">Advertiser's Signature:</p>
+									<p className="text-xs font-medium text-gray-500 mb-4">
+										{isFrench ? "Signature de l'Annonceur :" : "Advertiser's Signature:"}
+									</p>
 									<div className="relative w-48 h-16">
 										<NextImage
 											src="/images/signature.png"
-											alt="Advertiser Signature"
+											alt={isFrench ? "Signature de l'Annonceur" : "Advertiser Signature"}
 											fill
 											className="object-contain"
 											priority
