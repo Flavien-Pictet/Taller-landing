@@ -435,7 +435,7 @@ function AgreementPageContent() {
 		doc.setFont('times', 'normal')
 		// First paragraph - Use dynamic contract config with French translation
 		const paymentText1 = isFrench
-			? ' L\'Annonceur paie le Createur 10$ par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600$. Il y a un 0,50$ CPM pour chaque 1 000 vues generees, plafonne a 150$ par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50$ CPM plafonne a 150$ par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150$ sont eligibles sur Instagram. L\'acompte de 10$ s\'applique uniquement a TikTok.'
+			? ' L\'Annonceur paie le Createur 10EUR par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600EUR. Il y a un 0,50EUR CPM pour chaque 1 000 vues generees, plafonne a 150EUR par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50EUR CPM plafonne a 150EUR par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150EUR sont eligibles sur Instagram. L\'acompte de 10EUR s\'applique uniquement a TikTok.'
 			: ' ' + contract.paymentText
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
@@ -463,28 +463,28 @@ function AgreementPageContent() {
 		})
 		yPos += 3
 
-		// Section V - HIGH PERFORMANCE VIEWS BONUS
-		doc.setFontSize(10)
-		doc.setFont('times', 'bold')
-		const bonusTitle = isFrench ? 'V. BONUS DE HAUTE PERFORMANCE : ' : 'V. HIGH PERFORMANCE VIEWS BONUS: '
-		const bonusTitleWidth = doc.getTextWidth(bonusTitle)
-		doc.text(bonusTitle, margin, yPos)
+		// Section V - HIGH PERFORMANCE VIEWS BONUS (Only for English version)
+		if (!isFrench) {
+			doc.setFontSize(10)
+			doc.setFont('times', 'bold')
+			const bonusTitle = 'V. HIGH PERFORMANCE VIEWS BONUS: '
+			const bonusTitleWidth = doc.getTextWidth(bonusTitle)
+			doc.text(bonusTitle, margin, yPos)
 
-		doc.setFont('times', 'normal')
-		const bonusText = isFrench
-			? 'Si un createur publie une video qui depasse 1 000 000 de vues, il recevra un paiement bonus unique de 100 USD pour cette video.'
-			: 'If a creator publishes a video that exceeds 1,000,000 views, they will receive a one-time bonus payment of USD 100 for that video.'
-		const bonusLines = doc.splitTextToSize(bonusText, contentWidth - bonusTitleWidth)
-		doc.text(bonusLines[0], margin + bonusTitleWidth, yPos)
+			doc.setFont('times', 'normal')
+			const bonusText = 'If a creator publishes a video that exceeds 1,000,000 views, they will receive a one-time bonus payment of USD 100 for that video.'
+			const bonusLines = doc.splitTextToSize(bonusText, contentWidth - bonusTitleWidth)
+			doc.text(bonusLines[0], margin + bonusTitleWidth, yPos)
 
-		if (bonusLines.length > 1) {
-			yPos += 5
-			for (let i = 1; i < bonusLines.length; i++) {
-				doc.text(bonusLines[i], margin, yPos)
+			if (bonusLines.length > 1) {
 				yPos += 5
+				for (let i = 1; i < bonusLines.length; i++) {
+					doc.text(bonusLines[i], margin, yPos)
+					yPos += 5
+				}
 			}
+			yPos += 8
 		}
-		yPos += 8
 
 		// Section VI - INTELLECTUAL PROPERTY (Only for English version)
 		if (!isFrench) {
@@ -975,8 +975,8 @@ function AgreementPageContent() {
 											<p>
 												{isFrench ? (
 													<>
-														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}$ par vidéo</strong>, avec un plafond mensuel
-														de <strong className="font-semibold">{contract.monthlyCapPosts} publications</strong>, ce qui signifie que l'acompte mensuel peut aller jusqu'à <strong className="font-semibold">{contract.monthlyRetainerMax}$</strong>.
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}€ par vidéo</strong>, avec un plafond mensuel
+														de <strong className="font-semibold">{contract.monthlyCapPosts} publications</strong>, ce qui signifie que l'acompte mensuel peut aller jusqu'à <strong className="font-semibold">{contract.monthlyRetainerMax}€</strong>.
 													</>
 												) : (
 													<>
@@ -1001,8 +1001,8 @@ function AgreementPageContent() {
 										<p>
 											{isFrench ? (
 												<>
-													Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}$ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
-													<strong className="font-semibold">{contract.capPerVideo}$ par vidéo</strong>.{' '}
+													Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}€ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
+													<strong className="font-semibold">{contract.capPerVideo}€ par vidéo</strong>.{' '}
 													{contract.viewThreshold > 0 ? (
 														<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
 														pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
@@ -1028,10 +1028,10 @@ function AgreementPageContent() {
 												{isFrench ? (
 													<>
 														Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
-														<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}$ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}$ par vidéo</strong>
+														<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}€ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}€ par vidéo</strong>
 														{contract.crossPost.totalUploadsPerMonth && (
 															<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
-														)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}$ sont éligibles sur {contract.crossPost.platform}.
+														)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}€ sont éligibles sur {contract.crossPost.platform}.
 													</>
 												) : (
 													<>
@@ -1047,7 +1047,7 @@ function AgreementPageContent() {
 										{contract.retainer > 0 && (
 											<p>
 												{isFrench ? (
-													<>L'<strong className="font-semibold">acompte de {contract.retainer}$ s'applique uniquement à TikTok</strong>.</>
+													<>L'<strong className="font-semibold">acompte de {contract.retainer}€ s'applique uniquement à TikTok</strong>.</>
 												) : (
 													<>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</>
 												)}
@@ -1086,25 +1086,16 @@ function AgreementPageContent() {
 									</div>
 								</section>
 
-								{/* Section V */}
-								<section>
-									<h3 className="text-base font-semibold text-gray-900 mb-3">
-										{isFrench ? 'V. BONUS DE HAUTE PERFORMANCE' : 'V. HIGH PERFORMANCE VIEWS BONUS'}
-									</h3>
-									<p className="text-gray-700">
-										{isFrench ? (
-											<>
-												Si un créateur publie une vidéo qui dépasse <strong className="font-semibold">1 000 000 de vues</strong>, il recevra
-												un <strong className="font-semibold">paiement bonus unique de 100 USD</strong> pour cette vidéo.
-											</>
-										) : (
-											<>
-												If a creator publishes a video that exceeds <strong className="font-semibold">1,000,000 views</strong>, they will receive
-												a <strong className="font-semibold">one-time bonus payment of USD 100</strong> for that video.
-											</>
-										)}
-									</p>
-								</section>
+								{/* Section V - Only show if NOT French */}
+								{!isFrench && (
+									<section>
+										<h3 className="text-base font-semibold text-gray-900 mb-3">V. HIGH PERFORMANCE VIEWS BONUS</h3>
+										<p className="text-gray-700">
+											If a creator publishes a video that exceeds <strong className="font-semibold">1,000,000 views</strong>, they will receive
+											a <strong className="font-semibold">one-time bonus payment of USD 100</strong> for that video.
+										</p>
+									</section>
+								)}
 
 								{/* Section VI - Only show if NOT French */}
 								{!isFrench && (
