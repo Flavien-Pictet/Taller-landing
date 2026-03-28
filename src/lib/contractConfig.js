@@ -57,7 +57,7 @@ export const CONTRACT_TYPES = {
 	},
 	custom: {
 		name: 'Custom',
-		retainer: 2.5, // $2.5 per video
+		retainer: 12.5, // $12.5 per video
 		monthlyCapPosts: null, // No cap on posts
 		monthlyRetainerMax: null,
 		cpm: 0, // No CPM
@@ -72,7 +72,7 @@ export const CONTRACT_TYPES = {
 			viewThreshold: 0,
 		},
 		hasContentDeletionClause: true, // Special clause for video deletion after 1 year
-		paymentText: 'The Advertiser pays the Creator $2.5 per video posted. There is no CPM or performance-based payment. The Creator may cross-post the same video on other platforms.',
+		paymentText: 'The Advertiser pays the Creator $12.5 per video posted. There is no CPM or performance-based payment. The Creator may cross-post the same video on other platforms.',
 	},
 }
 

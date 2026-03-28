@@ -436,7 +436,7 @@ function AgreementPageContent() {
 		// First paragraph - Use dynamic contract config with French translation
 		let paymentText1
 		if (contract.hasContentDeletionClause) {
-			// Custom contract with $2.5 per video, no CPM
+			// Custom contract with $12.5 per video, no CPM
 			paymentText1 = isFrench
 				? ' L\'Annonceur paie le Createur 12,50EUR par video postee. Il n\'y a pas de CPM ou de paiement base sur la performance.'
 				: ' The Advertiser pays the Creator $12.50 per video posted. There is no CPM or performance-based payment.'
