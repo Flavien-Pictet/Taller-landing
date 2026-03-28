@@ -434,9 +434,17 @@ function AgreementPageContent() {
 
 		doc.setFont('times', 'normal')
 		// First paragraph - Use dynamic contract config with French translation
-		const paymentText1 = isFrench
-			? ' L\'Annonceur paie le Createur 10EUR par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600EUR. Il y a un 0,50EUR CPM pour chaque 1 000 vues generees, plafonne a 150EUR par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50EUR CPM plafonne a 150EUR par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150EUR sont eligibles sur Instagram. L\'acompte de 10EUR s\'applique uniquement a TikTok.'
-			: ' ' + contract.paymentText
+		let paymentText1
+		if (contract.hasContentDeletionClause) {
+			// Custom contract with $2.5 per video, no CPM
+			paymentText1 = isFrench
+				? ' L\'Annonceur paie le Createur 2,5EUR par video postee. Il n\'y a pas de CPM ou de paiement base sur la performance.'
+				: ' The Advertiser pays the Creator $2.5 per video posted. There is no CPM or performance-based payment.'
+		} else if (isFrench) {
+			paymentText1 = ' L\'Annonceur paie le Createur 10EUR par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600EUR. Il y a un 0,50EUR CPM pour chaque 1 000 vues generees, plafonne a 150EUR par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50EUR CPM plafonne a 150EUR par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150EUR sont eligibles sur Instagram. L\'acompte de 10EUR s\'applique uniquement a TikTok.'
+		} else {
+			paymentText1 = ' ' + contract.paymentText
+		}
 
 		const paymentLines1 = doc.splitTextToSize(paymentText1, contentWidth - paymentTitleWidth)
 		doc.text(paymentLines1[0], margin + paymentTitleWidth, yPos)
@@ -451,20 +459,57 @@ function AgreementPageContent() {
 
 		yPos += 3
 
-		// Second paragraph
-		const paymentText2 = isFrench
-			? 'Les paiements sont effectues entre le 1er et le 4 de chaque mois. Les paiements sont bases sur les vues generees le mois precedent. Seules les vues generees pendant le meme mois calendaire ou une video est initialement publiee seront eligibles au paiement. Par exemple, si une video est publiee le 21 juillet, seules les vues accumulees du 21 au 31 juillet seront comptabilisees. Les vues des mois suivants pour cette meme video ne seront pas prises en compte pour le paiement.'
-			: 'Payments are made between the 1st and 4th of each month. Payouts are based on views generated in the previous month. Only views generated during the same calendar month in which a video is originally posted will be eligible for payout. For example, if a video is published on July 21st, only views accrued from July 21st through July 31st will be counted. Views from subsequent months for that same video will not be considered for payment.'
+		// Second paragraph (only if not custom contract)
+		if (!contract.hasContentDeletionClause) {
+			const paymentText2 = isFrench
+				? 'Les paiements sont effectues entre le 1er et le 4 de chaque mois. Les paiements sont bases sur les vues generees le mois precedent. Seules les vues generees pendant le meme mois calendaire ou une video est initialement publiee seront eligibles au paiement. Par exemple, si une video est publiee le 21 juillet, seules les vues accumulees du 21 au 31 juillet seront comptabilisees. Les vues des mois suivants pour cette meme video ne seront pas prises en compte pour le paiement.'
+				: 'Payments are made between the 1st and 4th of each month. Payouts are based on views generated in the previous month. Only views generated during the same calendar month in which a video is originally posted will be eligible for payout. For example, if a video is published on July 21st, only views accrued from July 21st through July 31st will be counted. Views from subsequent months for that same video will not be considered for payment.'
 
-		const paymentLines2 = doc.splitTextToSize(paymentText2, contentWidth)
-		paymentLines2.forEach(line => {
-			doc.text(line, margin, yPos)
-			yPos += 5
-		})
+			const paymentLines2 = doc.splitTextToSize(paymentText2, contentWidth)
+			paymentLines2.forEach(line => {
+				doc.text(line, margin, yPos)
+				yPos += 5
+			})
+		} else {
+			// Custom contract payment schedule
+			const customPaymentText = isFrench
+				? 'Les paiements sont effectues entre le 1er et le 4 de chaque mois pour toutes les videos postees le mois precedent.'
+				: 'Payments are made between the 1st and 4th of each month for all videos posted in the previous month.'
+			
+			const customPaymentLines = doc.splitTextToSize(customPaymentText, contentWidth)
+			customPaymentLines.forEach(line => {
+				doc.text(line, margin, yPos)
+				yPos += 5
+			})
+		}
 		yPos += 3
 
-		// Section V - HIGH PERFORMANCE VIEWS BONUS (Only for English version)
-		if (!isFrench) {
+		// Section V - CONTENT DELETION RIGHTS (Only for custom contract) OR HIGH PERFORMANCE VIEWS BONUS
+		if (contract.hasContentDeletionClause) {
+			doc.setFontSize(10)
+			doc.setFont('times', 'bold')
+			const deletionTitle = isFrench ? 'V. DROIT DE SUPPRESSION DU CONTENU : ' : 'V. CONTENT DELETION RIGHTS: '
+			const deletionTitleWidth = doc.getTextWidth(deletionTitle)
+			doc.text(deletionTitle, margin, yPos)
+
+			doc.setFont('times', 'normal')
+			const deletionText = isFrench
+				? 'Le Createur conserve le droit de supprimer tout contenu cree dans le cadre de ce Contrat apres une periode de 12 mois (1 an) suivant la date de publication originale. Apres suppression par le Createur, l\'Annonceur s\'engage a ne plus utiliser, reproduire, modifier ou distribuer ce contenu a des fins commerciales ou promotionnelles. Le Createur doit notifier l\'Annonceur par ecrit (par email ou Discord) au moins 7 jours avant de supprimer le contenu.'
+				: 'The Creator retains the right to delete any content created under this Contract after a period of 12 months (1 year) from the original publication date. After deletion by the Creator, the Advertiser agrees to cease using, reproducing, modifying, or distributing such content for any commercial or promotional purpose. The Creator must notify the Advertiser in writing (via email or Discord) at least 7 days prior to deleting the content.'
+
+			const deletionLines = doc.splitTextToSize(deletionText, contentWidth - deletionTitleWidth)
+			doc.text(deletionLines[0], margin + deletionTitleWidth, yPos)
+
+			if (deletionLines.length > 1) {
+				yPos += 5
+				for (let i = 1; i < deletionLines.length; i++) {
+					doc.text(deletionLines[i], margin, yPos)
+					yPos += 5
+				}
+			}
+			yPos += 8
+		} else if (!isFrench) {
+			// Section V - HIGH PERFORMANCE VIEWS BONUS (Only for English version and standard contracts)
 			doc.setFontSize(10)
 			doc.setFont('times', 'bold')
 			const bonusTitle = 'V. HIGH PERFORMANCE VIEWS BONUS: '
@@ -486,8 +531,8 @@ function AgreementPageContent() {
 			yPos += 8
 		}
 
-		// Section VI - INTELLECTUAL PROPERTY (Only for English version)
-		if (!isFrench) {
+		// Section VI - INTELLECTUAL PROPERTY (Only for English version and standard contracts)
+		if (!isFrench && !contract.hasContentDeletionClause) {
 			doc.setFontSize(10)
 			doc.setFont('times', 'bold')
 			const ipTitle = 'VI. INTELLECTUAL PROPERTY & USAGE RIGHTS: '
@@ -971,17 +1016,35 @@ function AgreementPageContent() {
 										{isFrench ? 'IV. PAIEMENT' : 'IV. PAYMENT'}
 									</h3>
 									<div className="space-y-4 text-gray-700">
-										{contract.retainer > 0 ? (
+										{contract.retainer > 0 && !contract.hasContentDeletionClause ? (
 											<p>
 												{isFrench ? (
 													<>
-														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}€ par vidéo</strong>, avec un plafond mensuel
-														de <strong className="font-semibold">{contract.monthlyCapPosts} publications</strong>, ce qui signifie que l'acompte mensuel peut aller jusqu'à <strong className="font-semibold">{contract.monthlyRetainerMax}€</strong>.
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}€ par vidéo</strong>
+														{contract.monthlyCapPosts && (
+															<>, avec un plafond mensuel
+															de <strong className="font-semibold">{contract.monthlyCapPosts} publications</strong>, ce qui signifie que l'acompte mensuel peut aller jusqu'à <strong className="font-semibold">{contract.monthlyRetainerMax}€</strong></>
+														)}.
 													</>
 												) : (
 													<>
-														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video</strong>, with a monthly
-														cap of <strong className="font-semibold">{contract.monthlyCapPosts} posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">${contract.monthlyRetainerMax}</strong>.
+														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video</strong>
+														{contract.monthlyCapPosts && (
+															<>, with a monthly
+															cap of <strong className="font-semibold">{contract.monthlyCapPosts} posts</strong>, meaning the monthly retainer can go up to <strong className="font-semibold">${contract.monthlyRetainerMax}</strong></>
+														)}.
+													</>
+												)}
+											</p>
+										) : contract.hasContentDeletionClause ? (
+											<p>
+												{isFrench ? (
+													<>
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}€ par vidéo postée</strong>. Il n'y a pas de CPM ou de paiement basé sur la performance.
+													</>
+												) : (
+													<>
+														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video posted</strong>. There is no CPM or performance-based payment.
 													</>
 												)}
 											</p>
@@ -998,96 +1061,119 @@ function AgreementPageContent() {
 												)}
 											</p>
 										)}
-										<p>
-											{isFrench ? (
-												<>
-													Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}€ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
-													<strong className="font-semibold">{contract.capPerVideo}€ par vidéo</strong>.{' '}
-													{contract.viewThreshold > 0 ? (
-														<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
-														pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
+										{contract.cpm > 0 && (
+											<>
+												<p>
+													{isFrench ? (
+														<>
+															Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}€ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
+															<strong className="font-semibold">{contract.capPerVideo}€ par vidéo</strong>.{' '}
+															{contract.viewThreshold > 0 ? (
+																<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
+																pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
+															) : (
+																<>Toutes les vues sont éligibles au CPM dès la première vue.</>
+															)}
+														</>
 													) : (
-														<>Toutes les vues sont éligibles au CPM dès la première vue.</>
+														<>
+															There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
+															<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
+															{contract.viewThreshold > 0 ? (
+																<>The first <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10,000' : contract.viewThreshold} views per video</strong> are
+																not eligible for the CPM; only views above that count.</>
+															) : (
+																<>All views are eligible for the CPM from the first view.</>
+															)}
+														</>
 													)}
-												</>
-											) : (
-												<>
-													There's a <strong className="font-semibold">${contract.cpm.toFixed(2)} CPM</strong> on every <strong className="font-semibold">1,000 views</strong> generated, capped at{' '}
-													<strong className="font-semibold">${contract.capPerVideo} per video</strong>.{' '}
-													{contract.viewThreshold > 0 ? (
-														<>The first <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10,000' : contract.viewThreshold} views per video</strong> are
-														not eligible for the CPM; only views above that count.</>
+												</p>
+												{contract.crossPost.enabled && (
+													<p>
+														{isFrench ? (
+															<>
+																Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
+																<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}€ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}€ par vidéo</strong>
+																{contract.crossPost.totalUploadsPerMonth && (
+																	<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
+																)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}€ sont éligibles sur {contract.crossPost.platform}.
+															</>
+														) : (
+															<>
+																The creator may cross-post the same video on {contract.crossPost.platform} and earn a{' '}
+																<strong className="font-semibold">${contract.crossPost.cpm.toFixed(2)} CPM</strong> capped at <strong className="font-semibold">${contract.crossPost.capPerVideo} per video</strong>
+																{contract.crossPost.totalUploadsPerMonth && (
+																	<>, allowing up to <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} uploads per month</strong></>
+																)}. Every views under the ${contract.crossPost.capPerVideo} cap are eligible on {contract.crossPost.platform}.
+															</>
+														)}
+													</p>
+												)}
+												{contract.retainer > 0 && contract.monthlyCapPosts && (
+													<p>
+														{isFrench ? (
+															<>L'<strong className="font-semibold">acompte de {contract.retainer}€ s'applique uniquement à TikTok</strong>.</>
+														) : (
+															<>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</>
+														)}
+													</p>
+												)}
+											</>
+										)}
+										{!contract.hasContentDeletionClause && (
+											<>
+												<p>
+													{isFrench ? (
+														<>
+															Les paiements sont effectués entre le <strong className="font-semibold">1er et le 4 de chaque mois</strong>. Les paiements sont
+															basés sur les vues générées le <strong className="font-semibold">mois précédent</strong>.
+														</>
 													) : (
-														<>All views are eligible for the CPM from the first view.</>
+														<>
+															Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong>. Payouts are
+															based on views generated in the <strong className="font-semibold">previous month</strong>.
+														</>
 													)}
-												</>
-											)}
-										</p>
-										{contract.crossPost.enabled && (
+												</p>
+												{contract.cpm > 0 && (
+													<p>
+														{isFrench ? (
+															<>
+																Seules les vues générées pendant le <strong className="font-semibold">même mois calendaire</strong> où une vidéo est
+																initialement publiée seront éligibles au paiement. Par exemple, si une vidéo est publiée le
+																21 juillet, seules les vues accumulées du 21 au 31 juillet seront comptabilisées. Les vues
+																des mois suivants pour cette même vidéo ne seront pas prises en compte pour le paiement.
+															</>
+														) : (
+															<>
+																Only views generated during the <strong className="font-semibold">same calendar month</strong> in which a video is
+																originally posted will be eligible for payout. For example, if a video is published on
+																July 21st, only views accrued from July 21st through July 31st will be counted. Views
+																from subsequent months for that same video will not be considered for payment.
+															</>
+														)}
+													</p>
+												)}
+											</>
+										)}
+										{contract.hasContentDeletionClause && (
 											<p>
 												{isFrench ? (
 													<>
-														Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
-														<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}€ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}€ par vidéo</strong>
-														{contract.crossPost.totalUploadsPerMonth && (
-															<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
-														)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}€ sont éligibles sur {contract.crossPost.platform}.
+														Les paiements sont effectués entre le <strong className="font-semibold">1er et le 4 de chaque mois</strong> pour toutes les vidéos postées le mois précédent.
 													</>
 												) : (
 													<>
-														The creator may cross-post the same video on {contract.crossPost.platform} and earn a{' '}
-														<strong className="font-semibold">${contract.crossPost.cpm.toFixed(2)} CPM</strong> capped at <strong className="font-semibold">${contract.crossPost.capPerVideo} per video</strong>
-														{contract.crossPost.totalUploadsPerMonth && (
-															<>, allowing up to <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} uploads per month</strong></>
-														)}. Every views under the ${contract.crossPost.capPerVideo} cap are eligible on {contract.crossPost.platform}.
+														Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong> for all videos posted in the previous month.
 													</>
 												)}
 											</p>
 										)}
-										{contract.retainer > 0 && (
-											<p>
-												{isFrench ? (
-													<>L'<strong className="font-semibold">acompte de {contract.retainer}€ s'applique uniquement à TikTok</strong>.</>
-												) : (
-													<>The <strong className="font-semibold">${contract.retainer} retainer applies only to TikTok</strong>.</>
-												)}
-											</p>
-										)}
-										<p>
-											{isFrench ? (
-												<>
-													Les paiements sont effectués entre le <strong className="font-semibold">1er et le 4 de chaque mois</strong>. Les paiements sont
-													basés sur les vues générées le <strong className="font-semibold">mois précédent</strong>.
-												</>
-											) : (
-												<>
-													Payments are made between the <strong className="font-semibold">1st and 4th of each month</strong>. Payouts are
-													based on views generated in the <strong className="font-semibold">previous month</strong>.
-												</>
-											)}
-										</p>
-										<p>
-											{isFrench ? (
-												<>
-													Seules les vues générées pendant le <strong className="font-semibold">même mois calendaire</strong> où une vidéo est
-													initialement publiée seront éligibles au paiement. Par exemple, si une vidéo est publiée le
-													21 juillet, seules les vues accumulées du 21 au 31 juillet seront comptabilisées. Les vues
-													des mois suivants pour cette même vidéo ne seront pas prises en compte pour le paiement.
-												</>
-											) : (
-												<>
-													Only views generated during the <strong className="font-semibold">same calendar month</strong> in which a video is
-													originally posted will be eligible for payout. For example, if a video is published on
-													July 21st, only views accrued from July 21st through July 31st will be counted. Views
-													from subsequent months for that same video will not be considered for payment.
-												</>
-											)}
-										</p>
 									</div>
 								</section>
 
-								{/* Section V - Only show if NOT French */}
-								{!isFrench && (
+								{/* Section V - HIGH PERFORMANCE VIEWS BONUS (Only for English and if not custom contract) */}
+								{!isFrench && !contract.hasContentDeletionClause && (
 									<section>
 										<h3 className="text-base font-semibold text-gray-900 mb-3">V. HIGH PERFORMANCE VIEWS BONUS</h3>
 										<p className="text-gray-700">
@@ -1097,8 +1183,28 @@ function AgreementPageContent() {
 									</section>
 								)}
 
-								{/* Section VI - Only show if NOT French */}
-								{!isFrench && (
+								{/* Section V or VI - CONTENT DELETION RIGHTS (Only for custom contract) */}
+								{contract.hasContentDeletionClause && (
+									<section>
+										<h3 className="text-base font-semibold text-gray-900 mb-3">
+											{!isFrench && contract.hasContentDeletionClause ? 'V. CONTENT DELETION RIGHTS' : 'V. DROIT DE SUPPRESSION DU CONTENU'}
+										</h3>
+										<p className="text-gray-700">
+											{isFrench ? (
+												<>
+													Le Créateur conserve le droit de supprimer tout contenu créé dans le cadre de ce Contrat après une période de <strong className="font-semibold">12 mois (1 an)</strong> suivant la date de publication originale. Après suppression par le Créateur, l'Annonceur s'engage à ne plus utiliser, reproduire, modifier ou distribuer ce contenu à des fins commerciales ou promotionnelles. Le Créateur doit notifier l'Annonceur par écrit (par email ou Discord) au moins <strong className="font-semibold">7 jours avant</strong> de supprimer le contenu.
+												</>
+											) : (
+												<>
+													The Creator retains the right to delete any content created under this Contract after a period of <strong className="font-semibold">12 months (1 year)</strong> from the original publication date. After deletion by the Creator, the Advertiser agrees to cease using, reproducing, modifying, or distributing such content for any commercial or promotional purpose. The Creator must notify the Advertiser in writing (via email or Discord) at least <strong className="font-semibold">7 days prior</strong> to deleting the content.
+												</>
+											)}
+										</p>
+									</section>
+								)}
+
+								{/* Section VI or VII - INTELLECTUAL PROPERTY & USAGE RIGHTS (Only for English and standard contracts) */}
+								{!isFrench && !contract.hasContentDeletionClause && (
 									<section>
 										<h3 className="text-base font-semibold text-gray-900 mb-3">VI. INTELLECTUAL PROPERTY & USAGE RIGHTS</h3>
 										<p className="text-gray-700">

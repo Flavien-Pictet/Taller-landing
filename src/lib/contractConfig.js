@@ -55,6 +55,25 @@ export const CONTRACT_TYPES = {
 		},
 		paymentText: 'The Advertiser pays the Creator based on performance only (no retainer). There\'s a $1.00 CPM on every 1,000 views generated, capped at $150 per video. All views are eligible for the CPM from the first view. The creator may cross-post the same video on Instagram and earn a $1.00 CPM capped at $150 per video.',
 	},
+	custom: {
+		name: 'Custom',
+		retainer: 2.5, // $2.5 per video
+		monthlyCapPosts: null, // No cap on posts
+		monthlyRetainerMax: null,
+		cpm: 0, // No CPM
+		capPerVideo: 0,
+		viewThreshold: 0,
+		crossPost: {
+			enabled: false, // No cross-posting
+			platform: null,
+			cpm: 0,
+			capPerVideo: 0,
+			totalUploadsPerMonth: null,
+			viewThreshold: 0,
+		},
+		hasContentDeletionClause: true, // Special clause for video deletion after 1 year
+		paymentText: 'The Advertiser pays the Creator $2.5 per video posted. There is no CPM or performance-based payment. The Creator may cross-post the same video on other platforms.',
+	},
 }
 
 export function getContractConfig(type = 'default') {
