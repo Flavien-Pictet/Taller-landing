@@ -438,7 +438,7 @@ function AgreementPageContent() {
 		if (contract.hasContentDeletionClause) {
 			// Custom contract with $12.5 per video, no CPM
 			paymentText1 = isFrench
-				? ' L\'Annonceur paie le Createur 12,50EUR par video postee. Il n\'y a pas de CPM ou de paiement base sur la performance.'
+				? ' L\'Annonceur paie le Createur 12,50$ par video postee. Il n\'y a pas de CPM ou de paiement base sur la performance.'
 				: ' The Advertiser pays the Creator $12.50 per video posted. There is no CPM or performance-based payment.'
 		} else if (isFrench) {
 			paymentText1 = ' L\'Annonceur paie le Createur 10EUR par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600EUR. Il y a un 0,50EUR CPM pour chaque 1 000 vues generees, plafonne a 150EUR par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50EUR CPM plafonne a 150EUR par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150EUR sont eligibles sur Instagram. L\'acompte de 10EUR s\'applique uniquement a TikTok.'
@@ -1040,7 +1040,7 @@ function AgreementPageContent() {
 											<p>
 												{isFrench ? (
 													<>
-														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}€ par vidéo postée</strong>. Il n'y a pas de CPM ou de paiement basé sur la performance.
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}$ par vidéo postée</strong>. Il n'y a pas de CPM ou de paiement basé sur la performance.
 													</>
 												) : (
 													<>
