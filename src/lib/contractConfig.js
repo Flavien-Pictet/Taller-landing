@@ -60,19 +60,20 @@ export const CONTRACT_TYPES = {
 		retainer: 12.5, // $12.5 per video
 		monthlyCapPosts: null, // No cap on posts
 		monthlyRetainerMax: null,
-		cpm: 0, // No CPM
-		capPerVideo: 0,
-		viewThreshold: 0,
+		cpm: 0.50, // $0.50 CPM
+		capPerVideo: 150,
+		viewThreshold: 10000, // First 10k views not eligible
 		crossPost: {
-			enabled: false, // No cross-posting
-			platform: null,
-			cpm: 0,
-			capPerVideo: 0,
-			totalUploadsPerMonth: null,
-			viewThreshold: 0,
+			enabled: true,
+			platform: 'Instagram',
+			cpm: 0.50,
+			capPerVideo: 150,
+			totalUploadsPerMonth: null, // No limit
+			viewThreshold: 0, // All views count on Instagram
 		},
+		useUsdInFrench: true, // Force USD currency even in French
 		hasContentDeletionClause: true, // Special clause for video deletion after 1 year
-		paymentText: 'The Advertiser pays the Creator $12.5 per video posted. There is no CPM or performance-based payment. The Creator may cross-post the same video on other platforms.',
+		paymentText: 'The Advertiser pays the Creator $12.5 per video posted. There\'s a $0.50 CPM on every 1,000 views generated, capped at $150 per video. The first 10,000 views per video are not eligible for the CPM; only views above that count. The creator may cross-post the same video on Instagram and earn a $0.50 CPM capped at $150 per video. All views under the $150 cap are eligible on Instagram.',
 	},
 }
 

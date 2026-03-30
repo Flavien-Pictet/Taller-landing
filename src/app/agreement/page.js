@@ -436,10 +436,10 @@ function AgreementPageContent() {
 		// First paragraph - Use dynamic contract config with French translation
 		let paymentText1
 		if (contract.hasContentDeletionClause) {
-			// Custom contract with $12.5 per video, no CPM
+			// Custom contract with $12.5 per video + CPM
 			paymentText1 = isFrench
-				? ' L\'Annonceur paie le Createur 12,50$ par video postee. Il n\'y a pas de CPM ou de paiement base sur la performance.'
-				: ' The Advertiser pays the Creator $12.50 per video posted. There is no CPM or performance-based payment.'
+				? ' L\'Annonceur paie le Createur 12,50$ par video postee sans plafond mensuel. Il y a un 0,50$ CPM pour chaque 1 000 vues generees, plafonne a 150$ par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50$ CPM plafonne a 150$ par video. Toutes les vues sous le plafond de 150$ sont eligibles sur Instagram.'
+				: ' ' + contract.paymentText
 		} else if (isFrench) {
 			paymentText1 = ' L\'Annonceur paie le Createur 10EUR par video, avec un plafond mensuel de 60 publications, ce qui signifie que l\'acompte mensuel peut aller jusqu\'a 600EUR. Il y a un 0,50EUR CPM pour chaque 1 000 vues generees, plafonne a 150EUR par video. Les premieres 10 000 vues par video ne sont pas eligibles au CPM ; seules les vues au-dessus de ce seuil comptent. Le createur peut republier la meme video sur Instagram et gagner un 0,50EUR CPM plafonne a 150EUR par video, permettant jusqu\'a 120 publications par mois. Toutes les vues sous le plafond de 150EUR sont eligibles sur Instagram. L\'acompte de 10EUR s\'applique uniquement a TikTok.'
 		} else {
@@ -1040,11 +1040,13 @@ function AgreementPageContent() {
 											<p>
 												{isFrench ? (
 													<>
-														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}$ par vidéo postée</strong>. Il n'y a pas de CPM ou de paiement basé sur la performance.
+														L'Annonceur paie le Créateur <strong className="font-semibold">{contract.retainer}$ par vidéo postée</strong>
+														{!contract.monthlyCapPosts && <> sans plafond mensuel</>}.
 													</>
 												) : (
 													<>
-														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video posted</strong>. There is no CPM or performance-based payment.
+														The Advertiser pays the Creator <strong className="font-semibold">${contract.retainer} per video posted</strong>
+														{!contract.monthlyCapPosts && <> with no monthly cap</>}.
 													</>
 												)}
 											</p>
@@ -1064,10 +1066,21 @@ function AgreementPageContent() {
 										{contract.cpm > 0 && (
 											<>
 												<p>
-													{isFrench ? (
+													{isFrench && !contract.useUsdInFrench ? (
 														<>
 															Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}€ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
 															<strong className="font-semibold">{contract.capPerVideo}€ par vidéo</strong>.{' '}
+															{contract.viewThreshold > 0 ? (
+																<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
+																pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
+															) : (
+																<>Toutes les vues sont éligibles au CPM dès la première vue.</>
+															)}
+														</>
+													) : isFrench && contract.useUsdInFrench ? (
+														<>
+															Il y a un <strong className="font-semibold">{contract.cpm.toFixed(2)}$ CPM</strong> pour chaque <strong className="font-semibold">1 000 vues</strong> générées, plafonné à{' '}
+															<strong className="font-semibold">{contract.capPerVideo}$ par vidéo</strong>.{' '}
 															{contract.viewThreshold > 0 ? (
 																<>Les premières <strong className="font-semibold">{contract.viewThreshold >= 5000 ? '10 000' : contract.viewThreshold} vues par vidéo</strong> ne sont
 																pas éligibles au CPM ; seules les vues au-dessus de ce seuil comptent.</>
@@ -1090,13 +1103,21 @@ function AgreementPageContent() {
 												</p>
 												{contract.crossPost.enabled && (
 													<p>
-														{isFrench ? (
+														{isFrench && !contract.useUsdInFrench ? (
 															<>
 																Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
 																<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}€ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}€ par vidéo</strong>
 																{contract.crossPost.totalUploadsPerMonth && (
 																	<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
 																)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}€ sont éligibles sur {contract.crossPost.platform}.
+															</>
+														) : isFrench && contract.useUsdInFrench ? (
+															<>
+																Le créateur peut republier la même vidéo sur {contract.crossPost.platform} et gagner un{' '}
+																<strong className="font-semibold">{contract.crossPost.cpm.toFixed(2)}$ CPM</strong> plafonné à <strong className="font-semibold">{contract.crossPost.capPerVideo}$ par vidéo</strong>
+																{contract.crossPost.totalUploadsPerMonth && (
+																	<>, permettant jusqu'à <strong className="font-semibold">{contract.crossPost.totalUploadsPerMonth} publications par mois</strong></>
+																)}. Toutes les vues sous le plafond de {contract.crossPost.capPerVideo}$ sont éligibles sur {contract.crossPost.platform}.
 															</>
 														) : (
 															<>
